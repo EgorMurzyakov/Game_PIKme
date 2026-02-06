@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class AnimationController : MonoBehaviour
 {
     [SerializeField] private Animator animator;
+    private bool LKM;
+    private bool PKM;
 
-    public void ChoosingAction(state _st)
+    public void ChoosingAction(state _st, bool _LKM, bool _PKM)
     {
         ResetAllTrigger(); // —брасываем все триггеры, активным всегда может быть только 1
 
@@ -26,7 +29,14 @@ public class AnimationController : MonoBehaviour
                 animator.SetTrigger("goDodge");
                 break;
             case state.Attack:
-                //animator.SetTrigger("goIdle");
+                if (_LKM)
+                {
+                    animator.SetTrigger("LKM");
+                }
+                if (_PKM)
+                {
+                    animator.SetTrigger("PKM");
+                }
                 break;
         }
     }
@@ -38,5 +48,8 @@ public class AnimationController : MonoBehaviour
         animator.ResetTrigger("goRun");
         animator.ResetTrigger("goSprint");
         animator.ResetTrigger("goDodge");
+        animator.ResetTrigger("LKM");
+        animator.ResetTrigger("PKM");
+
     }
 }

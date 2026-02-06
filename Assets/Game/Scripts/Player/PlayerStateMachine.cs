@@ -14,17 +14,25 @@ public class PlayerStateMachine : MonoBehaviour
     private bool isShift = false;
     private bool isSpace = false;
     private bool isAlt = false;
+    private bool isLKM = false;
+    private bool isPKM = false;
 
     private state currentState = state.Idle;
+
+    private bool canChangeState = true;
 
     public void Start()
     {
         input.OnButtonAltPressed += ReactToButtonAlt; // Подписка на событие
+        input.OnButtonLeftMousePressed += ReactToButtonLeftMouse; 
+        input.OnButtonRightMousePressed += ReactToButtonRightMouse; 
     }
 
     public void OnDestroy()
     {
         input.OnButtonAltPressed -= ReactToButtonAlt; // Отписка от события
+        input.OnButtonLeftMousePressed -= ReactToButtonLeftMouse;
+        input.OnButtonRightMousePressed -= ReactToButtonRightMouse;
     }
 
     public void Update()
@@ -34,9 +42,6 @@ public class PlayerStateMachine : MonoBehaviour
             isMoveInput = input.GetMoveInput();
 
             isWASD = isMoveInput.magnitude > 0.7f; // Если есть изменения, изменяем состояние
-            //if (isMoveInput.magnitude > 0.01f) { isWASD = true; } // Если есть изменения, изменяем состояние
-            //else { isWASD = false; }
-
             UpdateState();
         }
 
@@ -45,106 +50,181 @@ public class PlayerStateMachine : MonoBehaviour
             isShift = input.GetShiftInput();
             UpdateState();
         }
-
     }
 
     private void UpdateState()
     {
-        switch (currentState)
+        // Приоритеты -> 1) Уклонение 2) Атака 3) Движения
+        if (canChangeState)
         {
-            case state.Idle:
-                if (isAlt == true) // Idle -> Dodge
-                {
-                    currentState = state.Dodge;
-                }
-                else if (isShift == true && isWASD == true) // Idle -> Run
-                {
-                    currentState = state.Run;
-                    Debug.Log("Ты хуй 1");
-                }
-                else if (isWASD == true) // Idle -> Walk
-                {
-                    currentState = state.Walk;
-                }
-                break;
+            switch (currentState)
+            {
+                case state.Idle:
+                    if (isAlt == true) // Idle -> Dodge
+                    {
+                        currentState = state.Dodge;
+                        //canChangeState = false;
+                    }
+                    else if ((isPKM || isLKM) == true) // Idle -> Attack
+                    {
+                        currentState = state.Attack;
+                        canChangeState = false;
+                    }
+                    else if (isShift == true && isWASD == true) // Idle -> Run
+                    {
+                        currentState = state.Run;
+                    }
+                    else if (isWASD == true) // Idle -> Walk
+                    {
+                        currentState = state.Walk;
+                    }
+                    break;
 
-            case state.Walk:
-                if (isAlt == true) // Walk -> Dodge
-                {
-                    currentState = state.Dodge;
-                }
-                else if (isShift == true && isWASD == true) // Walk -> Run
-                {
-                    currentState = state.Run;
-                }
-                else if (isWASD == false) // Walk -> Idle
-                {
-                    currentState = state.Idle;
-                }
-                break;
-            case state.Run:
-                if (isAlt == true) // Run -> Dodge
-                {
-                    currentState = state.Dodge;
-                }
-                else if (isShift == false && isWASD == true) // Run -> Walk
-                {
-                    currentState = state.Walk;
-                }
-                else if (isWASD == false) // Run -> Idle
-                {
-                    currentState = state.Idle;
-                    Debug.Log("Ты хуй 2");
-                }
-                break;
-            case state.Sprint:
-                if (isAlt == true) // Sprint -> Dodge
-                {
-                    currentState = state.Dodge;
-                }
-                else if (isShift == false && isWASD == true) // Sprint -> Walk
-                {
-                    currentState = state.Walk;
-                }
-                else if (isWASD == false) // Spront -> Idle
-                {
-                    currentState = state.Idle;
-                }
-                break;
-            case state.Dodge:
-                if (isAlt == true) // Dodge -> Dodge
-                {
-                    currentState = state.Dodge;
-                }
-                else if (isShift == true && isWASD == true) // Dodge -> Sprint
-                {
-                    currentState = state.Sprint;
-                }
-                else if (isShift == false && isWASD == true) // Dodge -> Walk
-                {
-                    currentState = state.Walk;
-                }
-                else if (isWASD == false) // Dodge -> Idle
-                {
-                    currentState = state.Idle;
-                }
-                break;
+                case state.Walk:
+                    if (isAlt == true) // Walk -> Dodge
+                    {
+                        currentState = state.Dodge;
+                        //canChangeState = false;
+                    }
+                    else if ((isPKM || isLKM) == true) // Walk -> Attack
+                    {
+                        currentState = state.Attack;
+                        canChangeState = false;
+                    }
+                    else if (isShift == true && isWASD == true) // Walk -> Run
+                    {
+                        currentState = state.Run;
+                    }
+                    else if (isWASD == false) // Walk -> Idle
+                    {
+                        currentState = state.Idle;
+                    }
+                    break;
+
+                case state.Run:
+                    if (isAlt == true) // Run -> Dodge
+                    {
+                        currentState = state.Dodge;
+                        //canChangeState = false;
+                    }
+                    else if ((isPKM || isLKM) == true) // Run -> Attack
+                    {
+                        currentState = state.Attack;
+                        canChangeState = false;
+                    }
+                    else if (isShift == false && isWASD == true) // Run -> Walk
+                    {
+                        currentState = state.Walk;
+                    }
+                    else if (isWASD == false) // Run -> Idle
+                    {
+                        currentState = state.Idle;
+                    }
+                    break;
+
+                case state.Sprint:
+                    if (isAlt == true) // Sprint -> Dodge
+                    {
+                        currentState = state.Dodge;
+                        //canChangeState = false;
+                    }
+                    else if ((isPKM || isLKM) == true) // Sprint -> Attack
+                    {
+                        currentState = state.Attack;
+                        canChangeState = false;
+                    }
+                    else if (isShift == false && isWASD == true) // Sprint -> Walk
+                    {
+                        currentState = state.Walk;
+                    }
+                    else if (isWASD == false) // Spront -> Idle
+                    {
+                        currentState = state.Idle;
+                    }
+                    break;
+
+                case state.Dodge:
+                    // ---------------- !!!!!!!!!!
+                    if (isAlt == true) // Dodge -> Dodge
+                    {
+                        currentState = state.Dodge;
+                        //canChangeState = false;
+                    }
+                    else if ((isPKM || isLKM) == true) // Dodge-> Attack
+                    {
+                        currentState = state.Attack;
+                        canChangeState = false;
+                    }
+                    // ---------------- !!!!!!!!!!
+                    else if (isShift == true && isWASD == true) // Dodge -> Sprint
+                    {
+                        currentState = state.Sprint;
+                    }
+                    else if (isShift == false && isWASD == true) // Dodge -> Walk
+                    {
+                        currentState = state.Walk;
+                    }
+                    else if (isWASD == false) // Dodge -> Idle
+                    {
+                        currentState = state.Idle;
+                    }
+                    break;
+
+                case state.Attack:
+                    if (isAlt == true) // Attack -> Dodge
+                    {
+                        currentState = state.Dodge;
+                        //canChangeState = false;
+                    }
+                    else if ((isPKM || isLKM) == true) // Attack -> Attack
+                    {
+                        currentState = state.Attack;
+                        canChangeState = false;
+                    }
+                    else if (isShift == true && isWASD == true) // Attack -> Run
+                    {
+                        currentState = state.Run;
+                    }
+                    else if (isWASD == true) // Attack -> Walk
+                    {
+                        currentState = state.Walk;
+                    }
+                    else if (isWASD == false) // Attack -> Idle
+                    {
+                        currentState = state.Idle;
+                    }
+                    break;
+            }
+
+            Debug.Log(currentState);
+            movControl.ChoosingAction(currentState, isMoveInput); // Сообщаем о новом состоянии
+            animControl.ChoosingAction(currentState, isLKM, isPKM);
+
+            isAlt = false; // Цикл: Обновление состояния (UpdateState()) -> стираем данные -> ждем (canChangeState = true) -> собираем данные ->
+            isLKM = false;
+            isPKM = false;
         }
-
-        Debug.Log(currentState);
-        movControl.ChoosingAction(currentState, isMoveInput); // Сообщаем о новом состоянии
-        animControl.ChoosingAction(currentState);
     }
 
     void ReactToButtonAlt() // Реагируем на Событие
     {
         isAlt = true;
         UpdateState();
-        isAlt = false; // Обязательно сразу после обновления состояния
+    }
+    void ReactToButtonLeftMouse()
+    {
+        isLKM = true;
+        UpdateState();
+    }    
+    void ReactToButtonRightMouse()
+    {
+        isPKM = true;
+        UpdateState();
     }
 
     public void ChangeStateAfterAnim() // Вызывается из анимационных событий в Unity
     {
+        canChangeState = true;
         UpdateState();
     }
 }
