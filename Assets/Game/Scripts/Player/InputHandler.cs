@@ -14,6 +14,8 @@ public class InputHandler : MonoBehaviour
     // События
     public event Action OnButtonSpacePressed;
     public event Action OnButtonAltPressed;
+    public event Action OnButtonLeftMousePressed;
+    public event Action OnButtonRightMousePressed;
 
     public void Start()
     {
@@ -32,6 +34,16 @@ public class InputHandler : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftAlt)) // Отдельные нажатия обрабатываем через События
         {
             OnButtonAltPressed?.Invoke();
+        }
+
+        if (Input.GetMouseButtonDown(0)) // Нажатие ЛКМ
+        {
+            OnButtonLeftMousePressed?.Invoke();
+        }
+
+        if (Input.GetMouseButtonDown(1)) // Нажатие ПКМ
+        {
+            OnButtonRightMousePressed?.Invoke();
         }
     }
 
