@@ -35,7 +35,8 @@ public class MovementController : MonoBehaviour
         switch (_st)
         {
             case state.Idle:
-                targetSpeed = 0;
+                //targetSpeed = 0;
+                StopMoving();
                 break;
             case state.Walk:
                 targetSpeed = walkSpeed;
@@ -48,6 +49,7 @@ public class MovementController : MonoBehaviour
                 break;
             case state.Dodge:
                 targetSpeed = dodgeSpeed;
+                currentSpeed = dodgeSpeed;
                 break;
             case state.Attack:
                 StopMoving();
