@@ -50,7 +50,6 @@ public class MovementController : MonoBehaviour
                 targetSpeed = dodgeSpeed;
                 break;
             case state.Attack:
-                targetSpeed = 0;
                 StopMoving();
                 break;
         }
@@ -92,6 +91,7 @@ public class MovementController : MonoBehaviour
 
     private void StopMoving() // Мгновенная остановка
     {
+        targetSpeed = 0;
         currentSpeed = 0;
     }
     void UpdateSpeed() // Плавное изменение скорости
