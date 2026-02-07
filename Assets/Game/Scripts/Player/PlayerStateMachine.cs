@@ -148,7 +148,7 @@ public class PlayerStateMachine : MonoBehaviour
                 break;
 
             case state.Dodge:
-                if ((isPKM || isLKM) == true && canChangeState) // Dodge-> Attack
+                if ((isPKM || isLKM) == true && flagAttack && canChangeState) // Dodge-> Attack
                 {
                     currentState = state.Attack;
                 }
