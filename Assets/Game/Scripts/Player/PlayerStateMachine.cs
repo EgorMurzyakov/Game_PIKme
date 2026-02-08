@@ -4,9 +4,13 @@ public enum state { Idle, Walk, Run, Sprint, Dodge, Attack, Empty }
 
 public class PlayerStateMachine : MonoBehaviour
 {
-    [SerializeField] private InputHandler input;
-    [SerializeField] private MovementController movControl;
-    [SerializeField] private AnimationController animControl;
+    //[SerializeField] private InputHandler input;
+    //[SerializeField] private MovementController movControl;
+    //[SerializeField] private AnimationController animControl;
+    private InputHandler input;
+    MovementController movControl;
+    AnimationController animControl;
+    ColliderSwitch colliderSwitch;
 
     private Vector2 isMoveInput;
 
@@ -33,6 +37,11 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void Start()
     {
+        input = GetComponent<InputHandler>();
+        movControl = GetComponent<MovementController>();
+        animControl = GetComponent<AnimationController>();
+        colliderSwitch = GetComponent<ColliderSwitch>();
+
         input.OnButtonAltPressed += ReactToButtonAlt; // Подписка на событие
         input.OnButtonLeftMousePressed += ReactToButtonLeftMouse; 
         input.OnButtonRightMousePressed += ReactToButtonRightMouse; 
@@ -181,7 +190,7 @@ public class PlayerStateMachine : MonoBehaviour
 
                 if (isAlt == true) // 1. Всегда можем уклониться 
                 {
-                    currentState = state.Dodge; // Attack -> Dodge
+                    currentState = state.Dodge; // Attack -> Dodge                    
                 }
                 else if (flagAttack && ((isPKM || isLKM) == true)) // 2. Можем атаковать только если flagAttack == true 
                 {
@@ -215,6 +224,7 @@ public class PlayerStateMachine : MonoBehaviour
         {
             Debug.Log(currentState);
             animControl.ChoosingAction(currentState, isLKM, isPKM); // Для аттаки сообщаем о новом состоянии только, если оно сменилось
+            colliderSwitch.ChoosingAction(currentState); // Коллайдер меча
             prevState = currentState;
         }
     }
