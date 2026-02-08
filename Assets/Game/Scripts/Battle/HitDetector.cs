@@ -4,11 +4,12 @@ public class HitDetector : MonoBehaviour // Универсальный (и для игрока и для вр
 {
     [SerializeField] private GameObject character;
     private ColliderSwitch colliderSwitch;
-    private bool isActive = false;
+    private BoxCollider weaponCollider;
 
     public void Start()
     {
         colliderSwitch = character.GetComponent<ColliderSwitch>();
+        weaponCollider = GetComponent<BoxCollider>();
 
         colliderSwitch.weaponColliderOn += ColliderOn; // Подписываемся на событие (Уведомление о включении коллайдера)
         colliderSwitch.weaponColliderOff += ColliderOff; // (Уведомление о выключении коллайдера)
@@ -22,23 +23,21 @@ public class HitDetector : MonoBehaviour // Универсальный (и для игрока и для вр
 
     private void OnTriggerEnter(Collider other)
     {
-        if (isActive)
-        {
-            Debug.Log($"Объект {other.name} вошел в триггер");
+        Debug.Log($"Объект {other.name} вошел в триггер");
 
-            other.GetComponent<DamageDetector>().GetDamage();
-        }
+        other.GetComponent<DamageDetector>().GetDamage();
+        ColliderOff();
     }
 
     private void ColliderOn()
     {
         Debug.Log("true");
-        isActive = true;
+        weaponCollider.enabled = true;
     }
     private void ColliderOff()
     {
         Debug.Log("false");
-        isActive = false;
+        weaponCollider.enabled = false;
     }
 
 }
