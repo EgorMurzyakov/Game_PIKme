@@ -123,12 +123,14 @@ public class VoiceMagic : MonoBehaviour
             return;
         }
 
-        // Для теста спавним в (0,0,0). Если там не видно — поставь перед игроком.
-        Instantiate(
-            fireballPrefab,
-            Vector3.zero,
-            Quaternion.identity
+        GameObject fireball = Instantiate(
+        fireballPrefab,
+        transform.position + transform.forward * 2f,
+        Quaternion.identity
         );
+
+
+        Destroy(fireball, 5f);
 
         UnityEngine.Debug.Log("Fireball: заспавнен объект (проверь Scene view, позицию 0,0,0)");
     }
