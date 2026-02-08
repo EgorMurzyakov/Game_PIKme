@@ -222,7 +222,7 @@ public class PlayerStateMachine : MonoBehaviour
         movControl.ChoosingAction(currentState, isMoveInput); // Для движения сообщаем о новом состоянии всегда
         if (currentState != prevState)
         {
-            Debug.Log(currentState);
+            //Debug.Log(currentState);
             animControl.ChoosingAction(currentState, isLKM, isPKM); // Для аттаки сообщаем о новом состоянии только, если оно сменилось
             colliderSwitch.ChoosingAction(currentState); // Коллайдер меча
             prevState = currentState;
