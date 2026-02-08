@@ -3,8 +3,9 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform targetPlayer;
-    [SerializeField] private InputHandler input;
     [SerializeField] private float mouseSen = 150f;
+    //[SerializeField] private InputHandler input;
+    private InputHandler input;
 
     private Vector3 emptyPosition; // Смещение пустышки
     private (float x, float y) mouseInput;
@@ -14,6 +15,7 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
+        input = GetComponent<InputHandler>();
         emptyPosition = new Vector3(0f, transform.position.y, 0f); // Смещение пустышки
     }
 
