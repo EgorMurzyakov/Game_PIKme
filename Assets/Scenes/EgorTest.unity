@@ -372,6 +372,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6315489529683533559, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+      propertyPath: input
+      value: 
+      objectReference: {fileID: 2070246272}
+    - target: {fileID: 6315489529683533559, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+      propertyPath: inputHandler
+      value: 
+      objectReference: {fileID: 2070246272}
     - target: {fileID: 7940719953895527930, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
       propertyPath: m_Name
       value: PlayerPrefab
@@ -792,6 +800,17 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!114 &2070246272 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 266729098191978417, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+  m_PrefabInstance: {fileID: 1288152950}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29c66a828be6f64cb2a95525978a32e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputHandler
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
