@@ -49,8 +49,6 @@ public class VoiceMagic : MonoBehaviour
         UnityEngine.Debug.Log("VoiceMagic: Python запущен, ждём заклинания...");
     }
 
-    // ВНИМАНИЕ: это колбэк из фонового потока.
-    // НЕЛЬЗЯ трогать Unity-объекты, Instantiate и т.п. здесь.
     private void OnOutput(object sender, DataReceivedEventArgs e)
     {
         if (string.IsNullOrEmpty(e.Data)) return;
