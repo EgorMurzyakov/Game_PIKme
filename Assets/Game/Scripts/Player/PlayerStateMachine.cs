@@ -4,22 +4,16 @@ public enum state { Idle, Walk, Run, Sprint, Dodge, Attack, Empty }
 
 public class PlayerStateMachine : MonoBehaviour
 {
-    //[SerializeField] private InputHandler input;
-    //[SerializeField] private MovementController movControl;
-    //[SerializeField] private AnimationController animControl;
-    private InputHandler input;
+    [SerializeField] private InputHandler inputHandler;
     MovementController movControl;
     AnimationController animControl;
     ColliderSwitch colliderSwitch;
 
     private Vector2 isMoveInput;
 
-    private bool isWASD = false;
-    private bool isShift = false;
-    private bool isSpace = false;
-    private bool isAlt = false;
-    private bool isLKM = false;
-    private bool isPKM = false;
+    //private InputHandler inputHandler;
+    //private PlayerInput currentInput; 
+
 
     // Очень важно!!! (Костыли)
     private state currentState = state.Idle;
@@ -37,127 +31,111 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void Start()
     {
-        input = GetComponent<InputHandler>();
+        //input = GetComponent<InputHandler>();
         movControl = GetComponent<MovementController>();
         animControl = GetComponent<AnimationController>();
         colliderSwitch = GetComponent<ColliderSwitch>();
-
-        input.OnButtonAltPressed += ReactToButtonAlt; // Подписка на событие
-        input.OnButtonLeftMousePressed += ReactToButtonLeftMouse; 
-        input.OnButtonRightMousePressed += ReactToButtonRightMouse; 
-    }
-
-    public void OnDestroy()
-    {
-        input.OnButtonAltPressed -= ReactToButtonAlt; // Отписка от события
-        input.OnButtonLeftMousePressed -= ReactToButtonLeftMouse;
-        input.OnButtonRightMousePressed -= ReactToButtonRightMouse;
     }
 
     public void Update()
     {
-        if (input.GetMoveInput() != isMoveInput) // Проверяем WASD каждый кадр, отдельные нажатия обрабатываем через События
-        {
-            isMoveInput = input.GetMoveInput();
 
-            isWASD = isMoveInput.magnitude > 0.7f; // Если есть изменения, изменяем состояние
-            UpdateState();
-        }
+        ref PlayerInput currentInput = ref inputHandler.CurrentInput; // Берем ССЫЛКУ на оригинал, не копируем, работаем напрямую
+        //currentInput = inputHandler.GetInputCopy();
 
-        if (input.GetShiftInput() != isShift) // Проверяем Shift каждый кадр, отдельные нажатия обрабатываем через События
-        {
-            isShift = input.GetShiftInput();
-            UpdateState();
-        }
-    }
+        UpdateState(in currentInput); // 'in' = только для чтения
+        
 
-    private void UpdateState()
+        flagMovment = false;
+}
+
+    private void UpdateState(in PlayerInput input)
     {
         // Приоритеты -> 1) Уклонение 2) Атака 3) Движения
-
+        
         canChangeState = (lastAttackTime < Time.time - COMBO_WINDOW);
         canChangeStateDodge = (lastDodgeTime < Time.time - DODGE_WINDOW);
 
         switch (currentState)
         {
             case state.Idle:
-                if (isAlt == true && canChangeStateDodge) // Idle -> Dodge
+                if (input.Alt == true && canChangeStateDodge) // Idle -> Dodge
                 {
                     currentState = state.Dodge;
                 }
-                else if ((isPKM || isLKM) == true && canChangeState) // Idle -> Attack
+                else if ((input.PKM || input.LKM) == true && canChangeState) // Idle -> Attack
                 {
                     currentState = state.Attack;
                 }
-                else if (isShift == true && isWASD == true) // Idle -> Run
+                else if (input.Shift == true && input.WASD == true) // Idle -> Run
                 {
                     currentState = state.Run;
                 }
-                else if (isWASD == true) // Idle -> Walk
+                else if (input.WASD == true) // Idle -> Walk
                 {
                     currentState = state.Walk;
                 }
                 break;
 
             case state.Walk:
-                if (isAlt == true && canChangeStateDodge) // Walk -> Dodge
+                if (input.Alt == true && canChangeStateDodge) // Walk -> Dodge
                 {
                     currentState = state.Dodge;
                 }
-                else if ((isPKM || isLKM) == true && canChangeState) // Walk -> Attack
+                else if ((input.PKM || input.LKM) == true && canChangeState) // Walk -> Attack
                 {
                     currentState = state.Attack;
                 }
-                else if (isShift == true && isWASD == true) // Walk -> Run
+                else if (input.Shift == true && input.WASD == true) // Walk -> Run
                 {
                     currentState = state.Run;
                 }
-                else if (isWASD == false) // Walk -> Idle
+                else if (input.WASD == false) // Walk -> Idle
                 {
                     currentState = state.Idle;
                 }
                 break;
 
             case state.Run:
-                if (isAlt == true && canChangeStateDodge) // Run -> Dodge
+                if (input.Alt == true && canChangeStateDodge) // Run -> Dodge
                 {
                     currentState = state.Dodge;
                 }
-                else if ((isPKM || isLKM) == true && canChangeState) // Run -> Attack
+                else if ((input.PKM || input.LKM) == true && canChangeState) // Run -> Attack
                 {
                     currentState = state.Attack;
                 }
-                else if (isShift == false && isWASD == true) // Run -> Walk
+                else if (input.Shift == false && input.WASD == true) // Run -> Walk
                 {
                     currentState = state.Walk;
                 }
-                else if (isWASD == false) // Run -> Idle
+                else if (input.WASD == false) // Run -> Idle
                 {
                     currentState = state.Idle;
                 }
                 break;
 
             case state.Sprint:
-                if (isAlt == true && canChangeStateDodge) // Sprint -> Dodge
+                if (input.Alt == true && canChangeStateDodge) // Sprint -> Dodge
                 {
                     currentState = state.Dodge;
                 }
-                else if ((isPKM || isLKM) == true && canChangeState) // Sprint -> Attack
+                else if ((input.PKM || input.LKM) == true && canChangeState) // Sprint -> Attack
                 {
                     currentState = state.Attack;
                 }
-                else if (isShift == false && isWASD == true) // Sprint -> Walk
+                else if (input.Shift == false && input.WASD == true) // Sprint -> Walk
                 {
                     currentState = state.Walk;
                 }
-                else if (isWASD == false) // Sprint -> Idle
+                else if (input.WASD == false) // Sprint -> Idle
                 {
                     currentState = state.Idle;
                 }
                 break;
 
             case state.Dodge:
-                if ((isPKM || isLKM) == true && flagAttack && canChangeState) // Dodge-> Attack
+                if ((input.PKM || input.LKM) == true && flagAttack && canChangeState) // Dodge-> Attack
                 {
                     currentState = state.Attack;
                 }
@@ -165,11 +143,11 @@ public class PlayerStateMachine : MonoBehaviour
                 {
                     lastDodgeTime = Time.time;
 
-                    if (isShift == true && isWASD == true) // Dodge -> Sprint
+                    if (input.Shift == true && input.WASD == true) // Dodge -> Sprint
                     {
                         currentState = state.Sprint;
                     }
-                    else if (isShift == false && isWASD == true) // Dodge -> Walk
+                    else if (input.Shift == false && input.WASD == true) // Dodge -> Walk
                     {
                         currentState = state.Walk;
                     }
@@ -188,11 +166,11 @@ public class PlayerStateMachine : MonoBehaviour
                 //    Переход           движения           на движение (Это кто-то читает?)
                 //  (Кроме уклонения)
 
-                if (isAlt == true) // 1. Всегда можем уклониться 
+                if (input.Alt == true) // 1. Всегда можем уклониться 
                 {
                     currentState = state.Dodge; // Attack -> Dodge                    
                 }
-                else if (flagAttack && ((isPKM || isLKM) == true)) // 2. Можем атаковать только если flagAttack == true 
+                else if (flagAttack && ((input.PKM || input.LKM) == true)) // 2. Можем атаковать только если flagAttack == true 
                 {
                     flagAttack = false; // Нет гарантий что EndChangeState() будет вызван
 
@@ -204,11 +182,11 @@ public class PlayerStateMachine : MonoBehaviour
                     lastAttackTime = Time.time;
                     flagAttack = false; // Нет гарантий что EndChangeState() будет вызван
 
-                    if (isShift == true && isWASD == true) // Attack -> Run
+                    if (input.Shift == true && input.WASD == true) // Attack -> Run
                     {
                         currentState = state.Run;
                     }
-                    else if (isWASD == true) // Attack -> Walk
+                    else if (input.WASD == true) // Attack -> Walk
                     {
                         currentState = state.Walk;
                     }
@@ -220,34 +198,13 @@ public class PlayerStateMachine : MonoBehaviour
                 break;
         }
 
-        movControl.ChoosingAction(currentState, isMoveInput); // Для движения сообщаем о новом состоянии всегда
+        movControl.ChoosingAction(currentState, input.Move); // Для движения сообщаем о новом состоянии всегда
         if (currentState != prevState)
         {
-            //Debug.Log(currentState);
-            animControl.ChoosingAction(currentState, isLKM, isPKM); // Для аттаки сообщаем о новом состоянии только, если оно сменилось
+            animControl.ChoosingAction(currentState, input.LKM, input.PKM); // Для аттаки сообщаем о новом состоянии только, если оно сменилось
             colliderSwitch.ChoosingAction(currentState); // Коллайдер меча
             prevState = currentState;
         }
-    }
-    
-
-    void ReactToButtonAlt() // Реагируем на Событие
-    {
-        isAlt = true;
-        UpdateState();
-        isAlt = false;
-    }
-    void ReactToButtonLeftMouse()
-    {
-        isLKM = true;
-        UpdateState();
-        isLKM = false; 
-    }    
-    void ReactToButtonRightMouse()
-    {
-        isPKM = true;
-        UpdateState();
-        isPKM = false;
     }
 
     public void StartChangeState() // Начало промежутка в котором можно сменить состояние 
@@ -259,7 +216,5 @@ public class PlayerStateMachine : MonoBehaviour
     {
         flagAttack = false;
         flagMovment = true;
-        UpdateState();
-        flagMovment = false;
     }
 }

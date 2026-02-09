@@ -35,7 +35,6 @@ public class MovementController : MonoBehaviour
         switch (_st)
         {
             case state.Idle:
-                //targetSpeed = 0;
                 StopMoving();
                 break;
             case state.Walk:
@@ -81,10 +80,6 @@ public class MovementController : MonoBehaviour
             Quaternion currentRotation = transform.rotation;
             //Определяем направление поворота
             Vector3 crossProduct = Vector3.Cross(currentRotation * Vector3.forward, targetRotation * Vector3.forward);
-
-            //animator.SetBool("Right", crossProduct.y >= 0.05f);
-            //animator.SetBool("Left", crossProduct.y <= -0.05f);
-            //animator.SetBool("Forward", (-0.5f < crossProduct.y) && (crossProduct.y < 0.05f));
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime); // Иначе плавно
         }
 
