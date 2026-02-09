@@ -194,12 +194,15 @@ public class PlayerStateMachine : MonoBehaviour
                 }
                 else if (flagAttack && ((isPKM || isLKM) == true)) // 2. Можем атаковать только если flagAttack == true 
                 {
+                    flagAttack = false; // Нет гарантий что EndChangeState() будет вызван
+
                     currentState = state.Attack; // Attack -> Attack
                     prevState = state.Empty; // Чтобы перейти в новую анимацию
                 }
                 else if (flagMovment) // 3. Можем ходить только если flagMovment == true
                 {
                     lastAttackTime = Time.time;
+                    flagAttack = false; // Нет гарантий что EndChangeState() будет вызван
 
                     if (isShift == true && isWASD == true) // Attack -> Run
                     {
@@ -214,8 +217,6 @@ public class PlayerStateMachine : MonoBehaviour
                         currentState = state.Idle;
                     }
                 }
-
-                flagAttack = false; // Нет гарантий что EndChangeState() будет вызван
                 break;
         }
 
