@@ -21,7 +21,7 @@ public class HitDetector : MonoBehaviour // Универсальный (и для игрока и для вр
         colliderSwitch.weaponColliderOff -= ColliderOff;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         Debug.Log($"Объект {other.name} вошел в триггер");
 
