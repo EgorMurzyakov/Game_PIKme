@@ -1,17 +1,14 @@
 using UnityEngine;
 using System.Diagnostics;
+using System.IO;
+using System.Threading;
 using UnityDebug = UnityEngine.Debug;
 
 public class VoiceMagic : MonoBehaviour
 {
     private Process process;
 
-    // Сюда кладём заклинание, которое пришло из Python (stdout).
-    // ВАЖНО: обрабатываем его только в Update() (в главном потоке Unity).
     private string pendingSpell = null;
-
-    [Header("Префабы")]
-    public GameObject fireballPrefab;
 
     [Header("Фильтры срабатывания голоса")]
     [Tooltip("Минимальная пауза (в секундах) между кастами.")]
@@ -23,21 +20,38 @@ public class VoiceMagic : MonoBehaviour
     private float lastCastTime = -999f;
     private string lastSpell = null;
 
+    public Transform cameraTransform;
+
+    [Header("Спеллы (компоненты)")]
+    public FireballSpell fireballSpell;
+
     void Start()
     {
-        // Путь к Python. Если Unity не видит команду "python" — укажи полный путь к python.exe
-        string pythonPath = "python";
+        if (cameraTransform == null && Camera.main != null)
+            cameraTransform = Camera.main.transform;
 
-        // Путь к скрипту относительно Assets
-        string scriptPath = Application.dataPath + "/Game/Scripts/Voice/spell_recognizer.py";
+        string exePath = Path.Combine(
+            Application.dataPath,
+            "Game/Scripts/Voice/dist/spell_recognizer/spell_recognizer.exe"
+        );
+
+        UnityEngine.Debug.Log("VoiceMagic: запускаю exe по пути: " + exePath);
+
+        if (!File.Exists(exePath))
+        {
+            UnityEngine.Debug.LogError("VoiceMagic: НЕ найден exe по пути: " + exePath);
+            return;
+        }
 
         process = new Process();
-        process.StartInfo.FileName = pythonPath;
-        process.StartInfo.Arguments = $"\"{scriptPath}\"";
+        process.StartInfo.FileName = exePath;
+        process.StartInfo.Arguments = "";
         process.StartInfo.UseShellExecute = false;
         process.StartInfo.RedirectStandardOutput = true;
         process.StartInfo.RedirectStandardError = true;
         process.StartInfo.CreateNoWindow = true;
+
+        process.StartInfo.WorkingDirectory = Path.GetDirectoryName(exePath);
 
         process.OutputDataReceived += OnOutput;
         process.ErrorDataReceived += OnError;
@@ -46,39 +60,30 @@ public class VoiceMagic : MonoBehaviour
         process.BeginOutputReadLine();
         process.BeginErrorReadLine();
 
-        UnityEngine.Debug.Log("VoiceMagic: Python запущен, ждём заклинания...");
+        UnityEngine.Debug.Log("VoiceMagic: exe запущен, ждём заклинания...");
     }
 
     private void OnOutput(object sender, DataReceivedEventArgs e)
     {
         if (string.IsNullOrEmpty(e.Data)) return;
-        pendingSpell = e.Data.Trim();
+        Interlocked.Exchange(ref pendingSpell, e.Data.Trim());
     }
 
     void Update()
     {
-        if (string.IsNullOrEmpty(pendingSpell)) return;
+        string spell = Interlocked.Exchange(ref pendingSpell, null);
+        if (string.IsNullOrEmpty(spell)) return;
 
-        // Копируем и сразу очищаем, чтобы не обработать одно и то же несколько раз.
-        string spell = pendingSpell;
-        pendingSpell = null;
-
-        // Кулдаун
         float now = Time.time;
         bool cooldownReady = (now - lastCastTime) >= spellCooldownSeconds;
 
         if (!cooldownReady)
         {
-            // Дополнительно блокируем повтор того же спелла во время кулдауна
             if (blockSameSpellDuringCooldown && spell == lastSpell)
                 return;
-
-            // Сейчас у нас общий кулдаун на всё — поэтому выходим.
-            // Если захочешь разрешить разные спеллы без общего кулдауна — скажи, переделаем.
             return;
         }
 
-        // Прошли фильтры — запоминаем время/последний спелл
         lastCastTime = now;
         lastSpell = spell;
 
@@ -95,11 +100,22 @@ public class VoiceMagic : MonoBehaviour
     {
         UnityEngine.Debug.Log("CastSpell called: " + spell);
 
+        if (cameraTransform == null)
+        {
+            UnityEngine.Debug.LogError("cameraTransform не задан и Camera.main не найден.");
+            return;
+        }
+
         switch (spell)
         {
             case "FIREBALL":
                 UnityDebug.Log("Fireball cast");
-                FireballTest();
+                if (fireballSpell == null)
+                {
+                    UnityEngine.Debug.LogError("fireballSpell не назначен в Inspector.");
+                    return;
+                }
+                fireballSpell.Cast(transform, cameraTransform);
                 break;
 
             case "TORNADO":
@@ -112,33 +128,17 @@ public class VoiceMagic : MonoBehaviour
         }
     }
 
-    private void FireballTest()
-    {
-        // Самая частая причина, почему "не спавнится" — префаб не назначен в Inspector.
-        if (fireballPrefab == null)
-        {
-            UnityEngine.Debug.LogError("fireballPrefab НЕ назначен в Inspector! Перетащи префаб шара в поле Fireball Prefab.");
-            return;
-        }
-
-        GameObject fireball = Instantiate(
-        fireballPrefab,
-        transform.position + transform.forward * 2f,
-        Quaternion.identity
-        );
-
-
-        Destroy(fireball, 5f);
-
-        UnityEngine.Debug.Log("Fireball: заспавнен объект (проверь Scene view, позицию 0,0,0)");
-    }
-
     void OnApplicationQuit()
     {
         try
         {
-            if (process != null && !process.HasExited)
-                process.Kill();
+            if (process != null)
+            {
+                if (!process.HasExited)
+                    process.Kill();
+                process.Dispose();
+                process = null;
+            }
         }
         catch { }
     }

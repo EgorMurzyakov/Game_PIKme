@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
     //[SerializeField] private InputHandler input;
     private InputHandler input;
 
-    private Vector3 emptyPosition; // Смещение пустышки
+    private Vector3 emptyPosition; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     private (float x, float y) mouseInput;
     private float xRotation = 0f;
     private float yRotation = 0f;
@@ -16,21 +16,21 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         input = GetComponent<InputHandler>();
-        emptyPosition = new Vector3(0f, transform.position.y, 0f); // Смещение пустышки
+        emptyPosition = new Vector3(0f, transform.position.y, 0f); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     }
 
     void LateUpdate()
     {
-        transform.position = targetPlayer.position; // Следуем за моделью персонажа
-        transform.position += emptyPosition; // Смещение пустышки
+        transform.position = targetPlayer.position; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        transform.position += emptyPosition; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-        mouseInput = input.GetMouseInput(); // Получаем ввод мыши
+        mouseInput = input.GetMouseInput(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
         float mouseX = mouseInput.x * mouseSen * Time.deltaTime;
         float mouseY = mouseInput.y * mouseSen * Time.deltaTime;
 
-        xRotation -= mouseY;  // Наклон камеры вверх/вниз  
-        xRotation = Mathf.Clamp(xRotation, -45f, 90f);  // Ограничение, чтобы не перевернуть голову  
-        yRotation += mouseX;  // Поворот камеры влево/вправо  
+        xRotation -= mouseY;  // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅ  
+        xRotation = Mathf.Clamp(xRotation, -45f, 90f);  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ  
+        yRotation += mouseX;  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅ  
         transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
     }
 

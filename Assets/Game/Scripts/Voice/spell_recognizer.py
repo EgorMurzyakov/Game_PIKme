@@ -2,9 +2,19 @@ import json
 import queue
 import sounddevice as sd
 import os
+import sys
 from vosk import Model, KaldiRecognizer
 
-MODEL_PATH = os.path.join(os.path.dirname(__file__), "vosk-model-small-ru-0.22")
+
+def resource_path(rel_path: str) -> str:
+    # Если запущено из PyInstaller
+    if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+        base = sys._MEIPASS
+    else:
+        base = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(base, rel_path)
+
+MODEL_PATH = resource_path("vosk-model-small-ru-0.22")
 
 
 SPELLS = {
