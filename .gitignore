@@ -95,3 +95,13 @@ captures/
 
 # .utmp Unity temp file
 .utmp
+
+# Voice Module - Python builds
+/Assets/Game/Scripts/Voice/build/
+/Assets/Game/Scripts/Voice/__pycache__
+/Assets/Game/Scripts/Voice/build/spell_recognizer/
+Assets/Game/Scripts/Voice/dist/spell_recognizer/_internal/
+
+# PyInstaller spec for spell_recognizer
+/Assets/Game/Scripts/Voice/spell_recognizer.spec
+/Assets/Game/Scripts/Voice/spell_recognizer.spec.meta
