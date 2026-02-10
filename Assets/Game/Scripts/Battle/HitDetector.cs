@@ -31,12 +31,12 @@ public class HitDetector : MonoBehaviour // ”ниверсальный (и дл€ игрока и дл€ вр
 
     private void ColliderOn()
     {
-        Debug.Log("true");
+        //Debug.Log("true");
         weaponCollider.enabled = true;
     }
     private void ColliderOff()
     {
-        Debug.Log("false");
+        //Debug.Log("false");
         weaponCollider.enabled = false;
     }
 

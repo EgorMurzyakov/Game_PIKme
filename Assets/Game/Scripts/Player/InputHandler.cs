@@ -11,12 +11,6 @@ public class InputHandler : MonoBehaviour
     private float isMouseX;
     private float isMouseY;
 
-    //private Vector2 moveInput;
-    //private bool isShift;
-    //private bool isAlt;
-    //private bool isLKM;
-    //private bool isPKM;  
-
     // События
     public event Action OnButtonSpacePressed;
     public event Action OnButtonAltPressed;
@@ -43,39 +37,8 @@ public class InputHandler : MonoBehaviour
         CurrentInput.LKM = Input.GetMouseButton(0);
         CurrentInput.PKM = Input.GetMouseButton(1);
 
-        // Не нужно создавать новый PlayerInput каждый кадр!
-        // Просто меняем поля существующего
-
         isMouseX = Input.GetAxis("Mouse X");
         isMouseY = Input.GetAxis("Mouse Y");
-
-        //moveInput = new Vector2(Input.GetAxisRaw("Vertical"), Input.GetAxisRaw("Horizontal")).normalized; // GetAxisRaw() возвращает -1, 0, 1 без интерполяции (нет промежуточных значений)
-        //isShift = Input.GetKey(KeyCode.LeftShift);
-        //isAlt = Input.GetKey(KeyCode.LeftAlt);
-        //isLKM = Input.GetMouseButtonDown(0);
-        //isPKM = Input.GetMouseButtonDown(1);
-
-    }
-
-    //public (Vector2 _WASD, bool _Shift, bool _Alt, bool _LKM, bool _PKM) GetInput()
-    //{
-    //    return (moveInput, isShift, isAlt, isLKM, isPKM);
-    //}
-
-    //public Vector2 GetMoveInput() // WASD
-    //{
-    //    return moveInput;
-    //}
-
-    //public bool GetShiftInput() // Shift
-    //{
-    //    return isShift;
-    //}
-
-    // Альтернативно: метод для получения копии
-    public PlayerInput GetInputCopy()
-    {
-        return CurrentInput; // Возвращает КОПИЮ структуры
     }
 
     public (float x, float y) GetMouseInput() // Mouse
