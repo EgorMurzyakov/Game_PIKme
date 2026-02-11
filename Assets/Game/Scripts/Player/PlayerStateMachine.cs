@@ -192,7 +192,7 @@ public class PlayerStateMachine : MonoBehaviour
                     flagAttack = false; // <- Очищаем после использования
                     currentState = state.Attack;
                 }
-                else if (flagMovment)
+                if (flagMovment)
                 {
                     lastDodgeTime = Time.time;
 
