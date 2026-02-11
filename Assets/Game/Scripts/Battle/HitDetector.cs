@@ -3,6 +3,7 @@ using UnityEngine;
 public class HitDetector : MonoBehaviour // ”ниверсальный (и дл€ игрока и дл€ врагов)
 {
     [SerializeField] private GameObject character;
+    [SerializeField] private int weaponDamage; // —ырой урон оружи€, пока так (можно оставить (хз)), позже можно брать из Item самого оружи€
     private ColliderSwitch colliderSwitch;
     private BoxCollider weaponCollider;
 
@@ -25,7 +26,7 @@ public class HitDetector : MonoBehaviour // ”ниверсальный (и дл€ игрока и дл€ вр
     {
         Debug.Log($"ќбъект {other.name} вошел в триггер");
 
-        other.GetComponent<DamageDetector>().GetDamage();
+        other.GetComponent<DamageDetector>().GetDamage(weaponDamage);
         ColliderOff();
     }
 
