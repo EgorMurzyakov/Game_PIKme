@@ -15,6 +15,13 @@ public class MovementController : MonoBehaviour
     private float speedValue = 4f;
     private Vector2 moveInput;
 
+    private Vector3 cameraForward;
+    private Vector3 cameraRight;
+    private Vector3 moveDirection;
+    private Quaternion targetRotation;
+    private Quaternion currentRotation;
+    private Vector3 crossProduct;
+
     [Header("Debug")]
     [SerializeField] private float currentSpeed;
     [SerializeField] private float targetSpeed;
@@ -48,6 +55,7 @@ public class MovementController : MonoBehaviour
                 break;
             case state.Dodge:
                 targetSpeed = dodgeSpeed;
+                currentVelocity = transform.forward; // Кувырок будет вперед относительно персонажа
                 currentSpeed = dodgeSpeed;
                 break;
             case state.Attack:
@@ -58,15 +66,15 @@ public class MovementController : MonoBehaviour
 
     private void GetMoving()
     {
-        Vector3 cameraForward = Camera.main.transform.forward;
+        cameraForward = Camera.main.transform.forward;
         cameraForward.y = 0;
         cameraForward.Normalize();
 
-        Vector3 cameraRight = Camera.main.transform.right;
+        cameraRight = Camera.main.transform.right;
         cameraRight.y = 0;
         cameraRight.Normalize();
 
-        Vector3 moveDirection = cameraForward * moveInput.x + cameraRight * moveInput.y;
+        moveDirection = cameraForward * moveInput.x + cameraRight * moveInput.y;
         moveDirection.Normalize();
 
         if (moveDirection.magnitude > 0.1f)
@@ -76,10 +84,10 @@ public class MovementController : MonoBehaviour
 
         if (moveDirection != Vector3.zero)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            Quaternion currentRotation = transform.rotation;
+            targetRotation = Quaternion.LookRotation(moveDirection);
+            currentRotation = transform.rotation;
             //Определяем направление поворота
-            Vector3 crossProduct = Vector3.Cross(currentRotation * Vector3.forward, targetRotation * Vector3.forward);
+            crossProduct = Vector3.Cross(currentRotation * Vector3.forward, targetRotation * Vector3.forward);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime); // Иначе плавно
         }
 
