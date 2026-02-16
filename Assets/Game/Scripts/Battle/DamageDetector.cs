@@ -7,7 +7,7 @@ public class DamageDetector : MonoBehaviour // ”ниверсальный (и дл€ игрока и дл€
 
     public void GetDamage(int _weaponDamage) // ѕомимо сырого урона, в будущем, нужно учитывать прокачку игрока
     {
-        animator.SetTrigger("goDamage");
+        animator.SetTrigger("goDamage"); // Ќужно изменить и добавить классы наследники
         hitPoint.TakeDamage(_weaponDamage); 
     }
     

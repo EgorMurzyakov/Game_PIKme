@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Windows;
 
-public enum state { Idle, Walk, Run, Sprint, Dodge, Attack, Empty }
+public enum state { Idle, Walk, Run, Sprint, Dodge, Attack, Empty, Action, Damage, Death }
 
 public class PlayerStateMachine : MonoBehaviour
 {
@@ -267,7 +267,7 @@ public class PlayerStateMachine : MonoBehaviour
             animControl.ChoosingAction(currentState, input.LKM, input.PKM); // Для аттаки сообщаем о новом состоянии только, если оно сменилось
             colliderSwitch.ChoosingAction(currentState); // Коллайдер меча
             prevState = currentState;
-            Debug.Log(currentState);
+            //Debug.Log(currentState);
         }
     }
 
