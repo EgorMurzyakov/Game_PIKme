@@ -3,7 +3,7 @@ using UnityEngine.Pool;
 
 public class AnimationController : MonoBehaviour
 {
-    [SerializeField] private Animator animator;
+    [SerializeField] private Animator animator;   
     private bool LKM;
     private bool PKM;
 
