@@ -963,12 +963,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8722707484499129528, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2070246279}
-    - targetCorrespondingSourceObject: {fileID: 8722707484499129528, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2070246288}
-    - targetCorrespondingSourceObject: {fileID: 8722707484499129528, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2070246287}
   m_SourcePrefab: {fileID: 100100000, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
 --- !u!4 &1386483398 stripped
 Transform:
@@ -1515,37 +1509,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DamageDetector
   animator: {fileID: 2070246285}
   hitPoint: {fileID: 2070246279}
---- !u!114 &2070246287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 806534357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebdbc7bb96d16b149ba75b06487598d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::VoiceMagic
-  spellCooldownSeconds: 1
-  blockSameSpellDuringCooldown: 1
-  cameraTransform: {fileID: 1574712597}
-  fireballSpell: {fileID: 2070246288}
---- !u!114 &2070246288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 806534357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8b2e817658c66a4db13ea188b86008d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FireballSpell
-  prefab: {fileID: 9022923010661334854, guid: 8be8e94eb7e49624db7ae557d2dabc3d, type: 3}
-  speed: 40
-  lifeTimeSeconds: 1.5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
