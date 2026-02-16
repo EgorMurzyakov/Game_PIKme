@@ -4,10 +4,11 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform targetPlayer;
     [SerializeField] private float mouseSen = 150f;
-    //[SerializeField] private InputHandler input;
     private InputHandler input;
 
-    private Vector3 emptyPosition; // �������� ��������
+    [SerializeField] private float offsetY = 1.3f; // �������� ��������
+    private Vector3 emptyPosition;
+
     private (float x, float y) mouseInput;
     private float xRotation = 0f;
     private float yRotation = 0f;
@@ -16,7 +17,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         input = GetComponent<InputHandler>();
-        emptyPosition = new Vector3(0f, transform.position.y, 0f); // �������� ��������
+        emptyPosition = new Vector3(0f, offsetY, 0f); // �������� ��������
     }
 
     void LateUpdate()

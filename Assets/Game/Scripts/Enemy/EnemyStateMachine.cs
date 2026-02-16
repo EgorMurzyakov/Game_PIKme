@@ -1,32 +1,49 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
-public enum enemyState { Idle, Walk, Attack, Action, Damage, Death }
 
 public class EnemyStateMachine : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject player;   
     private EnemyMovment movment;
     private EnemyAnimation anim;
+    private ColliderSwitch colliderSwitch;
 
-    private enemyState currentState = enemyState.Idle;
+    private state currentState = state.Idle;
+    private state prevState = state.Idle;
 
     [SerializeField] private float rayRange = 10f;
+    [SerializeField] private float attackRange = 1f;
     private float rayThickness = 0.1f; // Толщина луча (для визуализации)
     private Vector3 popopo;
     private RaycastHit hit;
     private bool inVisibilityArea;
+    private bool canChangeState = false;
+    private float distanceToPlayer;
 
     public void Start()
     {
         popopo = new Vector3 (0, 1.3f, 0);
         movment = GetComponent<EnemyMovment>();
         anim = GetComponent<EnemyAnimation>();
+        colliderSwitch = GetComponent<ColliderSwitch>();
     }
 
     public void Update()
     {
-        RunRayCast();
+        distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
+        RunRayCast(); // Рейкасты, меняет inVisibilityArea
+
         UpdateState();
+
+        movment.GetMoving(currentState);
+        if (currentState != prevState)
+        {
+            anim.GetAnimation(currentState);
+            colliderSwitch.ChoosingAction(currentState);
+            Debug.Log(currentState);
+            prevState = currentState;
+        }
     }
 
     private void RunRayCast() // Запуск рейкастов для определения нахождения в зоне видимости
@@ -51,25 +68,67 @@ public class EnemyStateMachine : MonoBehaviour
     {
         switch (currentState)
         {
-            case enemyState.Idle:
+            case state.Idle:
+                if (inVisibilityArea && distanceToPlayer < attackRange)
+                {
+                    currentState = state.Attack;
+                }
+                else if (inVisibilityArea)
+                {
+                    currentState = state.Walk;
+                }
                 break;
 
-            case enemyState.Walk:
+            case state.Walk:
+                if (inVisibilityArea && distanceToPlayer < attackRange)
+                {
+                    currentState = state.Attack;
+                }
+                else if (inVisibilityArea == false)
+                {
+                    currentState = state.Idle;
+                }
                 break;
 
-            case enemyState.Attack:
+            case state.Attack:
+                if (canChangeState)
+                {
+                    if (inVisibilityArea && distanceToPlayer < attackRange)
+                    {
+                        currentState = state.Attack;
+                        prevState = state.Empty;
+                    }
+                    else if (inVisibilityArea)
+                    {
+                        currentState = state.Walk;
+                    }
+                    else
+                    {
+                        currentState = state.Idle;
+                    }
+
+                    canChangeState = false;
+                }
                 break;
 
-            case enemyState.Action:
+            case state.Action:
                 break;
 
-            case enemyState.Damage:
+            case state.Damage:
                 break;
 
-            case enemyState.Death:
+            case state.Death:
                 break;
         }
     }
+
+    public void EndChangeState()
+    {
+        canChangeState = true;
+        Debug.Log("Вызвалось - " + canChangeState);
+    }
+
+
 
     void DrawThickRay(Vector3 start, Vector3 end, Color color, float thickness) // Метод для рисования толстых линий (визуализация RayCast)
     {
