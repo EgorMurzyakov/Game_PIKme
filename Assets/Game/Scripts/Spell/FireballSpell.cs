@@ -28,6 +28,12 @@ public class FireballSpell : MonoBehaviour, ISpell
 
         activeFireball = Instantiate(prefab, pos, rot);
         spawnTime = Time.time;
+
+        Rigidbody rb = activeFireball.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.linearVelocity = direction * speed;
+        }
     }
 
     void Update()
@@ -35,7 +41,7 @@ public class FireballSpell : MonoBehaviour, ISpell
         if (activeFireball == null) return;
 
         // Движение каждый кадр
-        activeFireball.transform.position += direction * speed * Time.deltaTime;
+        // activeFireball.transform.position += direction * speed * Time.deltaTime;
 
         // Уничтожение через время
         if (Time.time - spawnTime >= lifeTimeSeconds)
