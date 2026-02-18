@@ -19,6 +19,7 @@ public class EnemyStateMachine : MonoBehaviour
     private RaycastHit hit;
     private bool inVisibilityArea;
     private bool canChangeState = false;
+    private bool takingDamage = false;
     private float distanceToPlayer;
 
     public void Start()
@@ -66,6 +67,11 @@ public class EnemyStateMachine : MonoBehaviour
 
     private void UpdateState()
     {
+        if (takingDamage) // Самое приоритетное (нет)
+        {
+            currentState = state.Damage;
+        }
+
         switch (currentState)
         {
             case state.Idle:
@@ -115,6 +121,22 @@ public class EnemyStateMachine : MonoBehaviour
                 break;
 
             case state.Damage:
+                if (takingDamage == false)
+                {
+                    if (inVisibilityArea && distanceToPlayer < attackRange)
+                    {
+                        currentState = state.Attack;
+                        prevState = state.Empty;
+                    }
+                    else if (inVisibilityArea)
+                    {
+                        currentState = state.Walk;
+                    }
+                    else
+                    {
+                        currentState = state.Idle;
+                    }
+                }
                 break;
 
             case state.Death:
@@ -150,6 +172,18 @@ public class EnemyStateMachine : MonoBehaviour
             Debug.DrawLine(start - up + right, end - up + right, color);
             Debug.DrawLine(start - up - right, end - up - right, color);
         }
+    }
+
+    public void TakingDamage(bool _td) // Получаем урон - true, не получаем - false
+    {
+        prevState = state.Empty;
+        takingDamage = _td; 
+    }
+
+    public void TakingDamageOAO() // Получаем урон - true, не получаем - false
+    {
+        prevState = state.Empty;
+        takingDamage = false;
     }
 }
 
