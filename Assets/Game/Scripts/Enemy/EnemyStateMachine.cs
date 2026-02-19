@@ -20,6 +20,7 @@ public class EnemyStateMachine : MonoBehaviour
     private bool inVisibilityArea;
     private bool canChangeState = false;
     private bool takingDamage = false;
+    private bool death = false;
     private float distanceToPlayer;
 
     public void Start()
@@ -67,7 +68,11 @@ public class EnemyStateMachine : MonoBehaviour
 
     private void UpdateState()
     {
-        if (takingDamage) // Самое приоритетное (нет)
+        if (death)
+        {
+            currentState = state.Death;
+        }
+        else if (takingDamage) // Самое приоритетное (нет)
         {
             currentState = state.Damage;
         }
@@ -121,7 +126,7 @@ public class EnemyStateMachine : MonoBehaviour
                 break;
 
             case state.Damage:
-                if (takingDamage == false)
+                if (canChangeState)
                 {
                     if (inVisibilityArea && distanceToPlayer < attackRange)
                     {
@@ -136,6 +141,8 @@ public class EnemyStateMachine : MonoBehaviour
                     {
                         currentState = state.Idle;
                     }
+
+                    canChangeState = false;
                 }
                 break;
 
@@ -144,9 +151,10 @@ public class EnemyStateMachine : MonoBehaviour
         }
     }
 
-    public void EndChangeState()
+    public void EndChangeState() // Вызывается из анимационных событий, canChangeState -> true -> можем сменить состояние 
     {
         canChangeState = true;
+        takingDamage = false;
         Debug.Log("Вызвалось - " + canChangeState);
     }
 
@@ -174,16 +182,15 @@ public class EnemyStateMachine : MonoBehaviour
         }
     }
 
-    public void TakingDamage(bool _td) // Получаем урон - true, не получаем - false
+    public void GoDamageState() // Получаем урон - true, не получаем - false
     {
-        prevState = state.Empty;
-        takingDamage = _td; 
+        //prevState = state.Empty;
+        takingDamage = true;
     }
 
-    public void TakingDamageOAO() // Получаем урон - true, не получаем - false
+    public void GoDeathState()
     {
-        prevState = state.Empty;
-        takingDamage = false;
+        death = true;
     }
 }
 

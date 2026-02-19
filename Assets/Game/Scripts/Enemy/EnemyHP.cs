@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class EnemyHP : HitPoint
 {
-    [SerializeField] private Animator animator;
+    //[SerializeField] private Animator animator;
+    [SerializeField] private EnemyStateMachine stateMachine;
 
     protected override void Death()
     {
-        animator.SetTrigger("Death");
+        stateMachine.GoDeathState();
+        //animator.SetTrigger("Death");
     }
 
     //public override void TakeDamage(int damage)
