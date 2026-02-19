@@ -20,45 +20,50 @@ public class EnemyMovment : MonoBehaviour
 
     public void GetMoving(state _st)
     {
-
-        switch (_st)
+        if (_st != state.Death)
         {
-            case state.Idle:
-                currentSpeed = 0f;
-                break;
 
-            case state.Walk:
-                currentSpeed = speed;
-                break;
+            switch (_st)
+            {
+                case state.Idle:
+                    currentSpeed = 0f;
+                    break;
 
-            case state.Attack:
-                break;
+                case state.Walk:
+                    currentSpeed = speed;
+                    break;
 
-            case state.Action:
-                break;
+                case state.Attack:
+                    break;
 
-            case state.Damage:
-                break;
+                case state.Action:
+                    break;
 
-            case state.Death:
-                break;
+                case state.Damage:
+                    currentSpeed = 0f;
+                    break;
+
+                case state.Death:
+                    currentSpeed = 0f;
+                    break;
+            }
+
+
+            // 1. Обновляем цель агента
+            agent.SetDestination(target.position);
+
+            // 2. Получаем направление от агента
+            Vector3 direction = agent.desiredVelocity;
+
+            // 3. Нормализуем и применяем через CharacterController
+            if (direction.magnitude > 0.1f)
+            {
+                direction.Normalize();
+
+                // Движение
+                charControl.Move(direction * currentSpeed * Time.deltaTime);
+            }
+
         }
-
-
-        // 1. Обновляем цель агента
-        agent.SetDestination(target.position);
-
-        // 2. Получаем направление от агента
-        Vector3 direction = agent.desiredVelocity;
-
-        // 3. Нормализуем и применяем через CharacterController
-        if (direction.magnitude > 0.1f)
-        {
-            direction.Normalize();
-
-            // Движение
-            charControl.Move(direction * currentSpeed * Time.deltaTime);
-        }
-
     }
 }
