@@ -38,6 +38,9 @@ public class AnimationController : MonoBehaviour
                     animator.SetTrigger("PKM");
                 }
                 break;
+            case state.Death:
+                animator.SetTrigger("Death");
+                break;
         }
     }
 

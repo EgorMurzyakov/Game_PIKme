@@ -239,6 +239,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2047565304110414055, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
+      propertyPath: startHitPoint
+      value: 47
+      objectReference: {fileID: 0}
     - target: {fileID: 6680354047153013933, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
       propertyPath: target
       value: 
@@ -308,6 +312,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2047565304110414055, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
+      propertyPath: startHitPoint
+      value: 35
+      objectReference: {fileID: 0}
     - target: {fileID: 6680354047153013933, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
       propertyPath: target
       value: 
@@ -868,6 +876,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3294381731496366071, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+      propertyPath: stateMachine
+      value: 
+      objectReference: {fileID: 1386483404}
+    - target: {fileID: 3971153711544200308, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+      propertyPath: weaponDamage
+      value: 23
+      objectReference: {fileID: 0}
     - target: {fileID: 5251107426523682287, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.23
@@ -922,6 +938,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8234436724202565122, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
   m_PrefabInstance: {fileID: 1288152950}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1386483404 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6315489529683533559, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+  m_PrefabInstance: {fileID: 1288152950}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806534357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f34b4a5630140341affad3d547f54e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStateMachine
 --- !u!1001 &1391221494
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -930,6 +957,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2047565304110414055, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
+      propertyPath: startHitPoint
+      value: 28
+      objectReference: {fileID: 0}
     - target: {fileID: 6680354047153013933, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
       propertyPath: target
       value: 
@@ -942,6 +973,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 806534357}
+    - target: {fileID: 7802607988226553117, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
+      propertyPath: attackCooldown
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7930116586209811609, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.88875
@@ -1259,6 +1294,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2047565304110414055, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
+      propertyPath: startHitPoint
+      value: 34
+      objectReference: {fileID: 0}
     - target: {fileID: 6680354047153013933, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
       propertyPath: target
       value: 
@@ -1271,6 +1310,14 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 806534357}
+    - target: {fileID: 7802607988226553117, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
+      propertyPath: rayRange
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7802607988226553117, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
+      propertyPath: attackCooldown
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7930116586209811609, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 11.597622

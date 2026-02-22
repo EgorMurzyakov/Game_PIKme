@@ -1,10 +1,11 @@
 using UnityEngine;
 
 public class PlayerHP : HitPoint
-{ 
+{
+    [SerializeField] private PlayerStateMachine stateMachine;
     protected override void Death()
     {
-        // 
+        stateMachine.GoDeathState();
     }
     //public override void TakeDamage(int damage)
     //{
