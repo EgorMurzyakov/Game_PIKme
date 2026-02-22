@@ -3,7 +3,7 @@ using UnityEngine;
 public abstract class HitPoint : MonoBehaviour 
 {
     [SerializeField] protected int startHitPoint; // Ќачальное значение
-    private int maxHitPoint; // ћаксимальное значение (увеличиваетс€ при прокачке персонажа)
+    protected int maxHitPoint; // ћаксимальное значение (увеличиваетс€ при прокачке персонажа)
     protected int currentHitPoint;
 
     public void Start()
@@ -24,6 +24,7 @@ public abstract class HitPoint : MonoBehaviour
         else
         {
             Debug.Log("Death");
+            currentHitPoint = 0;
             Death();
         }
 
