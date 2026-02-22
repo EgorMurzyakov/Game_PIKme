@@ -8,6 +8,7 @@ public class EnemyHP : HitPoint
     protected override void Death()
     {
         stateMachine.GoDeathState();
+        gameObject.layer = LayerMask.NameToLayer("DeadEnemy");
         //animator.SetTrigger("Death");
     }
 

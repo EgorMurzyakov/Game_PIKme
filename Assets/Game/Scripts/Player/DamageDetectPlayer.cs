@@ -7,7 +7,10 @@ public class DamageDetectPlayer : DamageDetector
     public override void GetDamage(int _weaponDamage) // Помимо сырого урона, в будущем, нужно учитывать прокачку игрока
     {
         //stateMachine.TakingDamage(true); // Говорим машине состояний что получили урон -> она включает анимацию получения урона
-        hitPoint.TakeDamage(_weaponDamage); // Наносим урон
+        if (stateMachine.GetPlayerState() != state.Dodge)
+        {
+            hitPoint.TakeDamage(_weaponDamage); // Наносим урон
+        }
     }
 }
 
