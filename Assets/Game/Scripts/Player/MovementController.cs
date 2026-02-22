@@ -22,6 +22,8 @@ public class MovementController : MonoBehaviour
     private Quaternion currentRotation;
     private Vector3 crossProduct;
 
+    private bool death = false;
+
     [Header("Debug")]
     [SerializeField] private float currentSpeed;
     [SerializeField] private float targetSpeed;
@@ -32,7 +34,10 @@ public class MovementController : MonoBehaviour
     }
     public void FixedUpdate()
     {
-        GetMoving();
+        if (death == false)
+        {
+            GetMoving();
+        }
     }
 
     public void ChoosingAction(state _st, Vector2 _mi)
@@ -60,6 +65,9 @@ public class MovementController : MonoBehaviour
                 break;
             case state.Attack:
                 StopMoving();
+                break;
+            case state.Death:
+                death = true;
                 break;
         }
     }

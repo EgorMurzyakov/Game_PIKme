@@ -25,6 +25,7 @@ public class PlayerStateMachine : MonoBehaviour
     private const float DODGE_WINDOW = 0.25f; // Окно (Кулдаун) уклонения
     private bool canChangeStateAttack = true;
     private bool canChangeStateDodge = true;
+    private bool death = false;
 
     // Комбо 
     private string[] combo = { "L", "LL", "LLL", "R", "RR", "RRR", "LLR", "LLRR", "RRL", "RRLL" };
@@ -56,6 +57,11 @@ public class PlayerStateMachine : MonoBehaviour
         
         canChangeStateAttack = (lastAttackTime < Time.time - COMBO_WINDOW);
         canChangeStateDodge = (lastDodgeTime < Time.time - DODGE_WINDOW);
+
+        if (death)
+        {
+            currentState = state.Death;
+        }
 
         switch (currentState)
         {
@@ -259,6 +265,9 @@ public class PlayerStateMachine : MonoBehaviour
                     }
                 }
                 break;
+
+            case state.Death:
+                break;
         }
 
         movControl.ChoosingAction(currentState, input.Move); // Для движения сообщаем о новом состоянии всегда
@@ -302,5 +311,15 @@ public class PlayerStateMachine : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void GoDeathState()
+    {
+        death = true;
+    }
+
+    public state GetPlayerState()
+    {
+        return currentState;
     }
 }
