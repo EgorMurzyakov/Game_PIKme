@@ -12,12 +12,17 @@ public class EnemyStateMachine : MonoBehaviour
     private state currentState = state.Idle;
     private state prevState = state.Idle;
 
-    [SerializeField] private float rayRange = 10f;
-    [SerializeField] private float attackRange = 1f;
+    [SerializeField] private float rayRange = 10f; // Дистанция, с которой враг видит игрока
+    [SerializeField] private float attackRange = 1f; // Дистанция атаки
+    [SerializeField] private float attackCooldown = 1f; // Задержка атак
+    private float startAttckColdown;
+    private bool canAttack = true;
+
     private float rayThickness = 0.1f; // Толщина луча (для визуализации)
     private Vector3 popopo;
     private RaycastHit hit;
     private bool inVisibilityArea;
+
     private bool canChangeState = false;
     private bool takingDamage = false;
     private bool death = false;
@@ -28,7 +33,7 @@ public class EnemyStateMachine : MonoBehaviour
         popopo = new Vector3 (0, 1.3f, 0);
         movment = GetComponent<EnemyMovment>();
         anim = GetComponent<EnemyAnimation>();
-        colliderSwitch = GetComponent<ColliderSwitch>();
+        colliderSwitch = GetComponent<ColliderSwitch>();        
     }
 
     public void Update()
@@ -68,6 +73,8 @@ public class EnemyStateMachine : MonoBehaviour
 
     private void UpdateState()
     {
+        canAttack = (Time.time - attackCooldown) > startAttckColdown;
+
         if (death)
         {
             currentState = state.Death;
@@ -75,14 +82,16 @@ public class EnemyStateMachine : MonoBehaviour
         else if (takingDamage) // Самое приоритетное (нет)
         {
             currentState = state.Damage;
+            prevState = state.Empty;
         }
 
         switch (currentState)
         {
             case state.Idle:
-                if (inVisibilityArea && distanceToPlayer < attackRange)
+                if (inVisibilityArea && distanceToPlayer < attackRange && canAttack)
                 {
                     currentState = state.Attack;
+                    startAttckColdown = Time.time;
                 }
                 else if (inVisibilityArea)
                 {
@@ -91,9 +100,10 @@ public class EnemyStateMachine : MonoBehaviour
                 break;
 
             case state.Walk:
-                if (inVisibilityArea && distanceToPlayer < attackRange)
+                if (inVisibilityArea && distanceToPlayer < attackRange && canAttack)
                 {
                     currentState = state.Attack;
+                    startAttckColdown = Time.time;
                 }
                 else if (inVisibilityArea == false)
                 {
@@ -104,10 +114,11 @@ public class EnemyStateMachine : MonoBehaviour
             case state.Attack:
                 if (canChangeState)
                 {
-                    if (inVisibilityArea && distanceToPlayer < attackRange)
+                    if (inVisibilityArea && distanceToPlayer < attackRange && canAttack)
                     {
                         currentState = state.Attack;
                         prevState = state.Empty;
+                        startAttckColdown = Time.time;
                     }
                     else if (inVisibilityArea)
                     {
@@ -128,10 +139,11 @@ public class EnemyStateMachine : MonoBehaviour
             case state.Damage:
                 if (canChangeState)
                 {
-                    if (inVisibilityArea && distanceToPlayer < attackRange)
+                    if (inVisibilityArea && distanceToPlayer < attackRange && canAttack)
                     {
                         currentState = state.Attack;
                         prevState = state.Empty;
+                        startAttckColdown = Time.time;
                     }
                     else if (inVisibilityArea)
                     {
