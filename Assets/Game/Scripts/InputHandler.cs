@@ -12,8 +12,8 @@ public class InputHandler : MonoBehaviour
     private float isMouseY;
 
     // События
-    public event Action OnButtonSpacePressed;
-    public event Action OnButtonAltPressed;
+    //public event Action OnButtonSpacePressed;
+    //public event Action OnButtonAltPressed;
     public event Action OnButtonLeftMousePressed;
     public event Action OnButtonRightMousePressed;
 
