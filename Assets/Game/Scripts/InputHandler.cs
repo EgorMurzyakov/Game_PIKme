@@ -7,6 +7,11 @@ public class InputHandler : MonoBehaviour
     // Публичное поле, а не свойство (для скорости)
     public PlayerInput CurrentInput;
 
+    // Буффер ввода
+    private float inputBuffer = 0.2f;
+    private float startLKM;
+    private float startPKM;
+
     // Поля остаются приватными
     private float isMouseX;
     private float isMouseY;
@@ -14,8 +19,8 @@ public class InputHandler : MonoBehaviour
     // События
     //public event Action OnButtonSpacePressed;
     //public event Action OnButtonAltPressed;
-    public event Action OnButtonLeftMousePressed;
-    public event Action OnButtonRightMousePressed;
+    //public event Action OnButtonLeftMousePressed;
+    //public event Action OnButtonRightMousePressed;
 
     public void Start()
     {
@@ -34,8 +39,29 @@ public class InputHandler : MonoBehaviour
         CurrentInput.WASD = CurrentInput.Move.magnitude > 0.1f;
         CurrentInput.Shift = Input.GetKey(KeyCode.LeftShift);
         CurrentInput.Alt = Input.GetKey(KeyCode.LeftAlt);
+
+        // ---------------- Буфер ввода для атаки ------------ Начало 
         CurrentInput.LKM = Input.GetMouseButton(0);
+        if (CurrentInput.LKM)
+        {
+            startLKM = Time.time;
+        }
+        else if (Time.time < startLKM + inputBuffer)
+        {
+            CurrentInput.LKM = true;
+        }
         CurrentInput.PKM = Input.GetMouseButton(1);
+        if (CurrentInput.PKM) 
+        {
+            startPKM = Time.time;            
+        }
+        else if (Time.time < startPKM + inputBuffer)
+        {
+            CurrentInput.PKM = true;
+        }
+        // ---------------- Буфер ввода для атаки ------------ Конец
+
+
 
         isMouseX = Input.GetAxis("Mouse X");
         isMouseY = Input.GetAxis("Mouse Y");
@@ -45,5 +71,6 @@ public class InputHandler : MonoBehaviour
     {
         return (isMouseX, isMouseY);
     }
+
 
 }
