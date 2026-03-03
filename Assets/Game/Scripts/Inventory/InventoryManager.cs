@@ -5,6 +5,7 @@ using UnityEngine;
 public class InventoryManager : MonoBehaviour
 {
     public GameObject UIPanel;
+    public GameObject UIHelp;
     public Transform inventoryPanel;
     public List<InventorySlot> slots = new List<InventorySlot>();
     private bool isOpened = false; // Выключен в начале игры
@@ -22,6 +23,7 @@ public class InventoryManager : MonoBehaviour
         }
 
         UIPanel.SetActive(false); // Принудительно выключаем при старте игры
+        UIHelp.SetActive(false);
     }
 
     public void Update()
@@ -31,7 +33,7 @@ public class InventoryManager : MonoBehaviour
             isOpened = !isOpened;
             if (isOpened)
             {
-                UIPanel.SetActive(true);
+                UIPanel.SetActive(true);               
             }
             else
             {
@@ -52,6 +54,10 @@ public class InventoryManager : MonoBehaviour
             itemsInRange.Add(other.gameObject);
             Debug.Log($"Предмет {other.name} в зоне подбора");
         }
+        if (itemsInRange.Count > 0)
+        {
+            UIHelp.SetActive(true);
+        }
     }
     void OnTriggerExit(Collider other)
     {
@@ -59,6 +65,10 @@ public class InventoryManager : MonoBehaviour
         {
             itemsInRange.Remove(other.gameObject);
             Debug.Log($"Предмет {other.name} покинул зону");
+        }
+        if (itemsInRange.Count == 0)
+        {
+            UIHelp.SetActive(false);
         }
     }
 
@@ -73,8 +83,13 @@ public class InventoryManager : MonoBehaviour
             {
                 Item item = itemToPick.GetComponent<Item>();
                 Debug.Log($"Вы подобрали - {item.itemScriptableObject.itemName}");
+                AddItem(item.itemScriptableObject, item.amount);
                 Destroy(itemToPick);
                 itemsInRange.Remove(itemToPick);
+            }
+            if (itemsInRange.Count == 0)
+            {
+                UIHelp.SetActive(false);
             }
         }
     }
@@ -97,5 +112,27 @@ public class InventoryManager : MonoBehaviour
         }
 
         return closest;
+    }
+
+    private void AddItem(ItemScriptableObject _itemSO, int _amount)
+    {
+        foreach (InventorySlot slot in slots)
+        {
+            if (slot.isEmpty) // Если слот пустой
+            {
+                slot.item = _itemSO;
+                slot.amount = _amount;
+                slot.isEmpty = false;
+                slot.SetIcon(_itemSO.icon);
+                slot.textItemAmount.text = _amount.ToString();
+                return;
+            }
+            else if (slot.item == _itemSO) // Если слот НЕ пустой 
+            {
+                slot.amount += _amount;
+                slot.textItemAmount.text = slot.amount.ToString();
+                return; 
+            }
+        }
     }
 }
