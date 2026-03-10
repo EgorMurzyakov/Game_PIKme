@@ -16,6 +16,6 @@ MonoBehaviour:
   ItemPrefab: {fileID: 1169411228174609760, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
   itemName: Apple
   itemDescription: Red apple
-  maximumAmount: 7
-  icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  maximumAmount: 3
+  icon: {fileID: 21300000, guid: da7129ed6a246f048a49d8d97de2d2d4, type: 3}
   healthAmount: 14
