@@ -1,24 +1,42 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Data;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class InventoryManager : MonoBehaviour
 {
     public GameObject UIPanel;
     public GameObject UIHelp;
     public Transform inventoryPanel;
-    public List<InventorySlot> slots = new List<InventorySlot>();
+    public TMP_Text itemInfoText;
+    //public List<InventorySlot> slots = new List<InventorySlot>();
+    public InventorySlot[,] slots;
     private bool isOpened = false; // Выключен в начале игры
+
+    private int row; // Строки 
+    private int col; // Столбцы
+    private int curRow = 0;
+    private int curCol = 0;
 
     private List<GameObject> itemsInRange = new List<GameObject>(); // Список предметов, которые можно подобрать   
 
     public void Start()
     {
+        col = inventoryPanel.childCount;
+        row = inventoryPanel.GetChild(0).childCount;
+        slots = new InventorySlot[col, row];
+
         for (int i = 0; i < inventoryPanel.childCount; i++)
         {
-            if (inventoryPanel.GetChild(i).GetComponent<InventorySlot>() != null)
+            for (int j = 0; j < inventoryPanel.GetChild(i).childCount; j++)
             {
-                slots.Add(inventoryPanel.GetChild(i).GetComponent<InventorySlot>());
+                if (inventoryPanel.GetChild(i).GetChild(j).GetComponent<InventorySlot>() != null)
+                {
+                    slots[i, j] = inventoryPanel.GetChild(i).GetChild(j).GetComponent<InventorySlot>();
+                }
             }
         }
 
@@ -44,6 +62,12 @@ public class InventoryManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             TryPickupItem();
+        }
+
+        if (isOpened) // Навигация по инвентарю, если тот открыт
+        {
+            InventoryNavigation();
+            ShowItemInfo();
         }
     }
 
@@ -129,10 +153,82 @@ public class InventoryManager : MonoBehaviour
             }
             else if (slot.item == _itemSO) // Если слот НЕ пустой 
             {
-                slot.amount += _amount;
-                slot.textItemAmount.text = slot.amount.ToString();
-                return; 
+                if (slot.amount + _amount <= _itemSO.maximumAmount)
+                {
+                    slot.amount += _amount;
+                    slot.textItemAmount.text = slot.amount.ToString();
+                    return;
+                }
             }
         }
     }
+
+    private void InventoryNavigation() // Навигация по инвентарю
+    {
+        // Стрелки
+        if (Input.GetKeyDown(KeyCode.UpArrow)) // Нажата стрелка вверх
+        {
+            slots[curCol, curRow].GetComponent<Image>().color = new Color(255,255,255,255);
+
+            --curCol;
+            if (curCol == -1)
+            {
+                curCol = col - 1;
+            }
+
+            slots[curCol, curRow].GetComponent<Image>().color = new Color(255,0,0,255);
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow)) // Нажата стрелка вниз
+        {
+            slots[curCol, curRow].GetComponent<Image>().color = new Color(255, 255, 255, 255);
+
+            ++curCol;
+            if (curCol == col)
+            {
+                curCol = 0;
+            }
+
+            slots[curCol, curRow].GetComponent<Image>().color = new Color(255, 0, 0, 255);
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) // Нажата стрелка влево
+        {
+            slots[curCol, curRow].GetComponent<Image>().color = new Color(255, 255, 255, 255);
+
+            --curRow;
+            if (curRow == -1)
+            {
+                curRow = row - 1;
+            }
+
+            slots[curCol, curRow].GetComponent<Image>().color = new Color(255, 0, 0, 255);
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow)) // Нажата стрелка вправо
+        {
+            slots[curCol, curRow].GetComponent<Image>().color = new Color(255, 255, 255, 255);
+
+            ++curRow;
+            if (curRow == row)
+            {
+                curRow = 0;
+            }
+
+            slots[curCol, curRow].GetComponent<Image>().color = new Color(255, 0, 0, 255);
+        }
+    }
+
+    private void ShowItemInfo()
+    {
+        if (slots[curCol, curRow].isEmpty == false)
+        {
+            itemInfoText.text = slots[curCol, curRow].item.itemDescription;
+        }
+        else
+        {
+            itemInfoText.text = " ";
+        }
+    }
+
+
 }
+
+
