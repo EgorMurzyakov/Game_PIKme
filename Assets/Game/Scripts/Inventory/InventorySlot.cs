@@ -10,7 +10,7 @@ public class InventorySlot : MonoBehaviour
     public GameObject iconGO;
     public TMP_Text textItemAmount;
 
-    public void Start()
+    public void Awake()
     {
         iconGO = transform.GetChild(0).gameObject;
         textItemAmount = transform.GetChild(1).GetComponent<TMP_Text>();

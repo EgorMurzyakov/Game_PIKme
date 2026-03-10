@@ -64,10 +64,19 @@ public class InventoryManager : MonoBehaviour
             TryPickupItem();
         }
 
-        if (isOpened) // Навигация по инвентарю, если тот открыт
+        if (isOpened) // Если инвентарь открыт
         {
-            InventoryNavigation();
-            ShowItemInfo();
+            InventoryNavigation(); // Навигация по инвентарю
+            ShowItemInfo(); // Показывает описание предмета
+
+            if (Input.GetKeyDown(KeyCode.Q)) // Выбрасываем предмет
+            {
+                DropItem();
+            }
+            if (Input.GetKeyDown(KeyCode.E)) // Действие с предметом
+            {
+
+            }
         }
     }
 
@@ -156,6 +165,7 @@ public class InventoryManager : MonoBehaviour
                 if (slot.amount + _amount <= _itemSO.maximumAmount)
                 {
                     slot.amount += _amount;
+                    Debug.Log("Вызвалось, кол-во " + slot.amount);
                     slot.textItemAmount.text = slot.amount.ToString();
                     return;
                 }
@@ -216,15 +226,36 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    private void ShowItemInfo()
+    private void ShowItemInfo() // Показывает описание предмета
     {
-        if (slots[curCol, curRow].isEmpty == false)
+        if (slots[curCol, curRow].isEmpty == false) // Если слот НЕ пустой
         {
             itemInfoText.text = slots[curCol, curRow].item.itemDescription;
         }
         else
         {
             itemInfoText.text = " ";
+        }
+    }
+
+    private void DropItem()
+    {
+        if (slots[curCol, curRow].isEmpty == false) // Если слот НЕ пустой
+        {
+            slots[curCol, curRow].amount -= 1;
+            slots[curCol, curRow].textItemAmount.text = slots[curCol, curRow].amount.ToString();
+
+            // Спавн выброшенного предмета
+            GameObject newObject2 = Instantiate(slots[curCol, curRow].item.ItemPrefab, transform.position + new Vector3(2f, 2f, 0), Quaternion.identity);
+
+            if (slots[curCol, curRow].amount == 0)
+            {
+                Debug.Log("Больше нечего выкинуть");
+                slots[curCol, curRow].isEmpty = true;
+                slots[curCol, curRow].item = null;
+                slots[curCol, curRow].iconGO.GetComponent<Image>().sprite = null;
+                slots[curCol, curRow].textItemAmount.text = " ";
+            }
         }
     }
 
