@@ -20,6 +20,7 @@ public class InventoryManager : MonoBehaviour
     private bool isOpened = false; // Выключен в начале игры
 
     public event Action<ItemScriptableObject> ChangeWeapon;
+    public event Action<int> EatFood;
 
     private int row; // Строки 
     private int col; // Столбцы
@@ -296,7 +297,8 @@ public class InventoryManager : MonoBehaviour
             }
             else if (slots[curCol, curRow].item.type == ItemType.Food)
             {
-
+                EatFood?.Invoke(((FoodItem)slots[curCol, curRow].item).healthAmount); // Вызываем событие
+                DropItem(false); // Удалаем предмет
             }
             else if (slots[curCol, curRow].item.type == ItemType.Default)
             {
