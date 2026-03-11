@@ -4,13 +4,7 @@ public abstract class HitPoint : MonoBehaviour
 {
     [SerializeField] protected int startHitPoint; // Начальное значение
     protected int maxHitPoint; // Максимальное значение (увеличивается при прокачке персонажа)
-    protected int currentHitPoint;
-
-    public void Start()
-    {
-        maxHitPoint = startHitPoint;
-        currentHitPoint = startHitPoint;
-    }
+    protected int currentHitPoint;    
 
     public virtual void TakeDamage(int _damage) // Нанесение урона
     {

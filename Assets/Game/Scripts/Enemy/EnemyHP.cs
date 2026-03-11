@@ -5,6 +5,12 @@ public class EnemyHP : HitPoint
     //[SerializeField] private Animator animator;
     [SerializeField] private EnemyStateMachine stateMachine;
 
+    public void Start()
+    {
+        maxHitPoint = startHitPoint;
+        currentHitPoint = startHitPoint;
+    }
+
     protected override void Death()
     {
         stateMachine.GoDeathState();
