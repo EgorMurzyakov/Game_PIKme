@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Runtime.CompilerServices;
@@ -14,7 +15,11 @@ public class InventoryManager : MonoBehaviour
     public TMP_Text itemInfoText;
     //public List<InventorySlot> slots = new List<InventorySlot>();
     public InventorySlot[,] slots;
+    [SerializeField] private InventorySlot weaponSlot;
+    [SerializeField] private InventorySlot bookSlot;
     private bool isOpened = false; // Выключен в начале игры
+
+    public event Action<ItemScriptableObject> ChangeWeapon;
 
     private int row; // Строки 
     private int col; // Столбцы
@@ -71,11 +76,11 @@ public class InventoryManager : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Q)) // Выбрасываем предмет
             {
-                DropItem();
+                DropItem(true);
             }
             if (Input.GetKeyDown(KeyCode.E)) // Действие с предметом
             {
-
+                ActionItem();
             }
         }
     }
@@ -238,16 +243,18 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    private void DropItem()
+    private void DropItem(bool _dropPrefab) // true - спавним предмет в мире, false - нет
     {
         if (slots[curCol, curRow].isEmpty == false) // Если слот НЕ пустой
         {
             slots[curCol, curRow].amount -= 1;
             slots[curCol, curRow].textItemAmount.text = slots[curCol, curRow].amount.ToString();
 
-            // Спавн выброшенного предмета
-            GameObject newObject2 = Instantiate(slots[curCol, curRow].item.ItemPrefab, transform.position + new Vector3(2f, 2f, 0), Quaternion.identity);
-
+            if (_dropPrefab)
+            {
+                // Спавн выброшенного предмета
+                GameObject newObject2 = Instantiate(slots[curCol, curRow].item.ItemPrefab, transform.position + new Vector3(2f, 2f, 0), Quaternion.identity);
+            }
             if (slots[curCol, curRow].amount == 0)
             {
                 Debug.Log("Больше нечего выкинуть");
@@ -259,7 +266,44 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    private void ActionItem()
+    {
+        if (slots[curCol, curRow].isEmpty == false)
+        {
+            if (slots[curCol, curRow].item.type == ItemType.Weapon)
+            {
+                // Запоминаем орижие в слоте
+                ItemScriptableObject prevWeaponSlotItem = null;
+                if (weaponSlot != null)
+                {
+                    prevWeaponSlotItem = weaponSlot.item;                    
+                }
+                // Добавляем в слот оружия
+                weaponSlot.item = slots[curCol, curRow].item;
+                weaponSlot.amount = slots[curCol, curRow].amount;
+                weaponSlot.isEmpty = false;
+                weaponSlot.SetIcon(slots[curCol, curRow].item.icon);
 
+                ChangeWeapon?.Invoke(weaponSlot.item); // Событие - положили оружие в слот, класс - ActiveWeapon
+
+                // Удаляем оружие из инвентаря
+                DropItem(false);
+                // Добавляем оружие
+                if (prevWeaponSlotItem != null)
+                {
+                    AddItem(prevWeaponSlotItem, 1);
+                }
+            }
+            else if (slots[curCol, curRow].item.type == ItemType.Food)
+            {
+
+            }
+            else if (slots[curCol, curRow].item.type == ItemType.Default)
+            {
+
+            }
+        }
+    }
 }
 
 
