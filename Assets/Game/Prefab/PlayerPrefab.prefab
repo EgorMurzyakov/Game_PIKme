@@ -5639,6 +5639,7 @@ MonoBehaviour:
   startHitPoint: 235
   stateMachine: {fileID: 6315489529683533559}
   playerUI: {fileID: 3974880069769380310}
+  inventoryManager: {fileID: 7525040380494279768}
 --- !u!114 &3974880069769380310
 MonoBehaviour:
   m_ObjectHideFlags: 0
