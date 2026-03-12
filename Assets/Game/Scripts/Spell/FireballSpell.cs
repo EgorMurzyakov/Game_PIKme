@@ -26,7 +26,7 @@ public class FireballSpell : MonoBehaviour, ISpell
 
         direction = cameraTransform.forward.normalized;
 
-        Vector3 pos = cameraTransform.position + direction * 5f;
+        Vector3 pos = cameraTransform.position + direction;
         Quaternion rot = Quaternion.LookRotation(direction, Vector3.up);
 
         activeFireball = Instantiate(prefab, pos, rot);

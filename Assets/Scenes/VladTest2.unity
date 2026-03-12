@@ -3330,6 +3330,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3784058422663575842, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+      propertyPath: speed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3784058422663575842, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+      propertyPath: damage
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 4174841721667233667, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

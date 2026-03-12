@@ -4849,7 +4849,7 @@ GameObject:
   - component: {fileID: 2972392977303283610}
   - component: {fileID: 5209902533919332699}
   - component: {fileID: 2469013842846323441}
-  - component: {fileID: -7179644524280988316}
+  - component: {fileID: 7080224304939045030}
   m_Layer: 0
   m_Name: FX_Fire_03
   m_TagString: Untagged
@@ -4867,7 +4867,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 0.225, y: 0.225, z: 0.225}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2972392978296103415}
@@ -9708,7 +9708,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 0.227
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &2469013842846323441
 Rigidbody:
@@ -9718,9 +9718,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2972392977303283589}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 0.0000001
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -9737,7 +9737,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-7179644524280988316
+--- !u!114 &7080224304939045030
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9751,7 +9751,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FireballProjectileCollision
   hitMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
+  damage: 200
 --- !u!1 &2972392977518692226
 GameObject:
   m_ObjectHideFlags: 0
