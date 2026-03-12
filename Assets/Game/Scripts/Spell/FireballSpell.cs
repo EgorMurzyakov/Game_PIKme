@@ -9,6 +9,9 @@ public class FireballSpell : MonoBehaviour, ISpell
     public float speed = 34.5f;
     public float lifeTimeSeconds = 5f;
 
+    [Header("Урон")]
+    public int damage = 10;
+
     private GameObject activeFireball;
     private Vector3 direction;
     private float spawnTime;
@@ -28,6 +31,13 @@ public class FireballSpell : MonoBehaviour, ISpell
 
         activeFireball = Instantiate(prefab, pos, rot);
         spawnTime = Time.time;
+
+        // передаём урон на скрипт столкновения, если он есть
+        var collisionScript = activeFireball.GetComponent<FireballProjectileCollision>();
+        if (collisionScript != null)
+        {
+            collisionScript.damage = damage;
+        }
 
         Rigidbody rb = activeFireball.GetComponent<Rigidbody>();
         if (rb != null)

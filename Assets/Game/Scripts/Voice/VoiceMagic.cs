@@ -21,9 +21,12 @@ public class VoiceMagic : MonoBehaviour
     private string lastSpell = null;
 
     public Transform cameraTransform;
+    public Transform playerTransform;
 
     [Header("Спеллы (компоненты)")]
     public FireballSpell fireballSpell;
+
+    public TornadoSpell tornadoSpell;
 
     void Start()
     {
@@ -120,6 +123,12 @@ public class VoiceMagic : MonoBehaviour
 
             case "TORNADO":
                 UnityDebug.Log("Tornado cast");
+                if (fireballSpell == null)
+                {
+                    UnityEngine.Debug.LogError("fireballSpell не назначен в Inspector.");
+                    return;
+                }
+                tornadoSpell.Cast(transform, playerTransform);
                 break;
 
             case "ICE_ARROW":
