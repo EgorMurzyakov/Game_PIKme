@@ -121,10 +121,12 @@ public class InventoryManager : MonoBehaviour
             if (itemToPick != null)
             {
                 Item item = itemToPick.GetComponent<Item>();
-                Debug.Log($"Вы подобрали - {item.itemScriptableObject.itemName}");
-                AddItem(item.itemScriptableObject, item.amount);
-                Destroy(itemToPick);
-                itemsInRange.Remove(itemToPick);
+                if (AddItem(item.itemScriptableObject, item.amount))
+                {
+                    Debug.Log($"Вы подобрали - {item.itemScriptableObject.itemName}");
+                    Destroy(itemToPick);
+                    itemsInRange.Remove(itemToPick);
+                }
             }
             if (itemsInRange.Count == 0)
             {
@@ -153,7 +155,7 @@ public class InventoryManager : MonoBehaviour
         return closest;
     }
 
-    private void AddItem(ItemScriptableObject _itemSO, int _amount)
+    private bool AddItem(ItemScriptableObject _itemSO, int _amount) // Возвращаем true, если есть место
     {
         foreach (InventorySlot slot in slots)
         {
@@ -164,7 +166,7 @@ public class InventoryManager : MonoBehaviour
                 slot.isEmpty = false;
                 slot.SetIcon(_itemSO.icon);
                 slot.textItemAmount.text = _amount.ToString();
-                return;
+                return true;
             }
             else if (slot.item == _itemSO) // Если слот НЕ пустой 
             {
@@ -173,10 +175,11 @@ public class InventoryManager : MonoBehaviour
                     slot.amount += _amount;
                     Debug.Log("Вызвалось, кол-во " + slot.amount);
                     slot.textItemAmount.text = slot.amount.ToString();
-                    return;
+                    return true;
                 }
             }
         }
+        return false; // Инвентарь полон
     }
 
     private void InventoryNavigation() // Навигация по инвентарю
@@ -261,6 +264,7 @@ public class InventoryManager : MonoBehaviour
                 Debug.Log("Больше нечего выкинуть");
                 slots[curCol, curRow].isEmpty = true;
                 slots[curCol, curRow].item = null;
+                slots[curCol, curRow].iconGO.GetComponent<Image>().color = new Color(0, 0, 0, 0); // Делаю слот прозрачным чтобы он не загораживал выделение
                 slots[curCol, curRow].iconGO.GetComponent<Image>().sprite = null;
                 slots[curCol, curRow].textItemAmount.text = " ";
             }

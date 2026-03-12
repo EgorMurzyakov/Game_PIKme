@@ -4086,11 +4086,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7819768533087625032, guid: f30e7faeca8258b40961a8d86de5e6bf, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7819768533087625032, guid: f30e7faeca8258b40961a8d86de5e6bf, type: 3}
       propertyPath: m_Color.g
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7819768533087625032, guid: f30e7faeca8258b40961a8d86de5e6bf, type: 3}
       propertyPath: m_Color.r
@@ -5704,7 +5704,9 @@ MonoBehaviour:
   spellCooldownSeconds: 1
   blockSameSpellDuringCooldown: 1
   cameraTransform: {fileID: 0}
+  playerTransform: {fileID: 0}
   fireballSpell: {fileID: 3784058422663575842}
+  tornadoSpell: {fileID: 0}
 --- !u!114 &7517476122925314856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5734,6 +5736,7 @@ MonoBehaviour:
   prefab: {fileID: 2972392977303283589, guid: e66ae4879d9bf034bafa77f902e6b3da, type: 3}
   speed: 40
   lifeTimeSeconds: 1.5
+  damage: 10
 --- !u!1001 &8899682207830761384
 PrefabInstance:
   m_ObjectHideFlags: 0
