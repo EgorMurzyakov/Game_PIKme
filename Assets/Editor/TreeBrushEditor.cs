@@ -20,8 +20,7 @@ public class TreeBrushEditor : Editor
 
     public void OnSceneGUI(SceneView sceneView)
     {
-        if (brush == null || brush.targetMesh == null)
-            return;
+        if (!IsValid()) return;
 
         // Рисуем круг кисти
         Vector3 brushPos = GetBrushPosition();
@@ -30,21 +29,23 @@ public class TreeBrushEditor : Editor
             Handles.color = brush.brushColor;
             Handles.DrawSolidDisc(brushPos, Vector3.up, brush.brushSize);
             
-            // Рисуем границу круга
             Handles.color = Color.green;
             Handles.DrawWireDisc(brushPos, Vector3.up, brush.brushSize);
+            
+            // Подпись с размером кисти
+            Handles.Label(brushPos + Vector3.up * 0.5f, 
+                $"Radius: {brush.brushSize:F1}m", 
+                new GUIStyle(EditorStyles.label) { fontSize = 12 });
         }
 
-        // Получаем событие
         Event e = Event.current;
 
-        // Проверяем, нажата ли левая кнопка мыши
         if (e.button == 0)
         {
             if (e.type == EventType.MouseDown)
             {
                 isPainting = true;
-                e.Use(); // ⚠️ ВАЖНО: Забираем событие у Unity, чтобы не сбрасывалось выделение
+                e.Use();
             }
             else if (e.type == EventType.MouseUp)
             {
@@ -54,61 +55,165 @@ public class TreeBrushEditor : Editor
             else if (e.type == EventType.MouseDrag && isPainting)
             {
                 PaintTrees(brushPos);
-                e.Use(); // ⚠️ ВАЖНО: Чтобы Unity не двигал камеру и не снимал выделение
+                e.Use();
             }
+        }
+    }
+
+    private bool IsValid()
+    {
+        if (brush == null) return false;
+        if (brush.treePrefabs == null || brush.treePrefabs.Length == 0) return false;
+        
+        if (brush.useTerrain)
+        {
+            return brush.targetTerrain != null && brush.targetTerrain.terrainData != null;
+        }
+        else
+        {
+            return brush.targetMesh != null && brush.targetMesh.sharedMesh != null;
         }
     }
 
     private Vector3 GetBrushPosition()
+{
+    Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
+    
+    // Используем Physics.Raycast для обоих режимов
+    if (Physics.Raycast(ray, out RaycastHit hit, 10000f))
     {
-        Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, 1000f))
+        if (brush.useTerrain)
         {
-            if (hit.transform.GetComponent<MeshFilter>() == brush.targetMesh)
+            // Для Terrain проверяем компонент Terrain на объекте
+            Terrain hitTerrain = hit.transform.GetComponent<Terrain>();
+            if (hitTerrain != null && hitTerrain == brush.targetTerrain)
             {
                 return hit.point;
             }
         }
-        return Vector3.zero;
+        else
+        {
+            // Для Mesh проверяем, что попали в нужный MeshFilter
+            MeshFilter hitMeshFilter = hit.transform.GetComponent<MeshFilter>();
+            if (hitMeshFilter != null && hitMeshFilter == brush.targetMesh)
+            {
+                return hit.point;
+            }
+        }
+    }
+    return Vector3.zero;
+}
+
+    private Vector3 GetSurfaceNormal(Vector3 worldPos)
+    {
+        if (brush.useTerrain && brush.targetTerrain != null)
+        {
+            TerrainData terrainData = brush.targetTerrain.terrainData;
+            Vector3 terrainPos = worldPos - brush.targetTerrain.transform.position;
+            
+            // Нормализуем координаты для TerrainData (0..1)
+            float normalizedX = terrainPos.x / terrainData.size.x;
+            float normalizedZ = terrainPos.z / terrainData.size.z;
+            
+            return terrainData.GetInterpolatedNormal(normalizedX, normalizedZ);
+        }
+        else if (brush.targetMesh != null)
+        {
+            // Raycast для получения нормали меши
+            Ray ray = new Ray(worldPos + Vector3.up * 10f, Vector3.down);
+            if (Physics.Raycast(ray, out RaycastHit hit, 20f))
+            {
+                return hit.normal;
+            }
+            return Vector3.up;
+        }
+        return Vector3.up;
     }
 
     private void PaintTrees(Vector3 centerPos)
     {
-        if (centerPos == Vector3.zero) return;
-        if (brush.treePrefabs == null || brush.treePrefabs.Length == 0) return;
+        if (centerPos == Vector3.zero || !IsValid()) return;
 
         for (int i = 0; i < brush.density; i++)
         {
+            // Случайная точка внутри круга кисти
             Vector2 randomCircle = Random.insideUnitCircle * brush.brushSize;
             Vector3 testPos = centerPos + new Vector3(randomCircle.x, 0, randomCircle.y);
 
-            Ray ray = new Ray(testPos + Vector3.up * 5f, Vector3.down);
-            if (Physics.Raycast(ray, out RaycastHit hit, 10f))
+            Vector3 spawnPos;
+            Vector3 surfaceNormal;
+
+            if (brush.useTerrain && brush.targetTerrain != null)
             {
-                if (hit.transform.GetComponent<MeshFilter>() != brush.targetMesh)
+                // === ЛОГИКА ДЛЯ TERRAIN ===
+                float height = brush.targetTerrain.SampleHeight(testPos);
+                spawnPos = new Vector3(testPos.x, height, testPos.z);
+                surfaceNormal = GetSurfaceNormal(spawnPos);
+            }
+            else if (brush.targetMesh != null)
+            {
+                // === ЛОГИКА ДЛЯ MESH ===
+                Ray ray = new Ray(testPos + Vector3.up * 50f, Vector3.down);
+                if (!Physics.Raycast(ray, out RaycastHit hit, 100f))
                     continue;
-
-                float angle = Vector3.Angle(Vector3.up, hit.normal);
-                if (angle > brush.maxSlopeAngle)
+                    
+                MeshFilter hitMeshFilter = hit.transform.GetComponent<MeshFilter>();
+                if (hitMeshFilter == null || hitMeshFilter != brush.targetMesh)
                     continue;
+                    
+                spawnPos = hit.point;
+                surfaceNormal = hit.normal;
+            }
+            else
+            {
+                continue;
+            }
 
-                GameObject tree = Instantiate(
-                    brush.treePrefabs[Random.Range(0, brush.treePrefabs.Length)],
-                    hit.point,
-                    Quaternion.identity,
-                    brush.transform
-                );
+            // Проверка угла наклона
+            float angle = Vector3.Angle(Vector3.up, surfaceNormal);
+            if (angle > brush.maxSlopeAngle)
+                continue;
 
-                float scale = Random.Range(brush.minScale, brush.maxScale);
-                tree.transform.localScale = Vector3.one * scale;
+            // Создаём дерево
+            GameObject tree = Instantiate(
+                brush.treePrefabs[Random.Range(0, brush.treePrefabs.Length)],
+                spawnPos,
+                Quaternion.identity,
+                brush.transform
+            );
 
-                Quaternion rot = Quaternion.FromToRotation(Vector3.up, hit.normal);
-                if (brush.randomRotationY)
-                {
-                    rot *= Quaternion.Euler(0, Random.Range(0f, brush.rotationYVariance), 0);
-                }
-                tree.transform.rotation = rot;
+            // Масштаб
+            float scale = Random.Range(brush.minScale, brush.maxScale);
+            tree.transform.localScale = Vector3.one * scale;
+
+            // Поворот по нормали поверхности
+            Quaternion rot = Quaternion.FromToRotation(Vector3.up, surfaceNormal);
+            if (brush.randomRotationY)
+            {
+                rot *= Quaternion.Euler(0, Random.Range(0f, brush.rotationYVariance), 0);
+            }
+            tree.transform.rotation = rot;
+        }
+    }
+
+    // Добавляем кнопку Clear в инспектор
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+
+        EditorGUILayout.Space();
+        EditorGUILayout.BeginVertical("HelpBox");
+        EditorGUILayout.LabelField("Инструменты", EditorStyles.boldLabel);
+        
+        if (GUILayout.Button("🗑️ Clear All Trees", GUILayout.Height(25)))
+        {
+            if (EditorUtility.DisplayDialog("Подтверждение", 
+                "Удалить все деревья, созданные этой кистью?", 
+                "Да", "Отмена"))
+            {
+                brush.ClearAllTrees();
             }
         }
+        EditorGUILayout.EndVertical();
     }
 }
