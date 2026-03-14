@@ -130,29 +130,27 @@ public class TreeBrushEditor : Editor
         return Vector3.up;
     }
 
-    private void PaintTrees(Vector3 centerPos)
+        private void PaintTrees(Vector3 centerPos)
     {
         if (centerPos == Vector3.zero || !IsValid()) return;
 
         for (int i = 0; i < brush.density; i++)
         {
-            // Случайная точка внутри круга кисти
             Vector2 randomCircle = Random.insideUnitCircle * brush.brushSize;
             Vector3 testPos = centerPos + new Vector3(randomCircle.x, 0, randomCircle.y);
 
             Vector3 spawnPos;
             Vector3 surfaceNormal;
 
+            // === ЛОГИКА ПОЗИЦИОНИРОВАНИЯ ===
             if (brush.useTerrain && brush.targetTerrain != null)
             {
-                // === ЛОГИКА ДЛЯ TERRAIN ===
                 float height = brush.targetTerrain.SampleHeight(testPos);
                 spawnPos = new Vector3(testPos.x, height, testPos.z);
                 surfaceNormal = GetSurfaceNormal(spawnPos);
             }
             else if (brush.targetMesh != null)
             {
-                // === ЛОГИКА ДЛЯ MESH ===
                 Ray ray = new Ray(testPos + Vector3.up * 50f, Vector3.down);
                 if (!Physics.Raycast(ray, out RaycastHit hit, 100f))
                     continue;
@@ -174,13 +172,19 @@ public class TreeBrushEditor : Editor
             if (angle > brush.maxSlopeAngle)
                 continue;
 
-            // Создаём дерево
-            GameObject tree = Instantiate(
-                brush.treePrefabs[Random.Range(0, brush.treePrefabs.Length)],
-                spawnPos,
-                Quaternion.identity,
-                brush.transform
-            );
+            // === СОЗДАНИЕ ПРЕФАБА ===
+            GameObject prefab = brush.treePrefabs[Random.Range(0, brush.treePrefabs.Length)];
+            
+            // Используем PrefabUtility для корректного создания в редакторе
+            GameObject tree = (GameObject)PrefabUtility.InstantiatePrefab(prefab, brush.transform);
+            
+            if (tree == null) 
+            {
+                // Если PrefabUtility не сработал (редко), пробуем обычный Instantiate
+                tree = Instantiate(prefab, brush.transform);
+            }
+
+            tree.transform.position = spawnPos;
 
             // Масштаб
             float scale = Random.Range(brush.minScale, brush.maxScale);
