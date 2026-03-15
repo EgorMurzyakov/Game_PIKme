@@ -123,7 +123,7 @@ public class VoiceMagic : MonoBehaviour
 
             case "TORNADO":
                 UnityDebug.Log("Tornado cast");
-                if (fireballSpell == null)
+                if (tornadoSpell == null)
                 {
                     UnityEngine.Debug.LogError("fireballSpell не назначен в Inspector.");
                     return;
