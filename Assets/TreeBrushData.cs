@@ -2,15 +2,6 @@ using UnityEngine;
 
 public class TreeBrushData : MonoBehaviour
 {
-    [Header("🎯 Режим работы")]
-    public bool useTerrain = false; // Включи, если работаешь с Terrain
-    
-    [Header("🗿 Настройки для Mesh")]
-    public MeshFilter targetMesh;
-
-    [Header("🏔️ Настройки для Terrain")]
-    public Terrain targetTerrain;
-
     [Header("🌲 Настройки Кисти")]
     public GameObject[] treePrefabs;
     public float brushSize = 5f;
@@ -31,7 +22,10 @@ public class TreeBrushData : MonoBehaviour
     [Header("🎨 Отображение")]
     public Color brushColor = new Color(0, 1, 0, 0.3f);
 
-    // Метод для очистки деревьев (вызывается из редактора)
+    [Header("🔍 Слои")]
+    public LayerMask surfaceLayers = ~0; // Все слои
+    public string[] ignoreLayerNames = new string[] { "UI", "Player" };
+
     public void ClearAllTrees()
     {
         for (int i = transform.childCount - 1; i >= 0; i--)
