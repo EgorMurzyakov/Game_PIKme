@@ -5495,6 +5495,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 35c44a97c30e4e946a0f4d3310613b95, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3784058422663575842}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 35c44a97c30e4e946a0f4d3310613b95, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5716285196221697463}
   m_SourcePrefab: {fileID: 100100000, guid: 35c44a97c30e4e946a0f4d3310613b95, type: 3}
 --- !u!4 &1860097665412997098 stripped
 Transform:
@@ -5703,10 +5706,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VoiceMagic
   spellCooldownSeconds: 1
   blockSameSpellDuringCooldown: 1
-  cameraTransform: {fileID: 0}
-  playerTransform: {fileID: 0}
+  cameraTransform: {fileID: 8234436724202565122}
+  playerTransform: {fileID: 8234436724202565122}
   fireballSpell: {fileID: 3784058422663575842}
-  tornadoSpell: {fileID: 0}
+  tornadoSpell: {fileID: 5716285196221697463}
 --- !u!114 &7517476122925314856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5737,6 +5740,21 @@ MonoBehaviour:
   speed: 40
   lifeTimeSeconds: 1.5
   damage: 10
+--- !u!114 &5716285196221697463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8722707484499129528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45759108c56d5f748842e3b6d1669f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TornadoSpell
+  prefab: {fileID: 2972392977303283589, guid: 28885e58dc2185b48aa9aad7ca926ce9, type: 3}
+  speed: 34.5
+  lifeTimeSeconds: 0.25
 --- !u!1001 &8899682207830761384
 PrefabInstance:
   m_ObjectHideFlags: 0
