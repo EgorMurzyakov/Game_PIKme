@@ -22,6 +22,9 @@ public class MovementController : MonoBehaviour
     private Quaternion currentRotation;
     private Vector3 crossProduct;
 
+    private float lastChangeTurn;
+    private const float ChangeTurn_WINDOW = 0.07f; // Окно для смены направления движения
+    private bool turnAllow = true; // Разрешение на изменения направление движения
     private bool death = false;
 
     [Header("Debug")]
@@ -82,8 +85,11 @@ public class MovementController : MonoBehaviour
         cameraRight.y = 0;
         cameraRight.Normalize();
 
-        moveDirection = cameraForward * moveInput.x + cameraRight * moveInput.y;
-        moveDirection.Normalize();
+        if (!(turnAllow == false && Time.time - ChangeTurn_WINDOW > lastChangeTurn)) // Запутано, но вроде так 
+        {
+            moveDirection = cameraForward * moveInput.x + cameraRight * moveInput.y;
+            moveDirection.Normalize();
+        }
 
         if (moveDirection.magnitude > 0.1f)
         {
@@ -111,4 +117,11 @@ public class MovementController : MonoBehaviour
     {
         currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.deltaTime * speedValue);
     }
+
+    public void SetTurnAllow(bool _val) // Запрет на поворот
+    {
+        turnAllow = _val;
+        lastChangeTurn = Time.time;
+    }
+
 }
