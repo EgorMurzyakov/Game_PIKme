@@ -34,10 +34,9 @@ public class VoiceMagic : MonoBehaviour
             cameraTransform = Camera.main.transform;
 
         string exePath = Path.Combine(
-            Application.dataPath,
-            "Game/Scripts/Voice/dist/spell_recognizer/spell_recognizer.exe"
+            Application.streamingAssetsPath,
+            "Voice/spell_recognizer/spell_recognizer.exe"
         );
-
         UnityEngine.Debug.Log("VoiceMagic: запускаю exe по пути: " + exePath);
 
         if (!File.Exists(exePath))
