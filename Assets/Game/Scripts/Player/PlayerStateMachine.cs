@@ -225,7 +225,7 @@ public class PlayerStateMachine : MonoBehaviour
                 //    Переход           движения           на движение (Это кто-то читает?)
                 //  (Кроме уклонения)
 
-                if (input.Alt && flagAttack) // 1. Всегда можем уклониться  (Больше нет)
+                if (input.Alt && flagMovment) // 1. Всегда можем уклониться  (Больше нет)
                 {
                     blockFlagAttack = true;
                     currentState = state.Dodge; // Attack -> Dodge
