@@ -5706,7 +5706,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VoiceMagic
   spellCooldownSeconds: 1
   blockSameSpellDuringCooldown: 1
-  cameraTransform: {fileID: 8234436724202565122}
+  cameraTransform: {fileID: 0}
   playerTransform: {fileID: 8234436724202565122}
   fireballSpell: {fileID: 3784058422663575842}
   tornadoSpell: {fileID: 5716285196221697463}
@@ -5737,9 +5737,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FireballSpell
   prefab: {fileID: 2972392977303283589, guid: e66ae4879d9bf034bafa77f902e6b3da, type: 3}
-  speed: 40
+  speed: 30
   lifeTimeSeconds: 1.5
-  damage: 10
+  damage: 200
 --- !u!114 &5716285196221697463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5753,8 +5753,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TornadoSpell
   prefab: {fileID: 2972392977303283589, guid: 28885e58dc2185b48aa9aad7ca926ce9, type: 3}
-  speed: 34.5
-  lifeTimeSeconds: 0.25
+  lifeTimeSeconds: 0.5
 --- !u!1001 &8899682207830761384
 PrefabInstance:
   m_ObjectHideFlags: 0
