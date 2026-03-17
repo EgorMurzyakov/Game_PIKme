@@ -6,7 +6,6 @@ public class TornadoSpell : MonoBehaviour, ISpell
 
     [Header("Настройки Торнадо")]
     public GameObject prefab;
-    public float speed = 34.5f;
     public float lifeTimeSeconds = 0.25f;
 
     private GameObject activeTornado;
@@ -48,19 +47,14 @@ public class TornadoSpell : MonoBehaviour, ISpell
 
 
         Rigidbody rb = activeTornado.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.linearVelocity = direction;
-        }
+
     }
 
     void Update()
     {
         if (activeTornado == null) return;
 
-        // Движение каждый кадр
-        // activeTornado.transform.position += direction * speed * Time.deltaTime;
-
+        
         // Уничтожение через время
         if (Time.time - spawnTime >= lifeTimeSeconds)
         {
