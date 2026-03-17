@@ -25,6 +25,7 @@ public class PlayerStateMachine : MonoBehaviour
     private const float DODGE_WINDOW = 0.25f; // Окно (Кулдаун) уклонения
     private bool canChangeStateAttack = true;
     private bool canChangeStateDodge = true;
+    private bool weaponInHand = false;
     private bool death = false;
 
     // Комбо 
@@ -69,8 +70,9 @@ public class PlayerStateMachine : MonoBehaviour
                 if (input.Alt && canChangeStateDodge) // Idle -> Dodge
                 {
                     currentState = state.Dodge;
+                    movControl.SetTurnAllow(false);
                 }
-                else if ((input.PKM || input.LKM) && canChangeStateAttack) // Idle -> Attack
+                else if ((input.PKM || input.LKM) && canChangeStateAttack && weaponInHand) // Idle -> Attack
                 {
                     if (input.PKM)
                     {
@@ -80,9 +82,8 @@ public class PlayerStateMachine : MonoBehaviour
                     {
                         currentCombo = "L";
                     }
-
-
                     currentState = state.Attack;
+                    movControl.SetTurnAllow(false);
                 }
                 else if (input.Shift && input.WASD) // Idle -> Run
                 {
@@ -98,8 +99,9 @@ public class PlayerStateMachine : MonoBehaviour
                 if (input.Alt && canChangeStateDodge) // Walk -> Dodge
                 {
                     currentState = state.Dodge;
+                    movControl.SetTurnAllow(false);
                 }
-                else if ((input.PKM || input.LKM) && canChangeStateAttack) // Walk -> Attack
+                else if ((input.PKM || input.LKM) && canChangeStateAttack && weaponInHand) // Walk -> Attack
                 {
                     if (input.PKM)
                     {
@@ -109,9 +111,8 @@ public class PlayerStateMachine : MonoBehaviour
                     {
                         currentCombo = "L";
                     }
-
-
                     currentState = state.Attack;
+                    movControl.SetTurnAllow(false);
                 }
                 else if (input.Shift && input.WASD) // Walk -> Run
                 {
@@ -127,8 +128,9 @@ public class PlayerStateMachine : MonoBehaviour
                 if (input.Alt && canChangeStateDodge) // Run -> Dodge
                 {
                     currentState = state.Dodge;
+                    movControl.SetTurnAllow(false);
                 }
-                else if ((input.PKM || input.LKM) && canChangeStateAttack) // Run -> Attack
+                else if ((input.PKM || input.LKM) && canChangeStateAttack && weaponInHand) // Run -> Attack
                 {
                     if (input.PKM)
                     {
@@ -138,9 +140,8 @@ public class PlayerStateMachine : MonoBehaviour
                     {
                         currentCombo = "L";
                     }
-
-
                     currentState = state.Attack;
+                    movControl.SetTurnAllow(false);
                 }
                 else if (input.Shift == false && input.WASD) // Run -> Walk
                 {
@@ -156,8 +157,9 @@ public class PlayerStateMachine : MonoBehaviour
                 if (input.Alt && canChangeStateDodge) // Sprint -> Dodge
                 {
                     currentState = state.Dodge;
+                    movControl.SetTurnAllow(false);
                 }
-                else if ((input.PKM || input.LKM) && canChangeStateAttack) // Sprint -> Attack
+                else if ((input.PKM || input.LKM) && canChangeStateAttack && weaponInHand) // Sprint -> Attack
                 {
                     if (input.PKM)
                     {
@@ -167,9 +169,8 @@ public class PlayerStateMachine : MonoBehaviour
                     {
                         currentCombo = "L";
                     }
-
-
                     currentState = state.Attack;
+                    movControl.SetTurnAllow(false);
                 }
                 else if (input.Shift == false && input.WASD) // Sprint -> Walk
                 {
@@ -182,7 +183,7 @@ public class PlayerStateMachine : MonoBehaviour
                 break;
 
             case state.Dodge:
-                if ((input.PKM || input.LKM) && flagAttack && canChangeStateAttack) // Dodge -> Attack
+                if ((input.PKM || input.LKM) && flagAttack && canChangeStateAttack && weaponInHand) // Dodge -> Attack
                 {
                     if (input.PKM)
                     {
@@ -192,11 +193,10 @@ public class PlayerStateMachine : MonoBehaviour
                     {
                         currentCombo = "L";
                     }
-
-
                     blockFlagMovment = true;
                     flagAttack = false; // <- Очищаем после использования
                     currentState = state.Attack;
+                    movControl.SetTurnAllow(false);
                 }
                 if (flagMovment)
                 {
@@ -225,10 +225,12 @@ public class PlayerStateMachine : MonoBehaviour
                 //    Переход           движения           на движение (Это кто-то читает?)
                 //  (Кроме уклонения)
 
-                if (input.Alt) // 1. Всегда можем уклониться  
+                if (input.Alt && flagAttack) // 1. Всегда можем уклониться  (Больше нет)
                 {
                     blockFlagAttack = true;
-                    currentState = state.Dodge; // Attack -> Dodge                    
+                    currentState = state.Dodge; // Attack -> Dodge
+                    movControl.SetTurnAllow(false);
+                    //animControl.ProbAOA();
                 }
                 else if (flagAttack && ((input.PKM || input.LKM))) // 2. Можем атаковать только если flagAttack == true 
                 {
@@ -245,6 +247,7 @@ public class PlayerStateMachine : MonoBehaviour
 
                     flagAttack = false; // <- Очищаем после использования
                     currentState = state.Attack; // Attack -> Attack
+                    movControl.SetTurnAllow(false);
                     prevState = state.Empty; // Чтобы перейти в новую анимацию
                 }
                 else if (flagMovment) // 3. Можем ходить только если flagMovment == true
@@ -285,6 +288,8 @@ public class PlayerStateMachine : MonoBehaviour
         blockFlagAttack = false;
         flagAttack = true;
         blockFlagMovment = false;
+        movControl.SetTurnAllow(true); // Разрешаем изменять направление
+        Debug.Log("Было");
     }
 
     public void StartChangeState() // Начало промежутка в котором можно сменить состояние 
@@ -298,7 +303,7 @@ public class PlayerStateMachine : MonoBehaviour
 
         flagAttack = false;
         flagMovment = !blockFlagMovment; // Очищается сразу после использования
-
+        movControl.SetTurnAllow(true); // Разрешаем изменять направление
     }
 
     private bool BattleChecker()
@@ -321,5 +326,10 @@ public class PlayerStateMachine : MonoBehaviour
     public state GetPlayerState()
     {
         return currentState;
+    }
+
+    public void SetWeaponInHand(bool _val)
+    {
+        weaponInHand = _val;
     }
 }
