@@ -12,6 +12,7 @@ public class InventoryManager : MonoBehaviour
     public GameObject UIPanel;
     public GameObject UIHelp;
     public Transform inventoryPanel;
+    public PlayerStateMachine playerStateMachine;
     public TMP_Text itemInfoText;
     //public List<InventorySlot> slots = new List<InventorySlot>();
     public InventorySlot[,] slots;
@@ -288,6 +289,8 @@ public class InventoryManager : MonoBehaviour
                 weaponSlot.amount = slots[curCol, curRow].amount;
                 weaponSlot.isEmpty = false;
                 weaponSlot.SetIcon(slots[curCol, curRow].item.icon);
+
+                playerStateMachine.SetWeaponInHand(true); // ¬ слоте по€вилось оружие -> можно атаковать
 
                 ChangeWeapon?.Invoke(weaponSlot.item); // —обытие - положили оружие в слот, класс - ActiveWeapon
 

@@ -26,9 +26,11 @@ public class AnimationController : MonoBehaviour
                 animator.SetTrigger("goSprint");
                 break;
             case state.Dodge:
+                //animator.applyRootMotion = false; // Отключаем RootMotion
                 animator.SetTrigger("goDodge");
                 break;
             case state.Attack:
+                //animator.applyRootMotion = true; // Включаем RootMotion
                 if (_LKM)
                 {
                     animator.SetTrigger("LKM");
@@ -55,4 +57,9 @@ public class AnimationController : MonoBehaviour
         animator.ResetTrigger("PKM");
 
     }
+
+    //public void ProbAOA()
+    //{
+    //    animator.applyRootMotion = false;
+    //}
 }
