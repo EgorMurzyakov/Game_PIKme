@@ -3709,9 +3709,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7ce6d3f08f968041a68848eff2204a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TreeBrushData
-  useTerrain: 1
-  targetMesh: {fileID: 0}
-  targetTerrain: {fileID: 79254099}
   treePrefabs:
   - {fileID: 6117071349010126079, guid: d250af4848f51154f9a2bf6a85b60ac2, type: 3}
   brushSize: 15
@@ -3722,6 +3719,12 @@ MonoBehaviour:
   rotationYVariance: 360
   maxSlopeAngle: 67.2
   brushColor: {r: 0, g: 1, b: 0, a: 0.3}
+  surfaceLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  ignoreLayerNames:
+  - UI
+  - Player
 --- !u!4 &187247372
 Transform:
   m_ObjectHideFlags: 0
@@ -5128,9 +5131,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7ce6d3f08f968041a68848eff2204a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TreeBrushData
-  useTerrain: 1
-  targetMesh: {fileID: 0}
-  targetTerrain: {fileID: 79254099}
   treePrefabs:
   - {fileID: 176282, guid: ac00d368a6864c04791bc85c5567bd51, type: 3}
   - {fileID: 114672, guid: 98653de49a7044442972e6997c40db16, type: 3}
@@ -5145,6 +5145,12 @@ MonoBehaviour:
   rotationYVariance: 360
   maxSlopeAngle: 10.2
   brushColor: {r: 0, g: 1, b: 0, a: 0.3}
+  surfaceLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  ignoreLayerNames:
+  - UI
+  - Player
 --- !u!4 &255344392
 Transform:
   m_ObjectHideFlags: 0
@@ -14373,9 +14379,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7ce6d3f08f968041a68848eff2204a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TreeBrushData
-  useTerrain: 1
-  targetMesh: {fileID: 0}
-  targetTerrain: {fileID: 79254099}
   treePrefabs:
   - {fileID: 5361428799875542787, guid: 8db9c2ab1d83e4aa19107f6428edde51, type: 3}
   brushSize: 25
@@ -14386,6 +14389,12 @@ MonoBehaviour:
   rotationYVariance: 360
   maxSlopeAngle: 67.2
   brushColor: {r: 0, g: 1, b: 0, a: 0.3}
+  surfaceLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  ignoreLayerNames:
+  - UI
+  - Player
 --- !u!4 &812827800
 Transform:
   m_ObjectHideFlags: 0
@@ -15737,9 +15746,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7ce6d3f08f968041a68848eff2204a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TreeBrushData
-  useTerrain: 1
-  targetMesh: {fileID: 0}
-  targetTerrain: {fileID: 79254099}
   treePrefabs:
   - {fileID: 5361428799875542787, guid: c31bf8ec8e29cd74f9fb9a970fde7a53, type: 3}
   brushSize: 25
@@ -15750,6 +15756,12 @@ MonoBehaviour:
   rotationYVariance: 360
   maxSlopeAngle: 67.2
   brushColor: {r: 0, g: 1, b: 0, a: 0.3}
+  surfaceLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  ignoreLayerNames:
+  - UI
+  - Player
 --- !u!4 &932526567
 Transform:
   m_ObjectHideFlags: 0
@@ -23881,7 +23893,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b9123960f9985540afd43e4d52f7c1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneTransitionZone
-  targetScene: village1 valera 1 travle
+  targetScene: village1 valera
   spawnID: from_bridge
 --- !u!65 &1335962580
 BoxCollider:
@@ -26943,9 +26955,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7ce6d3f08f968041a68848eff2204a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TreeBrushData
-  useTerrain: 1
-  targetMesh: {fileID: 0}
-  targetTerrain: {fileID: 79254099}
   treePrefabs:
   - {fileID: 5935278547815300987, guid: e05ae677c7b3bc546bd36b488586fb0c, type: 3}
   brushSize: 25
@@ -26956,6 +26965,12 @@ MonoBehaviour:
   rotationYVariance: 360
   maxSlopeAngle: 67.2
   brushColor: {r: 0, g: 1, b: 0, a: 0.3}
+  surfaceLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  ignoreLayerNames:
+  - UI
+  - Player
 --- !u!4 &1522496311
 Transform:
   m_ObjectHideFlags: 0
