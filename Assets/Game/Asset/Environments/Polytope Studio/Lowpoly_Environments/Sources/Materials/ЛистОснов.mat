@@ -96,9 +96,9 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
-    - _Gradient: 0.123
+    - _Gradient: 0.12
     - _GradientPower: 1.74
-    - _LeavesThickness: 0.5
+    - _LeavesThickness: 0.95
     - _MaskClipValue: 0.5
     - _Metallic: 0
     - _Mode: 3
@@ -121,14 +121,14 @@ Material:
     - _TransNormal: 0.5
     - _TransNormalDistortion: 0.1
     - _TransScattering: 2
-    - _TransShadow: 0.9
+    - _TransShadow: 0.961
     - _TransStrength: 1
     - _Translucency: 10
     - _UVSec: 0
     - _WINDMASKONOFF: 0
-    - _WindDensity: 3.3
-    - _WindMovement: 1.15
-    - _WindStrength: 0.3
+    - _WindDensity: 0.67
+    - _WindMovement: 0.74
+    - _WindStrength: 0.59
     - _ZWrite: 0
     - __dirty: 0
     m_Colors:

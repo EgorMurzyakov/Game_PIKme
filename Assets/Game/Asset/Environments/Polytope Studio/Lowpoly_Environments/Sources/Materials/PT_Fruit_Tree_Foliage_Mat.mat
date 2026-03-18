@@ -38,9 +38,11 @@ Material:
     m_Floats:
     - _Gradient: 0.123
     - _GradientPower: 1.74
+    - _LeavesThickness: 0.6
     - _SnowGradient: 0.784
     - _TransAmbient: 0
     - _Translucency: 10
+    - _WindDensity: 0.45
     - _WindMovement: 1.15
     m_Colors:
     - _TopColor: {r: 0.5754717, g: 0.5186884, b: 0.04071733, a: 1}
