@@ -20,8 +20,10 @@ MonoBehaviour:
     rid: 1526167619009249280
   m_OverrideGlobalSceneList: 1
   m_Scenes:
-  - m_enabled: 1
+  - m_enabled: 0
     m_path: Assets/Scenes/village1 valera 1 travle.unity
+  - m_enabled: 1
+    m_path: Assets/Scenes/village1 valera.unity
   - m_enabled: 1
     m_path: Assets/Scenes/VladTest2.unity
   - m_enabled: 1
