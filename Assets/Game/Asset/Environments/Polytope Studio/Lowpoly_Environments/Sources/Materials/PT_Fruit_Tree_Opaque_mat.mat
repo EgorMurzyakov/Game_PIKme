@@ -108,16 +108,16 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SnowAmount: 1
     - _SnowCoverage: 0.219
-    - _SnowFade: 0.192
+    - _SnowFade: 0.159
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _WINDMASKONOFF: 0
-    - _WindDensity: 0.37
+    - _WindDensity: 0.36
     - _WindDensity1: 0.2
-    - _WindMovement: 0.5
+    - _WindMovement: 1.1
     - _WindMovement1: 0.5
-    - _WindStrength: 0.163
+    - _WindStrength: 0.093
     - _WindStrength1: 0.3
     - _ZWrite: 1
     - __dirty: 0
