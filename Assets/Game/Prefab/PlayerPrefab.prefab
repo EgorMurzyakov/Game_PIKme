@@ -892,6 +892,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4802897735976555364}
   - {fileID: 8446229518266413171}
   - {fileID: 6768049379291529254}
   m_Father: {fileID: 8340637248451174910}
@@ -1292,6 +1293,81 @@ MonoBehaviour:
   m_Spacing: {x: 12.5, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!1 &6664754177523310866
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4802897735976555364}
+  - component: {fileID: 8544388710553428210}
+  - component: {fileID: 7181586228042908605}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4802897735976555364
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6664754177523310866}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6129458732331725352}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.000043869, y: 0.0000019211}
+  m_SizeDelta: {x: 707.0022, y: 799.71}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &8544388710553428210
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6664754177523310866}
+  m_CullTransparentMesh: 1
+--- !u!114 &7181586228042908605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6664754177523310866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 5becc430515f3c6429237ddbf7f5980f, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &7046003598142229782
 GameObject:
   m_ObjectHideFlags: 0
@@ -1931,11 +2007,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6343694989972837110, guid: f30e7faeca8258b40961a8d86de5e6bf, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 520
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 6343694989972837110, guid: f30e7faeca8258b40961a8d86de5e6bf, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -320.70996
+      value: -450
       objectReference: {fileID: 0}
     - target: {fileID: 6343694989972837110, guid: f30e7faeca8258b40961a8d86de5e6bf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2996,11 +3072,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6343694989972837110, guid: f30e7faeca8258b40961a8d86de5e6bf, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 220
+      value: 135
       objectReference: {fileID: 0}
     - target: {fileID: 6343694989972837110, guid: f30e7faeca8258b40961a8d86de5e6bf, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -320.70996
+      value: -450
       objectReference: {fileID: 0}
     - target: {fileID: 6343694989972837110, guid: f30e7faeca8258b40961a8d86de5e6bf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -5671,6 +5747,7 @@ MonoBehaviour:
   UIPanel: {fileID: 1593873450491647577}
   UIHelp: {fileID: 7703779066486060387}
   inventoryPanel: {fileID: 5609230487905453427}
+  playerStateMachine: {fileID: 6315489529683533559}
   itemInfoText: {fileID: 7524790058531970887}
   weaponSlot: {fileID: 8846017154665739858}
   bookSlot: {fileID: 5915658746298975751}
