@@ -1367,6 +1367,75 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8722707484499129528, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
   m_PrefabInstance: {fileID: 1288152950}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &824849550
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 420062078510008520, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 806534357}
+    - target: {fileID: 1553148347283824250, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
+      propertyPath: m_Name
+      value: Orc8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1553148347283824250, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2217517719633659072, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 2217517719633659072, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.00000039577196
+      objectReference: {fileID: 0}
+    - target: {fileID: 2217517719633659072, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 16.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 2217517719633659072, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2217517719633659072, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2217517719633659072, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2217517719633659072, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2217517719633659072, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2217517719633659072, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2217517719633659072, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8150234730814357966, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1386483398}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
 --- !u!4 &867802777 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5447452182937856358, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
@@ -1392,7 +1461,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &898719905
 Transform:
   m_ObjectHideFlags: 0
@@ -2809,7 +2878,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 6.104245
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -3911,10 +3980,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BaceSword
       objectReference: {fileID: 0}
-    - target: {fileID: 8324030651237828437, guid: a3ef75a77794b0d428277d5fdd38cd06, type: 3}
-      propertyPath: m_TagString
-      value: Item
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3946,7 +4011,7 @@ PrefabInstance:
       objectReference: {fileID: 806534357}
     - target: {fileID: 7930116586209811609, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.29525566
+      value: -4.4
       objectReference: {fileID: 0}
     - target: {fileID: 7930116586209811609, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4072,3 +4137,4 @@ SceneRoots:
   - {fileID: 760912921}
   - {fileID: 1981504038}
   - {fileID: 1398371951}
+  - {fileID: 824849550}
