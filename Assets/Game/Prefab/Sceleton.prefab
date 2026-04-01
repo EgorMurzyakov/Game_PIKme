@@ -22,15 +22,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3288468337185982548, guid: fcc7e72ef9922724c9dbe91fe1141293, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.88875
+      value: 19.520586
       objectReference: {fileID: 0}
     - target: {fileID: 3288468337185982548, guid: fcc7e72ef9922724c9dbe91fe1141293, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.00000023841858
+      value: -0.00000030034585
       objectReference: {fileID: 0}
     - target: {fileID: 3288468337185982548, guid: fcc7e72ef9922724c9dbe91fe1141293, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.4431095
+      value: 16.651894
       objectReference: {fileID: 0}
     - target: {fileID: 3288468337185982548, guid: fcc7e72ef9922724c9dbe91fe1141293, type: 3}
       propertyPath: m_LocalRotation.w
@@ -89,6 +89,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2803820806472684270, guid: fcc7e72ef9922724c9dbe91fe1141293, type: 3}
       insertIndex: -1
       addedObject: {fileID: 969473690777598209}
+    - targetCorrespondingSourceObject: {fileID: 2803820806472684270, guid: fcc7e72ef9922724c9dbe91fe1141293, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3176058399893665798}
     - targetCorrespondingSourceObject: {fileID: 2803820806472684270, guid: fcc7e72ef9922724c9dbe91fe1141293, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1924329667270388532}
@@ -170,7 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d8c2cd6aa90de9449bd64d8804df136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHP
-  startHitPoint: 1
+  startHitPoint: 476
   stateMachine: {fileID: 7802607988226553117}
 --- !u!114 &7802607988226553117
 MonoBehaviour:
@@ -185,8 +188,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStateMachine
   player: {fileID: 0}
-  rayRange: 10
+  rayRange: 50
   attackRange: 1.5
+  attackCooldown: 1
 --- !u!114 &6680354047153013933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,6 +218,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cc81a202e0211b4a831a9399c5712bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAnimation
+--- !u!114 &3176058399893665798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7297730981434770979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54b12d2e18064514b8a27b72cd69c1fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Sounds
+  sounds:
+  - name: 
+    voluem: 0
+    audioClip: []
+  - name: 
+    voluem: 0
+    audioClip: []
+  - name: 
+    voluem: 0
+    audioClip: []
+  - name: 
+    voluem: 0
+    audioClip: []
+  - name: 
+    voluem: 0
+    audioClip: []
+  - name: 
+    voluem: 0
+    audioClip: []
+  - name: 
+    voluem: 0
+    audioClip: []
+  ground: 0
 --- !u!195 &1924329667270388532
 NavMeshAgent:
   m_ObjectHideFlags: 0
