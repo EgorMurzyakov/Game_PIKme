@@ -1664,7 +1664,7 @@ GameObject:
   - component: {fileID: 5251107426523682287}
   m_Layer: 0
   m_Name: PlayerPrefab
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5855,9 +5855,9 @@ MonoBehaviour:
   - name: Footstep
     voluem: 0.1
     audioClip:
-    - {fileID: 8300000, guid: 67f1320dedbaf4640ab9efbbb720f612, type: 3}
-    - {fileID: 8300000, guid: 4d33ee953c941e2449b0f325e128f799, type: 3}
-    - {fileID: 8300000, guid: 35b04b3d4a7acf54785194c477c9eb7b, type: 3}
+    - {fileID: 8300000, guid: ecef98b3978a2e74a9d321197c9fc98e, type: 3}
+    - {fileID: 8300000, guid: f71804734404dbf49a6dfeabb3e2ae9d, type: 3}
+    - {fileID: 8300000, guid: 68919eef930646c47baec2350ce2b51f, type: 3}
   - name: Dodge
     voluem: 1
     audioClip:
@@ -5887,7 +5887,9 @@ MonoBehaviour:
     audioClip:
     - {fileID: 8300000, guid: 674258a055e994b72bbb15a28eb79838, type: 3}
     - {fileID: 8300000, guid: 8a44b12d3e3f24b1a89dc7f0b66756f4, type: 3}
-  ground: 0
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!82 &924956933376190133
 AudioSource:
   m_ObjectHideFlags: 0
