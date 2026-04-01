@@ -5852,13 +5852,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Sounds
   sounds:
-  - {fileID: 8300000, guid: d5c3778edd6f88244a5eff78db0951cb, type: 3}
-  - {fileID: 8300000, guid: 1341e2b988f0e0f4a8a7f0e194d9d551, type: 3}
-  - {fileID: 8300000, guid: 52fa067c25c5c401b811eb86d142287e, type: 3}
-  - {fileID: 8300000, guid: b76357a42d03a4722afcba74c3073136, type: 3}
-  - {fileID: 8300000, guid: e32e3bde5559afb4cad3ef963cc96446, type: 3}
-  - {fileID: 8300000, guid: ecb642c8078cb814fb9efb6b2b223cf6, type: 3}
-  - {fileID: 8300000, guid: ce9a41258643d7a458646b4721cfae36, type: 3}
+  - name: Footstep
+    voluem: 0.1
+    audioClip:
+    - {fileID: 8300000, guid: 67f1320dedbaf4640ab9efbbb720f612, type: 3}
+    - {fileID: 8300000, guid: 4d33ee953c941e2449b0f325e128f799, type: 3}
+    - {fileID: 8300000, guid: 35b04b3d4a7acf54785194c477c9eb7b, type: 3}
+  - name: Dodge
+    voluem: 1
+    audioClip:
+    - {fileID: 8300000, guid: c30be629cb0f2f047926257d3c348fa2, type: 3}
+    - {fileID: 8300000, guid: de7e760217c5e7c42bf69b9bf512b78e, type: 3}
+    - {fileID: 8300000, guid: aa5daff71fd47a5449265db33ed14374, type: 3}
+  - name: Attack
+    voluem: 0.6
+    audioClip:
+    - {fileID: 8300000, guid: 52fa067c25c5c401b811eb86d142287e, type: 3}
+    - {fileID: 8300000, guid: b76357a42d03a4722afcba74c3073136, type: 3}
+  - name: Hit
+    voluem: 0.6
+    audioClip:
+    - {fileID: 8300000, guid: 72de2a353cacc46d3aad1d65f2599d2a, type: 3}
+    - {fileID: 8300000, guid: 0ecf18972377e4652ab7377a0993f14a, type: 3}
+    - {fileID: 8300000, guid: 07c38e0499aea4acd81b44991c0e4d07, type: 3}
+    - {fileID: 8300000, guid: f3645d7388d9f4efc88a56c59b3a70d4, type: 3}
+  - name: Damage
+    voluem: 1
+    audioClip: []
+  - name: Death
+    voluem: 1
+    audioClip: []
+  - name: Magic
+    voluem: 1
+    audioClip:
+    - {fileID: 8300000, guid: 674258a055e994b72bbb15a28eb79838, type: 3}
+    - {fileID: 8300000, guid: 8a44b12d3e3f24b1a89dc7f0b66756f4, type: 3}
+  ground: 0
 --- !u!82 &924956933376190133
 AudioSource:
   m_ObjectHideFlags: 0
