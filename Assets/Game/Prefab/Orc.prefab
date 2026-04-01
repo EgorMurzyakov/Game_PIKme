@@ -168,7 +168,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6564590044128998704, guid: 77a838fc939bd3c4685734c46ed4e78f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.028824
+      value: 5.48
       objectReference: {fileID: 0}
     - target: {fileID: 6564590044128998704, guid: 77a838fc939bd3c4685734c46ed4e78f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -176,7 +176,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6564590044128998704, guid: 77a838fc939bd3c4685734c46ed4e78f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.39948
+      value: 16.03
       objectReference: {fileID: 0}
     - target: {fileID: 6564590044128998704, guid: 77a838fc939bd3c4685734c46ed4e78f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -234,6 +234,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5787630685945573258, guid: 77a838fc939bd3c4685734c46ed4e78f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7579348758460887468}
+    - targetCorrespondingSourceObject: {fileID: 5787630685945573258, guid: 77a838fc939bd3c4685734c46ed4e78f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 49198940453542312}
     - targetCorrespondingSourceObject: {fileID: 5787630685945573258, guid: 77a838fc939bd3c4685734c46ed4e78f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4787448425574823115}
@@ -351,6 +354,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cc81a202e0211b4a831a9399c5712bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAnimation
+--- !u!114 &49198940453542312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553148347283824250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54b12d2e18064514b8a27b72cd69c1fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Sounds
+  sounds:
+  - name: 
+    voluem: 0
+    audioClip: []
+  - name: 
+    voluem: 0
+    audioClip: []
+  - name: 
+    voluem: 0
+    audioClip: []
+  - name: 
+    voluem: 0
+    audioClip: []
+  - name: 
+    voluem: 0
+    audioClip: []
+  - name: 
+    voluem: 0
+    audioClip: []
+  - name: 
+    voluem: 0
+    audioClip: []
+  ground: 0
 --- !u!195 &4787448425574823115
 NavMeshAgent:
   m_ObjectHideFlags: 0

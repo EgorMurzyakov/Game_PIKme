@@ -63,15 +63,15 @@ ModelImporter:
       curves: []
       events:
       - time: 0.095846646
-        functionName: PlaySoundLow
-        data: 
+        functionName: PlaySound
+        data: Footstep
         objectReferenceParameter: {fileID: 7940719953895527930, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.6166134
-        functionName: PlaySoundLow
-        data: 
+        functionName: PlaySound
+        data: Footstep
         objectReferenceParameter: {fileID: 7940719953895527930, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
         floatParameter: 0
         intParameter: 0
