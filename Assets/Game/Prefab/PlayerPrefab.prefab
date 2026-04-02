@@ -5927,6 +5927,8 @@ MonoBehaviour:
   itemInfoText: {fileID: 7524790058531970887}
   weaponSlot: {fileID: 8846017154665739858}
   bookSlot: {fileID: 5915658746298975751}
+  startWeapon: {fileID: 11400000, guid: 685622add8942a744afd6ab169decdef, type: 2}
+  startBook: {fileID: 11400000, guid: ecac1fd3aeae87d4dbeb17c520512b72, type: 2}
 --- !u!114 &7849432950495562030
 MonoBehaviour:
   m_ObjectHideFlags: 0

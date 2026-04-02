@@ -36,6 +36,7 @@ public class ActiveWeapon : MonoBehaviour
                 currentWeaponNumb = i;
                 break;
             }
+            Debug.Log("Что то не так");
         }
     }
 
