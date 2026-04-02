@@ -635,10 +635,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sceleton
       objectReference: {fileID: 0}
-    - target: {fileID: 7297730981434770979, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7802607988226553117, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
       propertyPath: player
       value: 
@@ -1490,10 +1486,6 @@ PrefabInstance:
     - target: {fileID: 1553148347283824250, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
       propertyPath: m_Name
       value: Orc8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1553148347283824250, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2217517719633659072, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
       propertyPath: m_LocalPosition.x
