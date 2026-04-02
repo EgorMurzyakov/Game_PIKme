@@ -18,6 +18,8 @@ public class InventoryManager : MonoBehaviour
     public InventorySlot[,] slots;
     [SerializeField] private InventorySlot weaponSlot;
     [SerializeField] private InventorySlot bookSlot;
+    public ItemScriptableObject startWeapon;
+    public ItemScriptableObject startBook;
     private bool isOpened = false; // Выключен в начале игры
 
     public event Action<ItemScriptableObject> ChangeWeapon;
@@ -49,6 +51,15 @@ public class InventoryManager : MonoBehaviour
 
         UIPanel.SetActive(false); // Принудительно выключаем при старте игры
         UIHelp.SetActive(false);
+
+        if (startWeapon != null)
+        {
+            AddItem(startWeapon, 1);
+        }
+        if (startBook != null)
+        {
+            AddItem(startBook, 1);
+        }
     }
 
     public void Update()
@@ -300,6 +311,28 @@ public class InventoryManager : MonoBehaviour
                 if (prevWeaponSlotItem != null)
                 {
                     AddItem(prevWeaponSlotItem, 1);
+                }
+            }
+            else if (slots[curCol, curRow].item.type == ItemType.Book)
+            {
+                // Запоминаем книгу в слоте
+                ItemScriptableObject prevBookSlotItem = null;
+                if (bookSlot != null)
+                {
+                    prevBookSlotItem = bookSlot.item;
+                }
+                // Добавляем в слот книги
+                bookSlot.item = slots[curCol, curRow].item;
+                bookSlot.amount = slots[curCol, curRow].amount;
+                bookSlot.isEmpty = false;
+                bookSlot.SetIcon(slots[curCol, curRow].item.icon);
+
+                // Удаляем книгу из инвентаря
+                DropItem(false);
+                // Добавляем книгу
+                if (prevBookSlotItem != null)
+                {
+                    AddItem(prevBookSlotItem, 1);
                 }
             }
             else if (slots[curCol, curRow].item.type == ItemType.Food)
