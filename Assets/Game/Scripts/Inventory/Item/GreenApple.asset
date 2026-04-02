@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5339899da09de3145b5c58e0a986efc3, type: 3}
-  m_Name: Apple
+  m_Name: GreenApple
   m_EditorClassIdentifier: Assembly-CSharp::FoodItem
   type: 1
   ItemPrefab: {fileID: 1169411228174609760, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
   itemName: Apple
-  itemDescription: Red apple
+  itemDescription: Green apple
   maximumAmount: 3
-  icon: {fileID: 21300000, guid: da7129ed6a246f048a49d8d97de2d2d4, type: 3}
-  healthAmount: 25
+  icon: {fileID: 21300000, guid: c1d0e6764d9c5f8458571840fb1d57d3, type: 3}
+  healthAmount: 31
