@@ -3,7 +3,7 @@ using UnityEngine;
 public class HitDetector : MonoBehaviour // ”ниверсальный (и дл€ игрока и дл€ врагов)
 {
     [SerializeField] private GameObject character;
-    [SerializeField] private int weaponDamage; // —ырой урон оружи€, пока так (можно оставить (хз)), позже можно брать из Item самого оружи€    
+    [SerializeField] private int weaponDamage; // —ырой урон оружи€
     private ColliderSwitch colliderSwitch;
     private BoxCollider weaponCollider;
     private Sounds sounds;
@@ -43,4 +43,9 @@ public class HitDetector : MonoBehaviour // ”ниверсальный (и дл€ игрока и дл€ вр
         weaponCollider.enabled = false;
     }
 
+
+    public void SetWeaponDamage(int _newDm) // ƒл€ изменение урона при прокачке
+    {
+        weaponDamage = _newDm;
+    }
 }

@@ -10,6 +10,9 @@ using TMPro;
 public class InventoryManager : MonoBehaviour
 {
     public GameObject UIPanel;
+    public GameObject UIActionPanel;
+    public GameObject UIPumpPanel;
+    private bool isTrader = false;
     public GameObject UIHelp;
     public Transform inventoryPanel;
     public PlayerStateMachine playerStateMachine;
@@ -18,11 +21,12 @@ public class InventoryManager : MonoBehaviour
     public InventorySlot[,] slots;
     [SerializeField] private InventorySlot weaponSlot;
     [SerializeField] private InventorySlot bookSlot;
+    [SerializeField] private InventorySlot pumpSlot;
     public ItemScriptableObject startWeapon;
     public ItemScriptableObject startBook;
     private bool isOpened = false; // Выключен в начале игры
 
-    public event Action<ItemScriptableObject> ChangeWeapon;
+    public event Action<WeaponItem> ChangeWeapon;
     public event Action<int> EatFood;
 
     private int row; // Строки 
@@ -50,15 +54,17 @@ public class InventoryManager : MonoBehaviour
         }
 
         UIPanel.SetActive(false); // Принудительно выключаем при старте игры
+        UIActionPanel.SetActive(false);
+        UIPumpPanel.SetActive(false);
         UIHelp.SetActive(false);
 
         if (startWeapon != null)
         {
-            AddItem(startWeapon, 1);
+            AddItem(startWeapon.Clone(), 1);
         }
         if (startBook != null)
         {
-            AddItem(startBook, 1);
+            AddItem(startBook.Clone(), 1);
         }
     }
 
@@ -69,11 +75,14 @@ public class InventoryManager : MonoBehaviour
             isOpened = !isOpened;
             if (isOpened)
             {
-                UIPanel.SetActive(true);               
+                UIPanel.SetActive(true);
+                UIActionPanel.SetActive(!isTrader);
+                UIPumpPanel.SetActive(isTrader);
             }
             else
             {
                 UIPanel.SetActive(false);
+                pumpSlot.SetIcon(null);
             }
         }
 
@@ -95,12 +104,20 @@ public class InventoryManager : MonoBehaviour
             {
                 ActionItem();
             }
+
+            if (isTrader)
+            {
+                if (Input.GetKeyDown(KeyCode.Space)) // <<<<<<-------------------------------------------------|
+                {
+                    ((WeaponItem)pumpSlot.item).SetBaceDamage(100);
+                }
+            }
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Item"))
+        if (other.CompareTag("Item")) // Подбор предметов
         {
             itemsInRange.Add(other.gameObject);
             Debug.Log($"Предмет {other.name} в зоне подбора");
@@ -109,10 +126,15 @@ public class InventoryManager : MonoBehaviour
         {
             UIHelp.SetActive(true);
         }
+
+        if (other.CompareTag("TraderNPC")) // Прокачка у торговца
+        {
+            isTrader = true;
+        }
     }
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Item"))
+        if (other.CompareTag("Item")) // Подбор предметов
         {
             itemsInRange.Remove(other.gameObject);
             Debug.Log($"Предмет {other.name} покинул зону");
@@ -120,6 +142,11 @@ public class InventoryManager : MonoBehaviour
         if (itemsInRange.Count == 0)
         {
             UIHelp.SetActive(false);
+        }
+
+        if (other.CompareTag("TraderNPC")) // Прокачка у торговца
+        {
+            isTrader = false;
         }
     }
 
@@ -251,7 +278,14 @@ public class InventoryManager : MonoBehaviour
     {
         if (slots[curCol, curRow].isEmpty == false) // Если слот НЕ пустой
         {
-            itemInfoText.text = slots[curCol, curRow].item.itemDescription;
+            if (slots[curCol, curRow].item.type == ItemType.Weapon)
+            {
+                itemInfoText.text = slots[curCol, curRow].item.itemDescription + ". Damage: " + ((WeaponItem)slots[curCol, curRow].item).GetBaceDamage();
+            }
+            else
+            {
+                itemInfoText.text = slots[curCol, curRow].item.itemDescription;
+            }
         }
         else
         {
@@ -287,63 +321,88 @@ public class InventoryManager : MonoBehaviour
     {
         if (slots[curCol, curRow].isEmpty == false)
         {
-            if (slots[curCol, curRow].item.type == ItemType.Weapon)
+            if (isTrader) 
             {
-                // Запоминаем орижие в слоте
-                ItemScriptableObject prevWeaponSlotItem = null;
-                if (weaponSlot != null)
-                {
-                    prevWeaponSlotItem = weaponSlot.item;                    
-                }
-                // Добавляем в слот оружия
-                weaponSlot.item = slots[curCol, curRow].item;
-                weaponSlot.amount = slots[curCol, curRow].amount;
-                weaponSlot.isEmpty = false;
-                weaponSlot.SetIcon(slots[curCol, curRow].item.icon);
-
-                playerStateMachine.SetWeaponInHand(true); // В слоте появилось оружие -> можно атаковать
-
-                ChangeWeapon?.Invoke(weaponSlot.item); // Событие - положили оружие в слот, класс - ActiveWeapon
-
-                // Удаляем оружие из инвентаря
-                DropItem(false);
-                // Добавляем оружие
-                if (prevWeaponSlotItem != null)
-                {
-                    AddItem(prevWeaponSlotItem, 1);
-                }
+                PumpItem();
             }
-            else if (slots[curCol, curRow].item.type == ItemType.Book)
+            else
             {
-                // Запоминаем книгу в слоте
-                ItemScriptableObject prevBookSlotItem = null;
-                if (bookSlot != null)
-                {
-                    prevBookSlotItem = bookSlot.item;
-                }
-                // Добавляем в слот книги
-                bookSlot.item = slots[curCol, curRow].item;
-                bookSlot.amount = slots[curCol, curRow].amount;
-                bookSlot.isEmpty = false;
-                bookSlot.SetIcon(slots[curCol, curRow].item.icon);
+                UseItem();
+            }
+        }
+    }
 
-                // Удаляем книгу из инвентаря
-                DropItem(false);
-                // Добавляем книгу
-                if (prevBookSlotItem != null)
-                {
-                    AddItem(prevBookSlotItem, 1);
-                }
-            }
-            else if (slots[curCol, curRow].item.type == ItemType.Food)
-            {
-                EatFood?.Invoke(((FoodItem)slots[curCol, curRow].item).healthAmount); // Вызываем событие
-                DropItem(false); // Удалаем предмет
-            }
-            else if (slots[curCol, curRow].item.type == ItemType.Default)
-            {
+    private void PumpItem()
+    {
+        if (slots[curCol, curRow].item.type == ItemType.Weapon)
+        {
+            pumpSlot.item = slots[curCol, curRow].item;
+            pumpSlot.SetIcon(slots[curCol, curRow].item.icon);
+        }
+        else if (slots[curCol, curRow].item.type == ItemType.Book)
+        {
 
+        }
+    }
+
+    private void UseItem()
+    {
+        if (slots[curCol, curRow].item.type == ItemType.Weapon)
+        {
+            // Запоминаем орижие в слоте
+            ItemScriptableObject prevWeaponSlotItem = null;
+            if (weaponSlot != null)
+            {
+                prevWeaponSlotItem = weaponSlot.item;
             }
+            // Добавляем в слот оружия
+            weaponSlot.item = slots[curCol, curRow].item;
+            weaponSlot.amount = slots[curCol, curRow].amount;
+            weaponSlot.isEmpty = false;
+            weaponSlot.SetIcon(slots[curCol, curRow].item.icon);
+
+            playerStateMachine.SetWeaponInHand(true); // В слоте появилось оружие -> можно атаковать
+
+            ChangeWeapon?.Invoke((WeaponItem)weaponSlot.item); // Событие - положили оружие в слот, класс - ActiveWeapon
+
+            // Удаляем оружие из инвентаря
+            DropItem(false);
+            // Добавляем оружие
+            if (prevWeaponSlotItem != null)
+            {
+                AddItem(prevWeaponSlotItem, 1);
+            }
+        }
+        else if (slots[curCol, curRow].item.type == ItemType.Book)
+        {
+            // Запоминаем книгу в слоте
+            ItemScriptableObject prevBookSlotItem = null;
+            if (bookSlot != null)
+            {
+                prevBookSlotItem = bookSlot.item;
+            }
+            // Добавляем в слот книги
+            bookSlot.item = slots[curCol, curRow].item;
+            bookSlot.amount = slots[curCol, curRow].amount;
+            bookSlot.isEmpty = false;
+            bookSlot.SetIcon(slots[curCol, curRow].item.icon);
+
+            // Удаляем книгу из инвентаря
+            DropItem(false);
+            // Добавляем книгу
+            if (prevBookSlotItem != null)
+            {
+                AddItem(prevBookSlotItem, 1);
+            }
+        }
+        else if (slots[curCol, curRow].item.type == ItemType.Food)
+        {
+            EatFood?.Invoke(((FoodItem)slots[curCol, curRow].item).healthAmount); // Вызываем событие
+            DropItem(false); // Удалаем предмет
+        }
+        else if (slots[curCol, curRow].item.type == ItemType.Default)
+        {
+
         }
     }
 }
