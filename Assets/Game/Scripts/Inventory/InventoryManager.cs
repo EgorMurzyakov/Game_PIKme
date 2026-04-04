@@ -207,7 +207,7 @@ public class InventoryManager : MonoBehaviour
                 slot.textItemAmount.text = _amount.ToString();
                 return true;
             }
-            else if (slot.item == _itemSO) // Если слот НЕ пустой 
+            else if (slot.item.itemName == _itemSO.itemName) // Если слот НЕ пустой 
             {
                 if (slot.amount + _amount <= _itemSO.maximumAmount)
                 {
