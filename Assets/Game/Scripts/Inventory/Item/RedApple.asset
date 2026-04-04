@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FoodItem
   type: 1
   ItemPrefab: {fileID: 1169411228174609760, guid: 38b319bc983685745b6a26428ca86deb, type: 3}
-  itemName: Apple
-  itemDescription: Red apple
+  itemName: RedApple
+  itemDescription: Sweet Apple
   maximumAmount: 2
   icon: {fileID: 21300000, guid: da7129ed6a246f048a49d8d97de2d2d4, type: 3}
   healthAmount: 43

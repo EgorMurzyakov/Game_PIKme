@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BookItem
   type: 3
   ItemPrefab: {fileID: 711209687790816509, guid: bfe16911512e35944a8ec53612d83a90, type: 3}
-  itemName: Bace book
+  itemName: BaceBook
   itemDescription: The Sorcerer's Book
   maximumAmount: 1
   icon: {fileID: 21300000, guid: 7972dd97521bb1c44ba8e3774391b996, type: 3}
