@@ -1,13 +1,20 @@
 fileFormatVersion: 2
 guid: ad69428b44c938e48ad6d8d96d1c7e78
+AssetOrigin:
+  serializedVersion: 1
+  productId: 248405
+  packageName: Free Low Poly Fantasy RPG Weapons
+  packageVersion: 2.0
+  assetPath: Assets/PurePoly/Free Fantasy RPG Weapons/Meshes/PP_Theme_01_Arrow_001.fbx
+  uploadId: 788740
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
   externalObjects: {}
   materials:
-    materialImportMode: 0
+    materialImportMode: 2
     materialName: 0
-    materialSearch: 1
+    materialSearch: 2
     materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
@@ -108,10 +115,3 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 248405
-  packageName: Free Low Poly Fantasy RPG Weapons
-  packageVersion: 2.0
-  assetPath: Assets/PurePoly/Free Fantasy RPG Weapons/Meshes/PP_Theme_01_Arrow_001.fbx
-  uploadId: 788740

@@ -1,13 +1,20 @@
 fileFormatVersion: 2
 guid: 07a73b60d63894b41aa76b897185aaff
+AssetOrigin:
+  serializedVersion: 1
+  productId: 248405
+  packageName: Free Low Poly Fantasy RPG Weapons
+  packageVersion: 2.0
+  assetPath: Assets/PurePoly/Free Fantasy RPG Weapons/Meshes/PP_Theme_01_Shield_005.fbx
+  uploadId: 788740
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
   externalObjects: {}
   materials:
-    materialImportMode: 0
+    materialImportMode: 2
     materialName: 0
-    materialSearch: 1
+    materialSearch: 2
     materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
@@ -108,10 +115,3 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 248405
-  packageName: Free Low Poly Fantasy RPG Weapons
-  packageVersion: 2.0
-  assetPath: Assets/PurePoly/Free Fantasy RPG Weapons/Meshes/PP_Theme_01_Shield_005.fbx
-  uploadId: 788740
