@@ -18,7 +18,7 @@ public class ActiveWeapon : MonoBehaviour
         inventoryManager.ChangeWeapon -= SetActivWeapon;
     }
 
-    public void SetActivWeapon(ItemScriptableObject _i)
+    public void SetActivWeapon(WeaponItem _i)
     {
         Debug.Log("Событие вызвалось");
 
@@ -32,10 +32,12 @@ public class ActiveWeapon : MonoBehaviour
             if (weaponArrayEmpty.GetChild(i).gameObject.name == _i.itemName) // Находим нужное оружие по имени
             {
                 Debug.Log("Имя подошло");
-                weaponArrayEmpty.GetChild(i).gameObject.SetActive(true);
+                weaponArrayEmpty.GetChild(i).gameObject.SetActive(true); // Включаем отображение оружия
+                weaponArrayEmpty.GetChild(i).gameObject.GetComponent<HitDetector>().SetWeaponDamage(_i.GetBaceDamage()); // Изменяем урон, как в WeaponItem
                 currentWeaponNumb = i;
                 break;
             }
+            Debug.Log("Что то не так");
         }
     }
 

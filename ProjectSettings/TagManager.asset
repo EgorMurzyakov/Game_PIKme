@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - Item
+  - Ground
+  - Tree
+  - Stone
+  - TraderNPC
   layers:
   - Default
   - TransparentFX
