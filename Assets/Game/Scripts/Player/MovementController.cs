@@ -23,21 +23,36 @@ public class MovementController : MonoBehaviour
     private Vector3 crossProduct;
 
     private float lastChangeTurn;
-    private const float ChangeTurn_WINDOW = 0.07f; // Окно для смены направления движения
-    private bool turnAllow = true; // Разрешение на изменения направление движения
+    private const float ChangeTurn_WINDOW = 0.07f;
+    private bool turnAllow = true;
     private bool death = false;
 
     [Header("Debug")]
     [SerializeField] private float currentSpeed;
     [SerializeField] private float targetSpeed;
 
+    // ?? АВТО-ПОИСК КОМПОНЕНТА ПРИ СТАРТЕ
+    private void Awake()
+    {
+        if (charControl == null)
+        {
+            charControl = GetComponent<CharacterController>();
+        }
+
+        if (charControl == null)
+        {
+            Debug.LogError($"[MovementController] CharacterController not found on {gameObject.name}! Please add the component or assign it in Inspector.");
+        }
+    }
+
     public void Update()
     {
         UpdateSpeed();
     }
+
     public void FixedUpdate()
     {
-        if (death == false)
+        if (!death)
         {
             GetMoving();
         }
@@ -45,7 +60,7 @@ public class MovementController : MonoBehaviour
 
     public void ChoosingAction(state _st, Vector2 _mi)
     {
-        moveInput = _mi; // Направление движения
+        moveInput = _mi;
 
         switch (_st)
         {
@@ -63,7 +78,7 @@ public class MovementController : MonoBehaviour
                 break;
             case state.Dodge:
                 targetSpeed = dodgeSpeed;
-                currentVelocity = transform.forward; // Кувырок будет вперед относительно персонажа
+                currentVelocity = transform.forward;
                 currentSpeed = dodgeSpeed;
                 break;
             case state.Attack:
@@ -77,6 +92,9 @@ public class MovementController : MonoBehaviour
 
     private void GetMoving()
     {
+        // ?? Защита от null Camera.main
+        if (Camera.main == null) return;
+
         cameraForward = Camera.main.transform.forward;
         cameraForward.y = 0;
         cameraForward.Normalize();
@@ -85,7 +103,7 @@ public class MovementController : MonoBehaviour
         cameraRight.y = 0;
         cameraRight.Normalize();
 
-        if (!(turnAllow == false && Time.time - ChangeTurn_WINDOW > lastChangeTurn)) // Запутано, но вроде так 
+        if (!(turnAllow == false && Time.time - ChangeTurn_WINDOW > lastChangeTurn))
         {
             moveDirection = cameraForward * moveInput.x + cameraRight * moveInput.y;
             moveDirection.Normalize();
@@ -93,35 +111,38 @@ public class MovementController : MonoBehaviour
 
         if (moveDirection.magnitude > 0.1f)
         {
-            currentVelocity = moveDirection; // currentVelocity сохранит направление движения когда moveDirection станет = 0
+            currentVelocity = moveDirection;
         }
 
         if (moveDirection != Vector3.zero)
         {
             targetRotation = Quaternion.LookRotation(moveDirection);
             currentRotation = transform.rotation;
-            //Определяем направление поворота
             crossProduct = Vector3.Cross(currentRotation * Vector3.forward, targetRotation * Vector3.forward);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime); // Иначе плавно
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
-        charControl.Move(currentVelocity * currentSpeed * Time.deltaTime);
+        // ?? Защита от null charControl
+        if (charControl != null)
+        {
+            charControl.Move(currentVelocity * currentSpeed * Time.deltaTime);
+        }
     }
 
-    private void StopMoving() // Мгновенная остановка
+    private void StopMoving()
     {
         targetSpeed = 0;
         currentSpeed = 0;
     }
-    void UpdateSpeed() // Плавное изменение скорости
+
+    void UpdateSpeed()
     {
         currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.deltaTime * speedValue);
     }
 
-    public void SetTurnAllow(bool _val) // Запрет на поворот
+    public void SetTurnAllow(bool _val)
     {
         turnAllow = _val;
         lastChangeTurn = Time.time;
     }
-
 }
