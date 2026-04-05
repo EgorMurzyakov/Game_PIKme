@@ -7,7 +7,11 @@ public class Sounds : MonoBehaviour
     private AudioSource audioSrc => GetComponent<AudioSource>();
 
     [SerializeField] private SoundList[] sounds;
-    public GroundType ground = GroundType.Soil;
+    private GroundType ground = GroundType.Ground;    
+    private float rayDistance = 2f; // Длина луча
+    [SerializeField] private LayerMask groundLayers; // Какие слои считаются землей
+    private Vector3 offset = new Vector3(0f, 1f, 0f);
+    private string currentGroundTag = "";
 
     public enum SoundType // !!! ВАЖНО !!! чтобы в инспекторе был тот же порядок
     {
@@ -22,10 +26,10 @@ public class Sounds : MonoBehaviour
 
     public enum GroundType
     {
-        Soil,
-        Dirt,
+        Ground,
         Tree,
-        Stone
+        Stone,
+        Empty
     }
 
     public enum SoundMagic
@@ -36,12 +40,20 @@ public class Sounds : MonoBehaviour
         TornadoEnd
     }
 
+    public void Update()
+    {
+        CheckGround();        
+    }
+
     public void PlaySound(SoundType type) // Базовые звуки
     {
+        Debug.Log("wgljrejlrnergnerkjgnljewrgjregj " + ground);
+
         if (type == SoundType.Footstep && sounds[(int)type].audioClip.Length != 0)
         {
+            if (ground == GroundType.Empty) return;
             // Берем вариацию звука в зависимости от типа земли под ногами
-            audioSrc.PlayOneShot(sounds[(int)type].audioClip[(int)ground], sounds[(int)type].voluem); 
+            audioSrc.PlayOneShot(sounds[(int)type].audioClip[(int)ground], sounds[(int)type].voluem);
         }
         else if (sounds[(int)type].audioClip.Length != 0)
         {
@@ -58,9 +70,39 @@ public class Sounds : MonoBehaviour
         }
     }
 
-    public void SetGroundType(GroundType _tp)
+    private void CheckGround()
     {
-        ground = _tp;
+        // Создаем луч из позиции персонажа вниз
+        Ray ray = new Ray(transform.position + offset, Vector3.down);
+        RaycastHit hit;
+
+        // Пускаем луч
+        if (Physics.Raycast(ray, out hit, rayDistance, groundLayers))
+        {
+            // Получаем тег объекта под ногами
+            currentGroundTag = hit.collider.tag;
+        }
+        else
+        {          
+            // Если ничего не нашли (персонаж в воздухе)
+            currentGroundTag = "";
+        }
+
+        switch (currentGroundTag)
+        {
+            case "Ground":
+                ground = GroundType.Ground;
+                break;
+            case "Tree":
+                ground = GroundType.Tree;
+                break;
+            case "Stone":
+                ground = GroundType.Stone;
+                break;
+            default:
+                ground = GroundType.Empty; 
+                break;
+        }        
     }
 }
 
