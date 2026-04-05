@@ -1,12 +1,5 @@
 fileFormatVersion: 2
 guid: 0ab466c619430a84182c2a188ccd2d5b
-AssetOrigin:
-  serializedVersion: 1
-  productId: 18736
-  packageName: Medieval Tent Small
-  packageVersion: 1.0
-  assetPath: Assets/kawetofe_Assets/medievalTentSmall/model/medievalTentSmall.fbx
-  uploadId: 19933
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable:
@@ -30,9 +23,9 @@ ModelImporter:
     second: //RootNode
   externalObjects: {}
   materials:
-    materialImportMode: 2
+    materialImportMode: 1
     materialName: 0
-    materialSearch: 2
+    materialSearch: 1
     materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
@@ -133,3 +126,10 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 18736
+  packageName: Medieval Tent Small
+  packageVersion: 1.0
+  assetPath: Assets/kawetofe_Assets/medievalTentSmall/model/medievalTentSmall.fbx
+  uploadId: 19933

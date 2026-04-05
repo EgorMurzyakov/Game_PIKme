@@ -1,20 +1,13 @@
 fileFormatVersion: 2
 guid: e004a80ac7ab9af438c62e6a999c860f
-AssetOrigin:
-  serializedVersion: 1
-  productId: 148410
-  packageName: RPG Poly Pack - Lite
-  packageVersion: 1.0.1
-  assetPath: Assets/RPGPP_LT/Models/Props/rpgpp_lt_basket_01.fbx
-  uploadId: 766582
 ModelImporter:
-  serializedVersion: 24200
+  serializedVersion: 22200
   internalIDToNameTable: []
   externalObjects: {}
   materials:
-    materialImportMode: 2
+    materialImportMode: 0
     materialName: 0
-    materialSearch: 2
+    materialSearch: 1
     materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
@@ -63,9 +56,6 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     optimizeBones: 1
-    generateMeshLods: 0
-    meshLodGenerationFlags: 0
-    maximumMeshLod: -1
     meshOptimizationFlags: -1
     indexFormat: 1
     secondaryUVAngleDistortion: 8
@@ -115,3 +105,10 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 148410
+  packageName: RPG Poly Pack - Lite
+  packageVersion: 1.0.1
+  assetPath: Assets/RPGPP_LT/Models/Props/rpgpp_lt_basket_01.fbx
+  uploadId: 766582

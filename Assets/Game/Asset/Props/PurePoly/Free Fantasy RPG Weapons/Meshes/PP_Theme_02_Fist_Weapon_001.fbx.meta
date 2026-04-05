@@ -1,20 +1,13 @@
 fileFormatVersion: 2
 guid: 56cc559067a545049a24eaa8afd3305b
-AssetOrigin:
-  serializedVersion: 1
-  productId: 248405
-  packageName: Free Low Poly Fantasy RPG Weapons
-  packageVersion: 2.0
-  assetPath: Assets/PurePoly/Free Fantasy RPG Weapons/Meshes/PP_Theme_02_Fist_Weapon_001.fbx
-  uploadId: 788740
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
   externalObjects: {}
   materials:
-    materialImportMode: 2
+    materialImportMode: 0
     materialName: 0
-    materialSearch: 2
+    materialSearch: 1
     materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
@@ -115,3 +108,10 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 248405
+  packageName: Free Low Poly Fantasy RPG Weapons
+  packageVersion: 2.0
+  assetPath: Assets/PurePoly/Free Fantasy RPG Weapons/Meshes/PP_Theme_02_Fist_Weapon_001.fbx
+  uploadId: 788740
