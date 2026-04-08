@@ -24,11 +24,11 @@ public abstract class HitPoint : MonoBehaviour
 
     }
 
-    public virtual void AddHP(int _HP) // Лечение
+    public virtual void AddHP(FoodItem _itemSO) // Лечение
     {
-        if (currentHitPoint + _HP < maxHitPoint)
+        if (currentHitPoint + _itemSO.healthAmount < maxHitPoint)
         {
-            currentHitPoint += _HP;
+            currentHitPoint += _itemSO.healthAmount;
         }
         else
         {
