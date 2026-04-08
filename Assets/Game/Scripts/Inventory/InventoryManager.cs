@@ -17,6 +17,12 @@ public class InventoryManager : MonoBehaviour
     public Transform inventoryPanel;
     public PlayerStateMachine playerStateMachine;
     public TMP_Text itemInfoText;
+    public TMP_Text startStatUI; // Текстовое поле (нынешний урон) - Прокачка
+    public TMP_Text newStatUI; // Текстовое поле (новый урон) - Прокачка
+    public TMP_Text moneyUI;
+    public TMP_Text priceUI;
+    private float improvCoeff = 1.1f; // Коэфицент увеличения урона при прокачке
+    public int playerMoney = 0;
     //public List<InventorySlot> slots = new List<InventorySlot>();
     public InventorySlot[,] slots;
     [SerializeField] private InventorySlot weaponSlot;
@@ -66,6 +72,11 @@ public class InventoryManager : MonoBehaviour
         {
             AddItem(startBook.Clone(), 1);
         }
+
+        moneyUI.text = playerMoney.ToString();
+        startStatUI.text = "Current damage";
+        newStatUI.text = "Future damage";
+        priceUI.text = "Price";
     }
 
     public void Update()
@@ -83,6 +94,11 @@ public class InventoryManager : MonoBehaviour
             {
                 UIPanel.SetActive(false);
                 pumpSlot.SetIcon(null);
+                pumpSlot.item = null;
+
+                startStatUI.text = "Current damage";
+                newStatUI.text = "Future damage";
+                priceUI.text = "Price";
             }
         }
 
@@ -107,9 +123,15 @@ public class InventoryManager : MonoBehaviour
 
             if (isTrader)
             {
-                if (Input.GetKeyDown(KeyCode.Space)) // <<<<<<-------------------------------------------------|
+                if (Input.GetKeyDown(KeyCode.Space) && pumpSlot.item != null) // <<<<<<-------------------------------------------------|
                 {
-                    ((WeaponItem)pumpSlot.item).SetBaceDamage(100);
+                    int upgradePrice = ((WeaponItem)pumpSlot.item).GetUpgradePrice();
+                    if (playerMoney >= upgradePrice) {
+                        ((WeaponItem)pumpSlot.item).SetBaceDamage((int)(((WeaponItem)pumpSlot.item).GetBaceDamage() * improvCoeff));
+                        ((WeaponItem)pumpSlot.item).UpdateUpgradePrice(); // Обновляем цену
+                        playerMoney -= upgradePrice;
+                        UpdateUI();
+                    }
                 }
             }
         }
@@ -338,6 +360,7 @@ public class InventoryManager : MonoBehaviour
         {
             pumpSlot.item = slots[curCol, curRow].item;
             pumpSlot.SetIcon(slots[curCol, curRow].item.icon);
+            UpdateUI();
         }
         else if (slots[curCol, curRow].item.type == ItemType.Book)
         {
@@ -404,6 +427,14 @@ public class InventoryManager : MonoBehaviour
         {
 
         }
+    }
+
+    private void UpdateUI()
+    {
+        priceUI.text = ((WeaponItem)pumpSlot.item).GetUpgradePrice().ToString(); // Обновляем цену в UI        
+        moneyUI.text = playerMoney.ToString(); // Обновляем балланс в UI
+        startStatUI.text = "Start: " + ((WeaponItem)slots[curCol, curRow].item).GetBaceDamage();
+        newStatUI.text = "New: " + (int)(((WeaponItem)slots[curCol, curRow].item).GetBaceDamage() * improvCoeff);
     }
 }
 

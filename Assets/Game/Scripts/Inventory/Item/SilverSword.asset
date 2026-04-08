@@ -19,3 +19,5 @@ MonoBehaviour:
   maximumAmount: 1
   icon: {fileID: 21300000, guid: 95052c6b62fb3de4695beaa99f842ac2, type: 3}
   baceDamage: 50
+  upgradePrice: 40
+  upgradePriceCoeff: 1.3
