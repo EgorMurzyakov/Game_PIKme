@@ -1,27 +1,30 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerUI : MonoBehaviour
 {
     [SerializeField] private Slider hpSlider;
-    [SerializeField] private GameObject boostIcon;
+    [SerializeField] private GameObject boostIconUI;
+    //[SerializeField] private TMP_Text hpUI;
 
     public void Start()
     {
-        boostIcon.SetActive(false);
+        boostIconUI.SetActive(false);
     }
 
-    public void SetHitPointUI(float _value)
+    public void SetHitPointUI(float _curHP, float _maxHP)
     {
-        hpSlider.value = _value;
+        //hpUI.text = _curHP.ToString();
+        hpSlider.value = _curHP / _maxHP;
     }
 
     public void BoostIconOn()
     {
-        boostIcon.SetActive(true);
+        boostIconUI.SetActive(true);
     }
     public void BoostIconOff()
     {
-        boostIcon.SetActive(false);
+        boostIconUI.SetActive(false);
     }
 }
