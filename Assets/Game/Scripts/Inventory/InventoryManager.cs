@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -218,6 +219,13 @@ public class InventoryManager : MonoBehaviour
 
     private bool AddItem(ItemScriptableObject _itemSO, int _amount) // Возвращаем true, если есть место
     {
+        if (_itemSO.type == ItemType.Money)
+        {
+            playerMoney += _amount;
+            UpdateUI();
+            return true;
+        }
+
         foreach (InventorySlot slot in slots)
         {
             if (slot.isEmpty) // Если слот пустой
@@ -431,10 +439,12 @@ public class InventoryManager : MonoBehaviour
 
     private void UpdateUI()
     {
-        priceUI.text = ((WeaponItem)pumpSlot.item).GetUpgradePrice().ToString(); // Обновляем цену в UI        
         moneyUI.text = playerMoney.ToString(); // Обновляем балланс в UI
-        startStatUI.text = "Start: " + ((WeaponItem)slots[curCol, curRow].item).GetBaceDamage();
-        newStatUI.text = "New: " + (int)(((WeaponItem)slots[curCol, curRow].item).GetBaceDamage() * improvCoeff);
+        if (pumpSlot.item != null) {
+            priceUI.text = ((WeaponItem)pumpSlot.item).GetUpgradePrice().ToString(); // Обновляем цену в UI        
+            startStatUI.text = "Start: " + ((WeaponItem)slots[curCol, curRow].item).GetBaceDamage();
+            newStatUI.text = "New: " + (int)(((WeaponItem)slots[curCol, curRow].item).GetBaceDamage() * improvCoeff);
+        }
     }
 }
 
