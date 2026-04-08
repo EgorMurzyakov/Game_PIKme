@@ -6,6 +6,8 @@ using UnityEngine;
 public class WeaponItem : ItemScriptableObject
 {
     [SerializeField] private int baceDamage;
+    [SerializeField] private int upgradePrice;
+    [SerializeField] private float upgradePriceCoeff;
 
     public override ItemScriptableObject Clone()
     {
@@ -19,6 +21,8 @@ public class WeaponItem : ItemScriptableObject
         clone.maximumAmount = this.maximumAmount;
         clone.icon = this.icon;
         clone.baceDamage = this.baceDamage;
+        clone.upgradePrice = this.upgradePrice;
+        clone.upgradePriceCoeff = this.upgradePriceCoeff;
 
         return clone;
     }
@@ -32,10 +36,18 @@ public class WeaponItem : ItemScriptableObject
     {
         return baceDamage;
     }
-
     public void SetBaceDamage(int _baceDm)
     {
         baceDamage = _baceDm;
+    }
+
+    public int GetUpgradePrice()
+    {
+        return upgradePrice;
+    }
+    public void UpdateUpgradePrice()
+    {
+        upgradePrice = (int)(upgradePrice * upgradePriceCoeff);
     }
 
 }
