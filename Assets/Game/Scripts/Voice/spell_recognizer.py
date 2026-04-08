@@ -20,7 +20,10 @@ MODEL_PATH = resource_path("vosk-model-small-ru-0.22")
 SPELLS = {
     "огненный шар": "FIREBALL",
     "торнадо": "TORNADO",
-    "ледяная стрела": "ICE_ARROW"
+    "ледяная стрела": "ICE_ARROW",
+    "гойда": "GOYDA",
+    "господи помилуй": "GOD_HELP",
+    "отче наш": "GOD_HELP"
 }
 
 model = Model(MODEL_PATH)

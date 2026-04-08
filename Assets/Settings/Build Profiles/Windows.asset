@@ -20,14 +20,18 @@ MonoBehaviour:
     rid: 1526167619009249280
   m_OverrideGlobalSceneList: 1
   m_Scenes:
-  - m_enabled: 0
-    m_path: Assets/Scenes/village1 valera 1 travle.unity
+  - m_enabled: 1
+    m_path: Assets/Scenes/start_menu.unity
+    m_guid: cfd7b16aed4624b44829f2ca76e6c80d
   - m_enabled: 1
     m_path: Assets/Scenes/village1 valera.unity
+    m_guid: d2809ab9b90eea7419d8d90d4c505d35
   - m_enabled: 1
     m_path: Assets/Scenes/VladTest2.unity
+    m_guid: 0e56452e467044c4386a32331b98daa4
   - m_enabled: 1
     m_path: Assets/Scenes/LoadingScreen.unity
+    m_guid: d8dcf098121ae0842b766d5a5b83994c
   m_HasScriptingDefines: 0
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
@@ -56,5 +60,6 @@ MonoBehaviour:
         m_Architecture: 0
         m_CreateSolution: 0
         m_CopyPDBFiles: 0
+        m_EnableDirectStorage: 0
         m_WindowsDevicePortalAddress: 
         m_WindowsDevicePortalUsername: 
