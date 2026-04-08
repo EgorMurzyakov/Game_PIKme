@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -6,6 +7,7 @@ public class PlayerHP : HitPoint
     [SerializeField] private PlayerStateMachine stateMachine;
     [SerializeField] private PlayerUI playerUI;
     [SerializeField] private InventoryManager inventoryManager;
+    [SerializeField] private TMP_Text hpUI;
 
     private int baceMaxHitPoint; // На это значение не влияет прокачка (сохраняет исходное MaxHP)
     private bool timerOperation = false;
@@ -18,6 +20,7 @@ public class PlayerHP : HitPoint
         currentHitPoint = startHitPoint;
         inventoryManager.EatFood += AddHP;
         baceMaxHitPoint = maxHitPoint;
+        hpUI.text = currentHitPoint.ToString();
     }
 
     public void Update()
@@ -58,7 +61,8 @@ public class PlayerHP : HitPoint
             Death();
         }
 
-        playerUI.SetHitPointUI((float)currentHitPoint / (float)maxHitPoint);
+        playerUI.SetHitPointUI((float)currentHitPoint, (float)maxHitPoint);
+        hpUI.text = currentHitPoint.ToString();
     }
 
     public override void AddHP(FoodItem _item) // Лечение
@@ -74,23 +78,32 @@ public class PlayerHP : HitPoint
             currentHitPoint = maxHitPoint;
         }
 
-        playerUI.SetHitPointUI((float)currentHitPoint / (float)maxHitPoint);
+        playerUI.SetHitPointUI((float)currentHitPoint, (float)maxHitPoint);
+        hpUI.text = currentHitPoint.ToString();
     }
 
     public void TemporaryEffectSrart(FoodItem _itemSO)
     {
         if (_itemSO.GetDurationEffect() > 0)
         {
-            if (timerOperation) // Перед новым эффектом очищаем старый
-            {
-                TemporaryEffectEnd();
-            }
-            timerOperation = true;
-            playerUI.BoostIconOn();
-            maxHitPoint = (int)(maxHitPoint * _itemSO.GetUpCoeff());
+            maxHitPoint = (int)(baceMaxHitPoint * _itemSO.GetUpCoeff());
             durationEffect = _itemSO.GetDurationEffect();
+
+            if (timerOperation) // При наложении эффектов
+            {
+                if (currentHitPoint > maxHitPoint)
+                {
+                    currentHitPoint = maxHitPoint;
+                }
+            }
+            else
+            {
+                timerOperation = true;
+                playerUI.BoostIconOn();
+            }
             startTime = Time.time;
-            playerUI.SetHitPointUI((float)currentHitPoint / (float)maxHitPoint); // Обновляем полоску HP
+            playerUI.SetHitPointUI((float)currentHitPoint, (float)maxHitPoint); // Обновляем полоску HP
+            hpUI.text = currentHitPoint.ToString();
         }
     }
 
@@ -103,6 +116,7 @@ public class PlayerHP : HitPoint
         {
             currentHitPoint = maxHitPoint;
         }
-        playerUI.SetHitPointUI((float)currentHitPoint / (float)maxHitPoint); // Обновляем полоску HP
+        playerUI.SetHitPointUI((float)currentHitPoint, (float)maxHitPoint); // Обновляем полоску HP
+        hpUI.text = currentHitPoint.ToString();
     }
 }
