@@ -6,6 +6,8 @@ using UnityEngine;
 public class FoodItem : ItemScriptableObject
 {
     public int healthAmount;
+    [SerializeField] private float upCoeff = 1f;
+    [SerializeField] private int durationEffect = 0;
 
     public override ItemScriptableObject Clone()
     {
@@ -19,11 +21,24 @@ public class FoodItem : ItemScriptableObject
         clone.maximumAmount = this.maximumAmount;
         clone.icon = this.icon;
         clone.healthAmount = this.healthAmount;
+        clone.upCoeff = this.upCoeff;
+        clone.durationEffect = this.durationEffect;
+
 
         return clone;
     }
     public void Start()
     {
         type = ItemType.Food;
+    }
+
+    public float GetUpCoeff()
+    {
+        return upCoeff;
+    }
+
+    public int GetDurationEffect()
+    {
+        return durationEffect;
     }
 }
