@@ -20,6 +20,11 @@ public class VoiceMagic : MonoBehaviour
     private float lastCastTime = -999f;
     private string lastSpell = null;
 
+    [Header("Проверка процесса")]
+    [Tooltip("Интервал проверки запущен ли процесс (в секундах).")]
+    public float processCheckIntervalSeconds = 5f;
+    private float lastProcessCheckTime = 0f;
+
     public Transform cameraTransform;
     public Transform playerTransform;
 
@@ -33,38 +38,7 @@ public class VoiceMagic : MonoBehaviour
         if (cameraTransform == null && Camera.main != null)
             cameraTransform = Camera.main.transform;
 
-        string exePath = Path.Combine(
-            Application.streamingAssetsPath,
-            "Voice/spell_recognizer/spell_recognizer.exe"
-            // Application.dataPath,
-            // "Game/Scripts/Voice/dist/spell_recognizer/spell_recognizer.exe"
-        );
-        UnityEngine.Debug.Log("VoiceMagic: запускаю exe по пути: " + exePath);
-
-        if (!File.Exists(exePath))
-        {
-            UnityEngine.Debug.LogError("VoiceMagic: НЕ найден exe по пути: " + exePath);
-            return;
-        }
-
-        process = new Process();
-        process.StartInfo.FileName = exePath;
-        process.StartInfo.Arguments = "";
-        process.StartInfo.UseShellExecute = false;
-        process.StartInfo.RedirectStandardOutput = true;
-        process.StartInfo.RedirectStandardError = true;
-        process.StartInfo.CreateNoWindow = true;
-
-        process.StartInfo.WorkingDirectory = Path.GetDirectoryName(exePath);
-
-        process.OutputDataReceived += OnOutput;
-        process.ErrorDataReceived += OnError;
-
-        process.Start();
-        process.BeginOutputReadLine();
-        process.BeginErrorReadLine();
-
-        UnityEngine.Debug.Log("VoiceMagic: exe запущен, ждём заклинания...");
+        StartVoiceProcess();
     }
 
     private void OnOutput(object sender, DataReceivedEventArgs e)
@@ -75,11 +49,19 @@ public class VoiceMagic : MonoBehaviour
 
     void Update()
     {
+        // Периодичная проверка процесса
+        float now = Time.time;
+        if (now - lastProcessCheckTime >= processCheckIntervalSeconds)
+        {
+            lastProcessCheckTime = now;
+            CheckAndRestartProcess();
+        }
+
         string spell = Interlocked.Exchange(ref pendingSpell, null);
         if (string.IsNullOrEmpty(spell)) return;
 
-        float now = Time.time;
-        bool cooldownReady = (now - lastCastTime) >= spellCooldownSeconds;
+        float now2 = Time.time;
+        bool cooldownReady = (now2 - lastCastTime) >= spellCooldownSeconds;
 
         if (!cooldownReady)
         {
@@ -88,10 +70,62 @@ public class VoiceMagic : MonoBehaviour
             return;
         }
 
-        lastCastTime = now;
+        lastCastTime = now2;
         lastSpell = spell;
 
         CastSpell(spell);
+    }
+
+    private void CheckAndRestartProcess()
+    {
+        if (process == null || process.HasExited)
+        {
+            UnityEngine.Debug.LogWarning("VoiceMagic: процесс завершился, перезапускаю...");
+            StartVoiceProcess();
+        }
+    }
+
+    private void StartVoiceProcess()
+    {
+        try
+        {
+            if (process != null && !process.HasExited)
+                return; // Процесс уже запущен
+
+            string exePath = Path.Combine(
+                Application.streamingAssetsPath,
+                "Voice/spell_recognizer/spell_recognizer.exe"
+            );
+            UnityEngine.Debug.Log("VoiceMagic: запускаю exe по пути: " + exePath);
+
+            if (!File.Exists(exePath))
+            {
+                UnityEngine.Debug.LogError("VoiceMagic: НЕ найден exe по пути: " + exePath);
+                return;
+            }
+
+            process = new Process();
+            process.StartInfo.FileName = exePath;
+            process.StartInfo.Arguments = "";
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.WorkingDirectory = Path.GetDirectoryName(exePath);
+
+            process.OutputDataReceived += OnOutput;
+            process.ErrorDataReceived += OnError;
+
+            process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+
+            UnityEngine.Debug.Log("VoiceMagic: exe запущен, ждём заклинания...");
+        }
+        catch (System.Exception e)
+        {
+            UnityEngine.Debug.LogError("VoiceMagic: ошибка при запуске процесса: " + e.Message);
+        }
     }
 
     private void OnError(object sender, DataReceivedEventArgs e)

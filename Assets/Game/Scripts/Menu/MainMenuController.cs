@@ -14,9 +14,48 @@ public class MainMenuController : MonoBehaviour
     // 1. Кнопка "Начать игру"
     public void StartGame()
     {
-
+        LaunchVoiceProcess();
         SceneManager.LoadScene(gameSceneName);
+    }
 
+    // Запуск процесса голосового ассистента
+    private void LaunchVoiceProcess()
+    {
+        try
+        {
+            var existingProcesses = Process.GetProcessesByName(processName);
+            if (existingProcesses.Length > 0)
+            {
+                Debug.Log($"Процесс {processName} уже запущен.");
+                return;
+            }
+
+            string exePath = System.IO.Path.Combine(
+                Application.streamingAssetsPath,
+                "Voice/spell_recognizer/spell_recognizer.exe"
+            );
+
+            if (!System.IO.File.Exists(exePath))
+            {
+                Debug.LogError($"Файл не найден: {exePath}");
+                return;
+            }
+
+            Process process = new Process();
+            process.StartInfo.FileName = exePath;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.WorkingDirectory = System.IO.Path.GetDirectoryName(exePath);
+
+            process.Start();
+            Debug.Log($"Процесс {processName} запущен.");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Ошибка запуска {processName}: {e.Message}");
+        }
     }
 
     // 2. Кнопка "Выход"

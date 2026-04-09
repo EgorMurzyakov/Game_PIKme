@@ -7415,6 +7415,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VoiceMagic
   spellCooldownSeconds: 1
   blockSameSpellDuringCooldown: 1
+  processCheckIntervalSeconds: 5
   cameraTransform: {fileID: 0}
   playerTransform: {fileID: 8234436724202565122}
   fireballSpell: {fileID: 3784058422663575842}
