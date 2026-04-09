@@ -35,18 +35,35 @@ def callback(indata, frames, time, status):
 
 with sd.RawInputStream(
         samplerate=16000,
-        blocksize=8000,
+        blocksize=4000,
         dtype='int16',
         channels=1,
         callback=callback):
 
-    print("READY")
-    while True:
-        data = q.get()
-        if rec.AcceptWaveform(data):
-            result = json.loads(rec.Result())
-            text = result.get("text", "").lower()
+    print("READY (Ctrl+C to stop)")
+    detected_spells = set()
+    try:
+        while True:
+            try:
+                data = q.get(timeout=1.0)
+            except queue.Empty:
+                continue
+
+            if rec.AcceptWaveform(data):
+                result = json.loads(rec.Result())
+                text = result.get("text", "").lower()
+                final = True
+            else:
+                result = json.loads(rec.PartialResult())
+                text = result.get("partial", "").lower()
+                final = False
 
             for spell in SPELLS:
-                if spell in text:
+                if spell in text and spell not in detected_spells:
                     print(SPELLS[spell], flush=True)
+                    detected_spells.add(spell)
+
+            if final:
+                detected_spells.clear()
+    except KeyboardInterrupt:
+        print("Stopping...")
