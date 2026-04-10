@@ -46,9 +46,7 @@ public class Sounds : MonoBehaviour
     }
 
     public void PlaySound(SoundType type) // Базовые звуки
-    {
-        Debug.Log("wgljrejlrnergnerkjgnljewrgjregj " + ground);
-
+    {        
         if (type == SoundType.Footstep && sounds[(int)type].audioClip.Length != 0)
         {
             if (ground == GroundType.Empty) return;
