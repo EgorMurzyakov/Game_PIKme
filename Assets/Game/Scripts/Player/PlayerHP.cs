@@ -119,4 +119,20 @@ public class PlayerHP : HitPoint
         playerUI.SetHitPointUI((float)currentHitPoint, (float)maxHitPoint); // Обновляем полоску HP
         hpUI.text = currentHitPoint.ToString();
     }
+
+    public void Respawn()
+    {
+        maxHitPoint = baceMaxHitPoint;
+        currentHitPoint = baceMaxHitPoint;
+
+        // Сбрасываем временный эффект если был активен
+        if (timerOperation)
+        {
+            timerOperation = false;
+            playerUI.BoostIconOff();
+        }
+
+        playerUI.SetHitPointUI((float)currentHitPoint, (float)maxHitPoint);
+        hpUI.text = currentHitPoint.ToString();
+    }
 }

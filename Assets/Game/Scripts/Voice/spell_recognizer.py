@@ -14,7 +14,7 @@ def resource_path(rel_path: str) -> str:
         base = os.path.dirname(os.path.abspath(__file__))
     return os.path.join(base, rel_path)
 
-MODEL_PATH = resource_path("vosk-model-small-ru-0.22")
+MODEL_PATH = r"C:\Users\xeon\Desktop\unit\Game_PIKme\Assets\Game\Scripts\Voice\vosk-model-small-ru-0.22"
 
 
 SPELLS = {

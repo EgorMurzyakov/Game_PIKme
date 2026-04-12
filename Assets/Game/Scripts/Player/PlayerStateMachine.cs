@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Windows;
 
 public enum state { Idle, Walk, Run, Sprint, Dodge, Attack, Empty, Action, Damage, Death }
 
@@ -10,27 +9,24 @@ public class PlayerStateMachine : MonoBehaviour
     private AnimationController animControl;
     private ColliderSwitch colliderSwitch;
 
-    // Очень важно!!! (Костыли)
     private state currentState = state.Idle;
     private state prevState = state.Empty;
-    private bool flagAttack = false; // <- Анимационное событие
-    private bool flagMovment = false; // <- Анимационное событие
+    private bool flagAttack = false;
+    private bool flagMovment = false;
     private bool blockFlagAttack = false;
-    private bool blockFlagMovment = false; // <- Костыль, блокирует flagMovment, если была атака, но EndChangeState() успел вызваться   
+    private bool blockFlagMovment = false;
 
-    // Настройки для Кулдауна
     private float lastAttackTime = 0f;
     private float lastDodgeTime = 0f;
-    private const float COMBO_WINDOW = 1f; // Окно (Кулдаун) комбо 
-    private const float DODGE_WINDOW = 0.25f; // Окно (Кулдаун) уклонения
+    private const float COMBO_WINDOW = 1f;
+    private const float DODGE_WINDOW = 0.25f;
     private bool canChangeStateAttack = true;
     private bool canChangeStateDodge = true;
     private bool weaponInHand = false;
     private bool death = false;
 
-    // Комбо 
-    private string[] combo = { "L", "LL", "LLL", "R", "RR", "RRR", "LLR", "LLRR", "RRL", "RRLL" };
-    private string currentCombo; 
+    private string[] combo = { "L ", "LL ", "LLL ", "R ", "RR ", "RRR ", "LLR ", "LLRR ", "RRL ", "RRLL " };
+    private string currentCombo;
 
     public void Start()
     {
@@ -42,20 +38,13 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void Update()
     {
-        // === ШАГ 1: СБОР ВСЕГО ВВОДА ЗА КАДР ===
-        ref PlayerInput currentInput = ref inputHandler.CurrentInput; // Берем ССЫЛКУ на оригинал, не копируем, работаем напрямую
-
-        // === ШАГ 2: ОБРАБОТКА СОСТОЯНИЯ ===
-        UpdateState(in currentInput); // 'in' = только для чтения
-
-        // === ШАГ 3: ОЧИСТКА КАДРА ===
+        ref PlayerInput currentInput = ref inputHandler.CurrentInput;
+        UpdateState(in currentInput);
         flagMovment = false;
-}
+    }
 
     private void UpdateState(in PlayerInput input)
     {
-        // Приоритеты -> 1) Уклонение 2) Атака 3) Движения
-        
         canChangeStateAttack = (lastAttackTime < Time.time - COMBO_WINDOW);
         canChangeStateDodge = (lastDodgeTime < Time.time - DODGE_WINDOW);
 
@@ -67,205 +56,131 @@ public class PlayerStateMachine : MonoBehaviour
         switch (currentState)
         {
             case state.Idle:
-                if (input.Alt && canChangeStateDodge) // Idle -> Dodge
+                if (input.Alt && canChangeStateDodge)
                 {
                     currentState = state.Dodge;
                     movControl.SetTurnAllow(false);
                 }
-                else if ((input.PKM || input.LKM) && canChangeStateAttack && weaponInHand) // Idle -> Attack
+                else if ((input.PKM || input.LKM) && canChangeStateAttack && weaponInHand)
                 {
-                    if (input.PKM)
-                    {
-                        currentCombo = "R";
-                    }
-                    else
-                    {
-                        currentCombo = "L";
-                    }
+                    currentCombo = input.PKM ? "R " : "L ";
                     currentState = state.Attack;
                     movControl.SetTurnAllow(false);
                 }
-                else if (input.Shift && input.WASD) // Idle -> Run
+                else if (input.Shift && input.WASD)
                 {
                     currentState = state.Run;
                 }
-                else if (input.WASD) // Idle -> Walk
+                else if (input.WASD)
                 {
                     currentState = state.Walk;
                 }
                 break;
 
             case state.Walk:
-                if (input.Alt && canChangeStateDodge) // Walk -> Dodge
+                if (input.Alt && canChangeStateDodge)
                 {
                     currentState = state.Dodge;
                     movControl.SetTurnAllow(false);
                 }
-                else if ((input.PKM || input.LKM) && canChangeStateAttack && weaponInHand) // Walk -> Attack
+                else if ((input.PKM || input.LKM) && canChangeStateAttack && weaponInHand)
                 {
-                    if (input.PKM)
-                    {
-                        currentCombo = "R";
-                    }
-                    else
-                    {
-                        currentCombo = "L";
-                    }
+                    currentCombo = input.PKM ? "R " : "L ";
                     currentState = state.Attack;
                     movControl.SetTurnAllow(false);
                 }
-                else if (input.Shift && input.WASD) // Walk -> Run
+                else if (input.Shift && input.WASD)
                 {
                     currentState = state.Run;
                 }
-                else if (input.WASD == false) // Walk -> Idle
+                else if (!input.WASD)
                 {
                     currentState = state.Idle;
                 }
                 break;
 
             case state.Run:
-                if (input.Alt && canChangeStateDodge) // Run -> Dodge
+                if (input.Alt && canChangeStateDodge)
                 {
                     currentState = state.Dodge;
                     movControl.SetTurnAllow(false);
                 }
-                else if ((input.PKM || input.LKM) && canChangeStateAttack && weaponInHand) // Run -> Attack
+                else if ((input.PKM || input.LKM) && canChangeStateAttack && weaponInHand)
                 {
-                    if (input.PKM)
-                    {
-                        currentCombo = "R";
-                    }
-                    else
-                    {
-                        currentCombo = "L";
-                    }
+                    currentCombo = input.PKM ? "R " : "L ";
                     currentState = state.Attack;
                     movControl.SetTurnAllow(false);
                 }
-                else if (input.Shift == false && input.WASD) // Run -> Walk
+                else if (!input.Shift && input.WASD)
                 {
                     currentState = state.Walk;
                 }
-                else if (input.WASD == false) // Run -> Idle
+                else if (!input.WASD)
                 {
                     currentState = state.Idle;
                 }
                 break;
 
             case state.Sprint:
-                if (input.Alt && canChangeStateDodge) // Sprint -> Dodge
+                if (input.Alt && canChangeStateDodge)
                 {
                     currentState = state.Dodge;
                     movControl.SetTurnAllow(false);
                 }
-                else if ((input.PKM || input.LKM) && canChangeStateAttack && weaponInHand) // Sprint -> Attack
+                else if ((input.PKM || input.LKM) && canChangeStateAttack && weaponInHand)
                 {
-                    if (input.PKM)
-                    {
-                        currentCombo = "R";
-                    }
-                    else
-                    {
-                        currentCombo = "L";
-                    }
+                    currentCombo = input.PKM ? "R " : "L ";
                     currentState = state.Attack;
                     movControl.SetTurnAllow(false);
                 }
-                else if (input.Shift == false && input.WASD) // Sprint -> Walk
+                else if (!input.Shift && input.WASD)
                 {
                     currentState = state.Walk;
                 }
-                else if (input.WASD == false) // Sprint -> Idle
+                else if (!input.WASD)
                 {
                     currentState = state.Idle;
                 }
                 break;
 
             case state.Dodge:
-                if ((input.PKM || input.LKM) && flagAttack && canChangeStateAttack && weaponInHand) // Dodge -> Attack
+                if ((input.PKM || input.LKM) && flagAttack && canChangeStateAttack && weaponInHand)
                 {
-                    if (input.PKM)
-                    {
-                        currentCombo = "R";
-                    }
-                    else
-                    {
-                        currentCombo = "L";
-                    }
+                    currentCombo = input.PKM ? "R " : "L ";
                     blockFlagMovment = true;
-                    flagAttack = false; // <- Очищаем после использования
+                    flagAttack = false;
                     currentState = state.Attack;
                     movControl.SetTurnAllow(false);
                 }
                 if (flagMovment)
                 {
                     lastDodgeTime = Time.time;
-
-                    if (input.Shift && input.WASD) // Dodge -> Sprint
-                    {
-                        currentState = state.Sprint;
-                    }
-                    else if (input.Shift == false && input.WASD) // Dodge -> Walk
-                    {
-                        currentState = state.Walk;
-                    }
-                    else // Dodge -> Idle
-                    {
-                        currentState = state.Idle;
-                    }
+                    currentState = (input.Shift && input.WASD) ? state.Sprint :
+                                   (input.WASD) ? state.Walk : state.Idle;
                 }
                 break;
 
             case state.Attack:
-                // |------------------{-------------}-----| <- Анимация Атаки
-                //                    ^             ^
-                //                    |             |
-                // 1.Запрет на любой   2.Запрет на    3.Запрет на атаки, гарантирует переход
-                //    Переход           движения           на движение (Это кто-то читает?)
-                //  (Кроме уклонения)
-
-                if (input.Alt && flagMovment) // 1. Всегда можем уклониться  (Больше нет)
+                if (input.Alt && flagMovment)
                 {
                     blockFlagAttack = true;
-                    currentState = state.Dodge; // Attack -> Dodge
+                    currentState = state.Dodge;
                     movControl.SetTurnAllow(false);
-                    //animControl.ProbAOA();
                 }
-                else if (flagAttack && ((input.PKM || input.LKM))) // 2. Можем атаковать только если flagAttack == true 
+                else if (flagAttack && (input.PKM || input.LKM))
                 {
-                    if (input.PKM)
-                    {
-                        currentCombo += "R";
-                    }
-                    else
-                    {
-                        currentCombo += "L";
-                    }
-
-                    blockFlagMovment = BattleChecker(); 
-
-                    flagAttack = false; // <- Очищаем после использования
-                    currentState = state.Attack; // Attack -> Attack
+                    currentCombo += input.PKM ? "R " : "L ";
+                    blockFlagMovment = BattleChecker();
+                    flagAttack = false;
+                    currentState = state.Attack;
                     movControl.SetTurnAllow(false);
-                    prevState = state.Empty; // Чтобы перейти в новую анимацию
+                    prevState = state.Empty;
                 }
-                else if (flagMovment) // 3. Можем ходить только если flagMovment == true
+                else if (flagMovment)
                 {
                     lastAttackTime = Time.time;
-
-                    if (input.Shift && input.WASD) // Attack -> Run
-                    {
-                        currentState = state.Run;
-                    }
-                    else if (input.WASD) // Attack -> Walk
-                    {
-                        currentState = state.Walk;
-                    }
-                    else // Attack -> Idle
-                    {
-                        currentState = state.Idle;
-                    }
+                    currentState = (input.Shift && input.WASD) ? state.Run :
+                                   (input.WASD) ? state.Walk : state.Idle;
                 }
                 break;
 
@@ -273,13 +188,12 @@ public class PlayerStateMachine : MonoBehaviour
                 break;
         }
 
-        movControl.ChoosingAction(currentState, input.Move); // Для движения сообщаем о новом состоянии всегда
+        movControl.ChoosingAction(currentState, input.Move);
         if (currentState != prevState)
         {
-            animControl.ChoosingAction(currentState, input.LKM, input.PKM); // Для аттаки сообщаем о новом состоянии только, если оно сменилось
-            colliderSwitch.ChoosingAction(currentState); // Коллайдер меча
+            animControl.ChoosingAction(currentState, input.LKM, input.PKM);
+            colliderSwitch.ChoosingAction(currentState);
             prevState = currentState;
-            //Debug.Log(currentState);
         }
     }
 
@@ -288,33 +202,26 @@ public class PlayerStateMachine : MonoBehaviour
         blockFlagAttack = false;
         flagAttack = true;
         blockFlagMovment = false;
-        movControl.SetTurnAllow(true); // Разрешаем изменять направление
-        Debug.Log("Было");
+        movControl.SetTurnAllow(true);
     }
 
-    public void StartChangeState() // Начало промежутка в котором можно сменить состояние 
+    public void StartChangeState()
     {
-        flagAttack = !blockFlagAttack; // Очищаестся сразу после использования или в EndChangeState() 
+        flagAttack = !blockFlagAttack;
         blockFlagMovment = false;
     }
 
-    public void EndChangeState() // Конец промежутка, гарантируем что состояние измениться
+    public void EndChangeState()
     {
-
         flagAttack = false;
-        flagMovment = !blockFlagMovment; // Очищается сразу после использования
-        movControl.SetTurnAllow(true); // Разрешаем изменять направление
+        flagMovment = !blockFlagMovment;
+        movControl.SetTurnAllow(true);
     }
 
     private bool BattleChecker()
     {
-        for (int i = 0; i < combo.Length; i++)
-        {
-            if (currentCombo == combo[i])
-            {
-                return true;
-            }
-        }
+        foreach (var c in combo)
+            if (currentCombo == c) return true;
         return false;
     }
 
@@ -323,13 +230,21 @@ public class PlayerStateMachine : MonoBehaviour
         death = true;
     }
 
-    public state GetPlayerState()
-    {
-        return currentState;
-    }
+    public state GetPlayerState() => currentState;
+    public void SetWeaponInHand(bool _val) => weaponInHand = _val;
 
-    public void SetWeaponInHand(bool _val)
+    public void GoRespawnState()
     {
-        weaponInHand = _val;
+        death = false;
+        currentState = state.Idle;
+        prevState = state.Empty;
+
+        if (movControl != null)
+        {
+            movControl.Respawn(); // РІРјРµСЃС‚Рѕ СЃС‚Р°СЂС‹С… РґРІСѓС… СЃС‚СЂРѕС‡РµРє СЃ movControl
+        }
+
+        if (animControl != null)
+            animControl.ResetToIdle();
     }
 }
