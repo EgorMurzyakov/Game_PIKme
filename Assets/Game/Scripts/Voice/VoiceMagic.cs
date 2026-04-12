@@ -30,8 +30,11 @@ public class VoiceMagic : MonoBehaviour
 
     [Header("Спеллы (компоненты)")]
     public FireballSpell fireballSpell;
-
     public TornadoSpell tornadoSpell;
+
+    [Header("Управление с клавиатуры")]
+    [Tooltip("Включить управление заклинаниями с клавиатуры")]
+    public bool enableKeyboardSpells = true;
 
     void Start()
     {
@@ -49,7 +52,33 @@ public class VoiceMagic : MonoBehaviour
 
     void Update()
     {
-        // Периодичная проверка процесса
+        // ===== УПРАВЛЕНИЕ С КЛАВИАТУРЫ =====
+        if (enableKeyboardSpells)
+        {
+            // Пробел для торнадо
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                UnityDebug.Log("Клавиатура: Пробел нажат - кастуем торнадо!");
+                HandleSpellCast("TORNADO");
+            }
+
+            // Опционально: Огненный шар на F
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                UnityDebug.Log("Клавиатура: F нажат - кастуем огненный шар!");
+                HandleSpellCast("FIREBALL");
+            }
+
+            // Опционально: Ледяная стрела на R
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                UnityDebug.Log("Клавиатура: R нажат - кастуем ледяную стрелу!");
+                HandleSpellCast("ICE_ARROW");
+            }
+        }
+        // ===== КОНЕЦ УПРАВЛЕНИЯ С КЛАВИАТУРЫ =====
+
+        // Периодичная проверка процесса (для голоса)
         float now = Time.time;
         if (now - lastProcessCheckTime >= processCheckIntervalSeconds)
         {
@@ -57,11 +86,19 @@ public class VoiceMagic : MonoBehaviour
             CheckAndRestartProcess();
         }
 
+        // Обработка голосовых команд
         string spell = Interlocked.Exchange(ref pendingSpell, null);
-        if (string.IsNullOrEmpty(spell)) return;
+        if (!string.IsNullOrEmpty(spell))
+        {
+            HandleSpellCast(spell);
+        }
+    }
 
-        float now2 = Time.time;
-        bool cooldownReady = (now2 - lastCastTime) >= spellCooldownSeconds;
+    // Общий метод для обработки заклинаний (и с голоса, и с клавиатуры)
+    private void HandleSpellCast(string spell)
+    {
+        float now = Time.time;
+        bool cooldownReady = (now - lastCastTime) >= spellCooldownSeconds;
 
         if (!cooldownReady)
         {
@@ -70,7 +107,7 @@ public class VoiceMagic : MonoBehaviour
             return;
         }
 
-        lastCastTime = now2;
+        lastCastTime = now;
         lastSpell = spell;
 
         CastSpell(spell);
@@ -160,7 +197,7 @@ public class VoiceMagic : MonoBehaviour
                 UnityDebug.Log("Tornado cast");
                 if (tornadoSpell == null)
                 {
-                    UnityEngine.Debug.LogError("fireballSpell не назначен в Inspector.");
+                    UnityEngine.Debug.LogError("tornadoSpell не назначен в Inspector.");
                     return;
                 }
                 tornadoSpell.Cast(transform, playerTransform);
@@ -168,6 +205,7 @@ public class VoiceMagic : MonoBehaviour
 
             case "ICE_ARROW":
                 UnityDebug.Log("Ice arrow cast");
+                // Добавьте логику для ледяной стрелы, если есть
                 break;
         }
     }

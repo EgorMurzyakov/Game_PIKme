@@ -58,6 +58,14 @@ public class AnimationController : MonoBehaviour
 
     }
 
+    public void ResetToIdle()
+    {
+        ResetAllTrigger();
+        animator.Rebind();
+        animator.Update(0f);
+        animator.SetTrigger("goIdle");
+    }
+
     //public void ProbAOA()
     //{
     //    animator.applyRootMotion = false;

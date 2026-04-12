@@ -124,4 +124,14 @@ public class MovementController : MonoBehaviour
         lastChangeTurn = Time.time;
     }
 
+    public void Respawn()
+    {
+        death = false;
+        currentVelocity = Vector3.zero;
+        currentSpeed = 0;
+        targetSpeed = 0;
+        moveInput = Vector2.zero;
+        moveDirection = Vector3.zero;
+    }
+
 }

@@ -9,6 +9,7 @@ TagManager:
   - Tree
   - Stone
   - TraderNPC
+  - Lava
   layers:
   - Default
   - TransparentFX
