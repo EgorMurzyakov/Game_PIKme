@@ -124,7 +124,7 @@ public class InventoryManager : MonoBehaviour
 
             if (isTrader)
             {
-                if (Input.GetKeyDown(KeyCode.Space) && pumpSlot.item != null) // <<<<<<-------------------------------------------------|
+                if (Input.GetKeyDown(KeyCode.R) && pumpSlot.item != null) // <<<<<<-------------------------------------------------|
                 {
                     int upgradePrice = ((WeaponItem)pumpSlot.item).GetUpgradePrice();
                     if (playerMoney >= upgradePrice) {
