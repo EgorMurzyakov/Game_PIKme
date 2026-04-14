@@ -7163,6 +7163,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2405603918325724960, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+      propertyPath: hitPoint
+      value: 
+      objectReference: {fileID: 2125548320}
+    - target: {fileID: 2405603918325724960, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+      propertyPath: stateMachine
+      value: 
+      objectReference: {fileID: 2125548324}
     - target: {fileID: 2561230060016913758, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -7737,7 +7745,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8234436724202565122, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -15.527
+      value: -12.2
       objectReference: {fileID: 0}
     - target: {fileID: 8234436724202565122, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7798,6 +7806,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8722707484499129528, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2125548310}
+    - targetCorrespondingSourceObject: {fileID: 8722707484499129528, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2125548329}
   m_SourcePrefab: {fileID: 100100000, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
 --- !u!1001 &669689632
 PrefabInstance:
@@ -18461,6 +18472,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1289960687327132697, guid: 4803056ce7a6c874a8d21072ebf38e6d, type: 3}
   m_PrefabInstance: {fileID: 1719118636}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1735670582
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1735670583}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1735670583
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1735670582}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 169.12, y: 10.43, z: -125.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1735935469
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22034,6 +22076,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57060d6eea40224eb52e4a5c68f55ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerRespawn
+--- !u!114 &2125548320 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3294381731496366071, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+  m_PrefabInstance: {fileID: 659315704}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125548291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a35fc5de16bf9e4ab860880389760f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHP
+--- !u!114 &2125548324 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6315489529683533559, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+  m_PrefabInstance: {fileID: 659315704}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125548291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f34b4a5630140341affad3d547f54e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStateMachine
+--- !u!114 &2125548329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125548291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 439454ce035fb2d4abaf25f70517f702, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RespawnManager
+  spawnPoint: {fileID: 1735670583}
+  stateMachine: {fileID: 2125548324}
+  playerHP: {fileID: 2125548320}
+  respawnDelay: 3
 --- !u!1001 &2136220281
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22123,3 +22203,4 @@ SceneRoots:
   - {fileID: 131451197}
   - {fileID: 776045319}
   - {fileID: 659315704}
+  - {fileID: 1735670583}

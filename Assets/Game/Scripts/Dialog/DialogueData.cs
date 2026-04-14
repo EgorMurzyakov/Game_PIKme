@@ -1,7 +1,5 @@
-using System;
-
-[Serializable]
+[System.Serializable]
 public class DialogueData
 {
-    public string text;
+    public string[] lines;
 }
