@@ -8,40 +8,66 @@ public class DialogueManager : MonoBehaviour
 
     public GameObject dialoguePanel;
     public TextMeshProUGUI dialogueText;
-    public Button acceptButton; // перетащи кнопку в Inspector
+    public Button continueButton;     
+    public TextMeshProUGUI buttonLabel; 
 
+    private string[] currentLines;
+    private int currentIndex = 0;
     public bool IsOpen { get; private set; }
 
-    void Awake()
-    {
-        Instance = this;
-    }
+    void Awake() { Instance = this; }
 
     void Start()
     {
         dialoguePanel.SetActive(false);
-        // Привязываем кнопку здесь — надёжнее чем через Inspector
-        acceptButton.onClick.AddListener(CloseDialogue);
+        continueButton.onClick.AddListener(OnContinuePressed);
     }
 
-    public void OpenDialogue(string text)
+    public void OpenDialogue(string[] lines)
     {
-        dialogueText.text = text;
-        dialoguePanel.SetActive(true);
+        currentLines = lines;
+        currentIndex = 0;
         IsOpen = true;
 
-        // Замораживаем игру (см. пункт 3)
+        dialoguePanel.SetActive(true);
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        ShowCurrentLine();
     }
 
-    public void CloseDialogue()
+    void ShowCurrentLine()
+    {
+        dialogueText.text = currentLines[currentIndex];
+
+        // Меняем текст кнопки на последнем блоке
+        if (currentIndex == currentLines.Length - 1)
+            buttonLabel.text = "Принять";
+        else
+            buttonLabel.text = "Продолжить";
+    }
+
+    void OnContinuePressed()
+    {
+        // Если есть следующий блок — показываем его
+        if (currentIndex < currentLines.Length - 1)
+        {
+            currentIndex++;
+            ShowCurrentLine();
+        }
+        else
+        {
+            // Последний блок — закрываем диалог
+            CloseDialogue();
+        }
+    }
+
+    void CloseDialogue()
     {
         dialoguePanel.SetActive(false);
         IsOpen = false;
-
-        // Размораживаем игру
+        currentIndex = 0;
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
