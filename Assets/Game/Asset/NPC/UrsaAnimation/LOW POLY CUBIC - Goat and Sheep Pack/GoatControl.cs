@@ -1,4 +1,4 @@
-using UnityEditor.Rendering;
+using UnityEngine.Rendering;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -39,13 +39,13 @@ public class GoatControl : MonoBehaviour
 
         if (currentState == GoatState.Walk)
         {
-            CheckDistance(); // Проверяем дистанцию до цели
-            GoToNextPoint(); // Запускаем движение
+            CheckDistance(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
+            GoToNextPoint(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         }
 
         if (canChageState) 
         {
-            UpdateState(); // Меняем состояние при возможности
+            UpdateState(); // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         }
 
         //PlaySound();
@@ -114,19 +114,19 @@ public class GoatControl : MonoBehaviour
 
     private void GoToNextPoint()
     {
-        // 1. Обновляем цель агента
+        // 1. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         //target = targetPoints[Random.Range(0, targetPoints.Length)];
         agent.SetDestination(target.position);
 
-        // 2. Получаем направление от агента
+        // 2. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         Vector3 direction = agent.desiredVelocity;
 
-        // 3. Нормализуем и применяем через CharacterController
+        // 3. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ CharacterController
         if (direction.magnitude > 0.1f)
         {
             direction.Normalize();
 
-            // Движение
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             charControl.Move(direction * 2f * Time.deltaTime);
         }
     }
@@ -172,7 +172,7 @@ public class GoatControl : MonoBehaviour
         //audioSrc.PlayOneShot(soundLists[_i], vol);
     }
 
-    private void SetChangeStateTrue() // Вызываем из анимационных событий
+    private void SetChangeStateTrue() // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     {
         canChageState = true;
     }

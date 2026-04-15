@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems; // <--- ВАЖНО: для EventSystem
+using UnityEngine.EventSystems; 
 using System.Diagnostics;
 using Debug = UnityEngine.Debug;
 
@@ -14,19 +14,19 @@ public class SimpleMenu : MonoBehaviour
     public Button btnQuit;
     
     [Header("Инвентарь (для блокировки)")]
-    public GameObject inventoryUI; // Перетащи сюда корень инвентаря
+    public GameObject inventoryUI;
 
     private bool isPaused = false;
+    private bool wasInventoryActive = false; // Запоминаем состояние инвентаря
 
     void Start()
     {
-        // 1. ПРОВЕРКА EVENTSYSTEM (Критично для новой сцены!)
+        // 1. ПРОВЕРКА EVENTSYSTEM
         if (FindObjectOfType<EventSystem>() == null)
         {
             Debug.LogWarning("EventSystem не найден! Создаю автоматически...");
             GameObject es = new GameObject("EventSystem");
             es.AddComponent<EventSystem>();
-            // Для старых версий Unity:
             es.AddComponent<StandaloneInputModule>();
         }
 
@@ -40,11 +40,9 @@ public class SimpleMenu : MonoBehaviour
             }
         }
 
-        // Скрываем меню при старте
         if (menuCanvasObject != null)
             menuCanvasObject.SetActive(false);
 
-        // Подписываем кнопки
         if (btnContinue) btnContinue.onClick.AddListener(Resume);
         if (btnSave) btnSave.onClick.AddListener(SaveDummy);
         if (btnSettings) btnSettings.onClick.AddListener(SettingsDummy);
@@ -69,11 +67,12 @@ public class SimpleMenu : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         
-        // ВАЖНО: Отключаем инвентарь, чтобы он не блокировал клики!
+        // ЗАПОМИНАЕМ состояние инвентаря ПЕРЕД отключением
         if (inventoryUI != null)
         {
+            wasInventoryActive = inventoryUI.activeSelf;
             inventoryUI.SetActive(false);
-            Debug.Log("Инвентарь отключен");
+            Debug.Log($"Инвентарь отключен (был активен: {wasInventoryActive})");
         }
         
         if (menuCanvasObject != null) 
@@ -95,8 +94,12 @@ public class SimpleMenu : MonoBehaviour
             menuCanvasObject.SetActive(false);
         }
         
-        // Инвентарь можно включить обратно, если нужно
-        // if (inventoryUI != null) inventoryUI.SetActive(true);
+        // ВОССТАНАВЛИВАЕМ состояние инвентаря
+        if (inventoryUI != null)
+        {
+            inventoryUI.SetActive(wasInventoryActive);
+            Debug.Log($"Инвентарь восстановлен: {wasInventoryActive}");
+        }
         
         Debug.Log("ПРОДОЛЖИТЬ");
     }
