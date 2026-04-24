@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94240c36e245bfa40bfac44c31bdf061, type: 3}
   m_Name: BaceBook
   m_EditorClassIdentifier: Assembly-CSharp::BookItem
+  itemID: bace_book_1
   type: 3
   ItemPrefab: {fileID: 711209687790816509, guid: bfe16911512e35944a8ec53612d83a90, type: 3}
   itemName: BaceBook

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5339899da09de3145b5c58e0a986efc3, type: 3}
   m_Name: RedApple
   m_EditorClassIdentifier: Assembly-CSharp::FoodItem
+  itemID: red_apple_1
   type: 1
   ItemPrefab: {fileID: 1169411228174609760, guid: 38b319bc983685745b6a26428ca86deb, type: 3}
   itemName: RedApple

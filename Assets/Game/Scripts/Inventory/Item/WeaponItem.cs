@@ -14,6 +14,7 @@ public class WeaponItem : ItemScriptableObject
         WeaponItem clone = ScriptableObject.CreateInstance<WeaponItem>();
 
         // Копируем все поля
+        clone.itemID = itemID;
         clone.type = this.type;
         clone.ItemPrefab = this.ItemPrefab;
         clone.itemName = this.itemName;
@@ -48,6 +49,11 @@ public class WeaponItem : ItemScriptableObject
     public void UpdateUpgradePrice()
     {
         upgradePrice = (int)(upgradePrice * upgradePriceCoeff);
+    }
+
+    public void UpdateUpgradePrice(int _price)
+    {
+        upgradePrice = _price;
     }
 
 }
