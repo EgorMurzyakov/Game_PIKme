@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Data;
 using System.Runtime.CompilerServices;
@@ -7,6 +8,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
+using NUnit.Framework.Constraints;
+using static UnityEditor.Progress;
+using System.Collections;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -26,8 +30,8 @@ public class InventoryManager : MonoBehaviour
     public int playerMoney = 0;
     //public List<InventorySlot> slots = new List<InventorySlot>();
     public InventorySlot[,] slots;
-    [SerializeField] private InventorySlot weaponSlot;
-    [SerializeField] private InventorySlot bookSlot;
+    public InventorySlot weaponSlot;
+    public InventorySlot bookSlot;
     [SerializeField] private InventorySlot pumpSlot;
     public ItemScriptableObject startWeapon;
     public ItemScriptableObject startBook;
@@ -40,11 +44,19 @@ public class InventoryManager : MonoBehaviour
     private int col; // Столбцы
     private int curRow = 0;
     private int curCol = 0;
+        
+    private string savePath; // Путь к файлу сохранения
+    ItemScriptableObject[] allItems; // Item Asset
 
     private List<GameObject> itemsInRange = new List<GameObject>(); // Список предметов, которые можно подобрать   
 
     public void Start()
     {
+        // Задаём путь для сохранения (специальная папка для игры)
+        savePath = Application.persistentDataPath + "/money.json";
+        //Debug.Log("Файл сохранения находится здесь: " + Application.persistentDataPath);
+
+
         col = inventoryPanel.childCount;
         row = inventoryPanel.GetChild(0).childCount;
         slots = new InventorySlot[col, row];
@@ -59,6 +71,10 @@ public class InventoryManager : MonoBehaviour
                 }
             }
         }
+
+        allItems = Resources.LoadAll<ItemScriptableObject>("Items"); // Обязательно до LoadMoney()
+        LoadMoney();
+        StartCoroutine(InitializeWeaponLater()); // Включаем оружие с задержкой в кадр (должно спасать в случае, если ChangeWeapon не успеет подписаться на событие)
 
         UIPanel.SetActive(false); // Принудительно выключаем при старте игры
         UIActionPanel.SetActive(false);
@@ -80,7 +96,19 @@ public class InventoryManager : MonoBehaviour
         priceUI.text = "Price";
     }
 
-    public void Update()
+    IEnumerator InitializeWeaponLater()
+    {
+        // Ждем 1 кадр, чтобы все Start() выполнились
+        yield return null;
+
+        if (weaponSlot.item != null)
+        {
+            playerStateMachine.SetWeaponInHand(true); // В слоте появилось оружие -> можно атаковать
+            ChangeWeapon?.Invoke((WeaponItem)weaponSlot.item); // Событие - положили оружие в слот, класс - ActiveWeapon
+        }
+    }
+
+        public void Update()
     {
         if (Input.GetKeyDown(KeyCode.I)) // Вкл/Выкл инвентаря в игре
         {
@@ -134,6 +162,102 @@ public class InventoryManager : MonoBehaviour
                         UpdateUI();
                     }
                 }
+            }
+        }
+
+    }
+
+    // Сохраняем деньги
+    //public void SaveMoney()
+    //{
+    //    // Превращаем число в текст (JSON)
+    //    string json = "{\"money\":" + playerMoney + "}"; // Деньги
+
+    //    foreach (InventorySlot _slot in slots) // Содержимое инвентаря
+    //    {
+    //        if (_slot.item != null)
+    //        {
+    //            json += "{\"itemID\":" + _slot.item.itemID + "}";
+    //        }
+    //    }
+
+    //    // Записываем текст в файл
+    //    File.WriteAllText(savePath, json);
+
+    //    Debug.Log("Деньги сохранены: " + playerMoney);
+    //}
+
+    public void LoadMoney()
+    {
+        string path = Path.Combine(Application.persistentDataPath, "money.json");
+    
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+            SaveDate data = JsonUtility.FromJson<SaveDate>(json);
+        
+            if (data != null)
+            {
+                playerMoney = data.money;
+                if (data.weaponSlotItem != null)
+                {
+                    string ID = data.weaponSlotItem.itemID;
+                    foreach (ItemScriptableObject _itemSO in allItems)
+                    {
+                        if (_itemSO.itemID == ID)
+                        {
+                            WeaponItem weapon = (WeaponItem)_itemSO.Clone();
+                            weapon.SetBaceDamage(data.weaponSlotItem.baseDamage);
+                            weapon.UpdateUpgradePrice(data.weaponSlotItem.UpPrice);
+                            weaponSlot.item = weapon;
+                            weaponSlot.SetIcon(weapon.icon);
+                        }
+                    }
+                }
+                if (data.bookSlotItemID != null)
+                {
+                    string ID = data.bookSlotItemID;
+                    foreach (ItemScriptableObject _itemSO in allItems)
+                    {
+                        if (_itemSO.itemID == ID)
+                        {
+                            bookSlot.item = _itemSO;
+                            bookSlot.SetIcon(_itemSO.icon);
+                        }
+                    }
+                }
+
+                foreach (ItemSaveDate _itemDate in data.inventory) // Предметы кроме оружия
+                {
+                    string ID = _itemDate.itemID;
+                    foreach (ItemScriptableObject _itemSO in allItems)
+                    {
+                        if (_itemSO.itemID == ID)
+                        {
+                            AddItem(_itemSO.Clone(), _itemDate.amount); // Это нужный предмет
+                        }
+                    }
+                }
+
+                foreach (ItemSaveDateWeapon _itemDate in data.inventoryWeapon) // Оружие
+                {
+                    string ID = _itemDate.itemID;
+                    foreach (ItemScriptableObject _itemSO in allItems)
+                    {
+                        if (_itemSO.itemID == ID)
+                        {
+                            WeaponItem weapon = (WeaponItem)_itemSO.Clone(); // Берем то же оружие, но меняем хар-ки которые можно качать
+                            weapon.SetBaceDamage(_itemDate.baseDamage);
+                            weapon.UpdateUpgradePrice(_itemDate.UpPrice);
+                            AddItem(weapon, 1); 
+                        }
+                    }
+                }
+            }
+            else
+            {
+                playerMoney = 0;
+                Debug.LogWarning("Не удалось загрузить, используем значение по умолчанию");
             }
         }
     }
@@ -385,7 +509,7 @@ public class InventoryManager : MonoBehaviour
             if (weaponSlot != null)
             {
                 prevWeaponSlotItem = weaponSlot.item;
-            }
+            }            
             // Добавляем в слот оружия
             weaponSlot.item = slots[curCol, curRow].item;
             weaponSlot.amount = slots[curCol, curRow].amount;

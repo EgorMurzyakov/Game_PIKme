@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5339899da09de3145b5c58e0a986efc3, type: 3}
   m_Name: GreenApple
   m_EditorClassIdentifier: Assembly-CSharp::FoodItem
+  itemID: green_apple_1
   type: 1
   ItemPrefab: {fileID: 1169411228174609760, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
   itemName: GreenApple
@@ -19,3 +20,5 @@ MonoBehaviour:
   maximumAmount: 3
   icon: {fileID: 21300000, guid: c1d0e6764d9c5f8458571840fb1d57d3, type: 3}
   healthAmount: 31
+  upCoeff: 1
+  durationEffect: 0

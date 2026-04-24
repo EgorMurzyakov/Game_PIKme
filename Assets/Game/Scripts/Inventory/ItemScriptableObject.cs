@@ -4,6 +4,7 @@ public enum ItemType { Default, Food, Weapon, Book, Money }
 
 public class ItemScriptableObject : ScriptableObject
 {
+    public string itemID;
     public ItemType type;
     public GameObject ItemPrefab;
     public string itemName;

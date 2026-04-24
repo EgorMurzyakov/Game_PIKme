@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162c6aca54a944444a31dee3739eb2ae, type: 3}
   m_Name: Gold
   m_EditorClassIdentifier: Assembly-CSharp::MoneyItem
+  itemID: gold_1
   type: 4
   ItemPrefab: {fileID: 0}
   itemName: Gold
