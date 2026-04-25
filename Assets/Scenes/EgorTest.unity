@@ -131,6 +131,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Apple (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1169411228174609760, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5447452182937856358, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8.289499
@@ -427,6 +431,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SilverSword
       objectReference: {fileID: 0}
+    - target: {fileID: 5631673566334751013, guid: 2a8cda2da5bbde54eac88b787907f003, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -512,6 +520,10 @@ PrefabInstance:
     - target: {fileID: 1169411228174609760, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
       propertyPath: m_Name
       value: Apple (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169411228174609760, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5447452182937856358, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -710,6 +722,10 @@ PrefabInstance:
     - target: {fileID: 1169411228174609760, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
       propertyPath: m_Name
       value: Apple (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169411228174609760, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5447452182937856358, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1016,6 +1032,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Apple (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 1169411228174609760, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5447452182937856358, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.273855
@@ -1184,6 +1204,10 @@ PrefabInstance:
     - target: {fileID: 1169411228174609760, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
       propertyPath: m_Name
       value: Apple (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169411228174609760, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5447452182937856358, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1754,6 +1778,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BaceSword (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8324030651237828437, guid: a3ef75a77794b0d428277d5fdd38cd06, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1780,6 +1808,10 @@ PrefabInstance:
     - target: {fileID: 1169411228174609760, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
       propertyPath: m_Name
       value: Apple (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169411228174609760, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5447452182937856358, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1837,6 +1869,10 @@ PrefabInstance:
     - target: {fileID: 1169411228174609760, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
       propertyPath: m_Name
       value: Apple (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169411228174609760, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5447452182937856358, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1997,6 +2033,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RedApple (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1169411228174609760, guid: 38b319bc983685745b6a26428ca86deb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5447452182937856358, guid: 38b319bc983685745b6a26428ca86deb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8.228837
@@ -2094,6 +2134,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BaceBook (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 711209687790816509, guid: bfe16911512e35944a8ec53612d83a90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2110,6 +2154,10 @@ PrefabInstance:
     - target: {fileID: 1169411228174609760, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
       propertyPath: m_Name
       value: Apple
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169411228174609760, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5447452182937856358, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3066,6 +3114,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5184116532292491096, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+      propertyPath: saveItem
+      value: 
+      objectReference: {fileID: 898719905}
     - target: {fileID: 5213300742830711785, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3419,6 +3471,10 @@ PrefabInstance:
     - target: {fileID: 1169411228174609760, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
       propertyPath: m_Name
       value: Apple (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169411228174609760, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5447452182937856358, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3804,6 +3860,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RedApple (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1169411228174609760, guid: 38b319bc983685745b6a26428ca86deb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5447452182937856358, guid: 38b319bc983685745b6a26428ca86deb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.290961
@@ -3860,6 +3920,10 @@ PrefabInstance:
     - target: {fileID: 1169411228174609760, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
       propertyPath: m_Name
       value: Apple (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169411228174609760, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5447452182937856358, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3986,6 +4050,10 @@ PrefabInstance:
     - target: {fileID: 1169411228174609760, guid: 38b319bc983685745b6a26428ca86deb, type: 3}
       propertyPath: m_Name
       value: RedApple (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169411228174609760, guid: 38b319bc983685745b6a26428ca86deb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5447452182937856358, guid: 38b319bc983685745b6a26428ca86deb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4253,6 +4321,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Apple (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 1169411228174609760, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5447452182937856358, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8.228558
@@ -4506,6 +4578,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Apple (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1169411228174609760, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5447452182937856358, guid: a814f1a324038f94292625f6e5b9edd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.1706829
@@ -4708,6 +4784,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RedApple
       objectReference: {fileID: 0}
+    - target: {fileID: 1169411228174609760, guid: 38b319bc983685745b6a26428ca86deb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5447452182937856358, guid: 38b319bc983685745b6a26428ca86deb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.8591733
@@ -4804,6 +4884,10 @@ PrefabInstance:
     - target: {fileID: 711209687790816509, guid: bfe16911512e35944a8ec53612d83a90, type: 3}
       propertyPath: m_Name
       value: BaceBook
+      objectReference: {fileID: 0}
+    - target: {fileID: 711209687790816509, guid: bfe16911512e35944a8ec53612d83a90, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4938,6 +5022,10 @@ PrefabInstance:
     - target: {fileID: 760072250502909517, guid: 4b3458c2071f0b74494bbfc37f2a4844, type: 3}
       propertyPath: m_Name
       value: GoldPileBig_001
+      objectReference: {fileID: 0}
+    - target: {fileID: 760072250502909517, guid: 4b3458c2071f0b74494bbfc37f2a4844, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
