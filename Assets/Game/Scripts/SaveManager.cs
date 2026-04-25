@@ -28,8 +28,9 @@ public class SaveManager : MonoBehaviour
     {
         SaveDate data = new SaveDate();
 
-        data.money = inventoryManager.playerMoney;
-        if (inventoryManager.weaponSlot.item != null)
+        data.money = inventoryManager.playerMoney; // Деньги
+
+        if (inventoryManager.weaponSlot.item != null) // Слот оружия
         {
             data.weaponSlotItem = new ItemSaveDateWeapon(inventoryManager.weaponSlot.item.itemID, 
                 ((WeaponItem)inventoryManager.weaponSlot.item).GetBaceDamage(), 
@@ -42,7 +43,8 @@ public class SaveManager : MonoBehaviour
         {
             data.weaponSlotItem = null;
         }
-        if (inventoryManager.bookSlot.item != null)
+
+        if (inventoryManager.bookSlot.item != null) // Слот книги
         {
             data.bookSlotItemID = inventoryManager.bookSlot.item.itemID;
         }
@@ -50,18 +52,19 @@ public class SaveManager : MonoBehaviour
         {
             data.bookSlotItemID = null;
         }
-        foreach (InventorySlot _slot in inventoryManager.slots)
+
+        foreach (InventorySlot _slot in inventoryManager.slots) // Инчентарь
         {
             if (_slot.item != null)
             {
-                if (_slot.item.type != ItemType.Weapon) // Не оружие
-                {
-                    data.inventory.Add(new ItemSaveDate(_slot.item.itemID, _slot.amount));
-                }
-                else
+                if (_slot.item.type == ItemType.Weapon) // Оружие
                 {
                     data.inventoryWeapon.Add(new ItemSaveDateWeapon(_slot.item.itemID, ((WeaponItem)_slot.item).GetBaceDamage(),
                         ((WeaponItem)_slot.item).GetUpgradePrice()));
+                }
+                else // Остальное (включая книги)
+                {
+                    data.inventory.Add(new ItemSaveDate(_slot.item.itemID, _slot.amount));
                 }
             }
         }
@@ -83,7 +86,7 @@ public class SaveDate
 }
 
 [System.Serializable]
-public class ItemSaveDate
+public class ItemSaveDate // Сохраняемые данные о дефолтных вещах
 {
     public string itemID;
     public int amount;
@@ -98,7 +101,7 @@ public class ItemSaveDate
 }
 
 [System.Serializable]
-public class ItemSaveDateWeapon
+public class ItemSaveDateWeapon // Сохраняемые данные о оружие
 {
     public string itemID;
     public int baseDamage;
@@ -108,7 +111,22 @@ public class ItemSaveDateWeapon
     {
         this.itemID = _id;
         this.baseDamage = _bd;
-        this.UpPrice = _up;  
+        this.UpPrice = _up;
     }
 }
+
+// НЕ НУЖНО (нет механики для изменения заклинаний в книге, поэтому нет смысла сохранять их), но пусть будет
+
+//public class ItemSaveDataBook // Сохраняемые данные о книгах
+//{
+//    public string itemID;
+//    public Spells spells;
+
+//    public ItemSaveDataBook(string _id, Spells _sp)
+//    {
+//        this.itemID = _id;
+//        this.spells = _sp;
+//    }
+//}
+
 
