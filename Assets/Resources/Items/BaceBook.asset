@@ -19,3 +19,6 @@ MonoBehaviour:
   itemDescription: The Sorcerer's Book
   maximumAmount: 1
   icon: {fileID: 21300000, guid: 7972dd97521bb1c44ba8e3774391b996, type: 3}
+  magicSpells:
+    fireball: 1
+    tornado: 1
