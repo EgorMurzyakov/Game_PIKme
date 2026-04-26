@@ -21,11 +21,18 @@ public class RespawnManager : MonoBehaviour
 
     private void Respawn()
     {
-        // 1. Сначала перемещаем
+        // 1. Отключаем CharacterController чтобы можно было телепортировать
+        CharacterController cc = stateMachine.GetComponent<CharacterController>();
+        if (cc != null) cc.enabled = false;
+
+        // 2. Перемещаем на точку спавна
         stateMachine.transform.position = spawnPoint.position;
         stateMachine.transform.rotation = spawnPoint.rotation;
 
-        // 2. Потом восстанавливаем физику
+        // 3. Включаем обратно
+        if (cc != null) cc.enabled = true;
+
+        // 4. Восстанавливаем физику (на случай смерти от лавы)
         Rigidbody rb = stateMachine.GetComponent<Rigidbody>();
         if (rb != null)
         {
@@ -35,10 +42,11 @@ public class RespawnManager : MonoBehaviour
             rb.angularVelocity = Vector3.zero;
         }
 
+        // 5. Восстанавливаем коллайдер (на случай смерти от лавы)
         Collider col = stateMachine.GetComponent<Collider>();
-        if (col != null)
-            col.enabled = true;
+        if (col != null) col.enabled = true;
 
+        // 6. Сбрасываем HP, движение, стейт
         playerHP.Respawn();
         stateMachine.GoRespawnState();
 

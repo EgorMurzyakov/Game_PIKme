@@ -11,6 +11,8 @@ TagManager:
   - TraderNPC
   - Lava
   - WeaponSlot
+  - Orc
+  - DeadEnemy
   layers:
   - Default
   - TransparentFX
@@ -22,7 +24,7 @@ TagManager:
   - Enemy
   - PlayerWeapon
   - EnemyWeapon
-  - 
+  - Orc
   - DeadEnemy
   - 
   - 

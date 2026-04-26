@@ -3,7 +3,6 @@ using UnityEngine.AI;
 
 /// <summary>
 /// Скрипт патрулирования для NPC.
-/// Заставляет персонажа ходить по кругу в заданном радиусе от стартовой точки.
 /// </summary>
 [RequireComponent(typeof(NavMeshAgent))]
 public class PatrolNPC : MonoBehaviour
@@ -11,22 +10,25 @@ public class PatrolNPC : MonoBehaviour
     [Header("⚙️ Настройки патрулирования")]
     [Tooltip("Скорость передвижения")]
     public float moveSpeed = 1.5f;
-    
+
+    [Tooltip("Скорость поворота")]
+    public float turnSpeed = 300f;
+
     [Tooltip("Радиус зоны патрулирования от стартовой точки")]
     public float patrolRadius = 10f;
-    
+
     [Tooltip("Время паузы в точке (секунды)")]
     public float waitTime = 2f;
-    
+
     [Tooltip("Дистанция, на которой считается что НПЦ дошёл")]
     public float stopDistance = 0.5f;
-    
-    [Tooltip("Минимальная дистанция между точками (чтобы не ходил на месте)")]
+
+    [Tooltip("Минимальная дистанция между точками")]
     public float minDistanceBetweenPoints = 2f;
 
     [Header("🔗 Ссылки")]
     [SerializeField] private NavMeshAgent agent;
-    
+
     // Приватные переменные
     private Vector3 startPosition;
     private Vector3 targetPoint;
@@ -34,10 +36,6 @@ public class PatrolNPC : MonoBehaviour
     private bool isWaiting;
     private bool isInitialized;
 
-    // ============================================================
-    // UNITY METHODS
-    // ============================================================
-    
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -51,10 +49,14 @@ public class PatrolNPC : MonoBehaviour
     void Update()
     {
         if (!isInitialized) return;
-        
+
+        // Синхронизация скорости
+        agent.speed = moveSpeed;
+        agent.angularSpeed = turnSpeed;
+
         if (!agent.isOnNavMesh || !agent.enabled)
         {
-            Debug.LogWarning($"[{name}] Потерян NavMesh! Остановка патрулирования.");
+            Debug.LogWarning($"[{name}] Потерян NavMesh!");
             isInitialized = false;
             Invoke(nameof(Initialize), 1f);
             return;
@@ -63,18 +65,14 @@ public class PatrolNPC : MonoBehaviour
         PatrolLogic();
     }
 
-    // Отладка: рисуем зону патруля в редакторе
     void OnDrawGizmosSelected()
     {
-        // Стартовая точка (зелёная)
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(transform.position, 0.1f);
-        
-        // Радиус патрулирования (жёлтый круг)
+
         Gizmos.color = new Color(1, 1, 0, 0.3f);
         Gizmos.DrawWireSphere(transform.position, patrolRadius);
-        
-        // Целевая точка (красная)
+
         if (isInitialized)
         {
             Gizmos.color = Color.red;
@@ -82,37 +80,32 @@ public class PatrolNPC : MonoBehaviour
         }
     }
 
-    // ============================================================
-    // MAIN LOGIC
-    // ============================================================
-
     void Initialize()
     {
         if (agent == null)
         {
-            Debug.LogError($"[{name}] ❌ NavMeshAgent не найден! Добавьте компонент.");
+            Debug.LogError($"[{name}] ❌ NavMeshAgent не найден!");
             return;
         }
 
         if (!agent.isOnNavMesh)
         {
-            Debug.LogWarning($"[{name}] ⚠️ Агент ещё не на NavMesh. Повторная попытка через 0.5с...");
+            Debug.LogWarning($"[{name}] ⚠️ Агент ещё не на NavMesh...");
             Invoke(nameof(Initialize), 0.5f);
             return;
         }
 
-        // Настройки агента
-        agent.speed = moveSpeed;  // ← ИСПОЛЬЗУЕМ НАШУ ПЕРЕМЕННУЮ!
-        agent.angularSpeed = 120f;
+        agent.speed = moveSpeed;
+        agent.angularSpeed = turnSpeed;
         agent.acceleration = 8f;
         agent.stoppingDistance = stopDistance;
         agent.isStopped = false;
 
         startPosition = transform.position;
         isInitialized = true;
-        
-        Debug.Log($"[{name}] ✅ Патрулирование запущено! Скорость: {moveSpeed}");
-        
+
+        Debug.Log($"[{name}] ✅ Патрулирование запущено!");
+
         SetNewDestination();
     }
 
@@ -120,10 +113,16 @@ public class PatrolNPC : MonoBehaviour
     {
         if (isWaiting)
         {
+            // ← ОСТАНАВЛИВАЕМ агента во время Idle
+            agent.isStopped = true;
+            agent.velocity = Vector3.zero;
+
             waitTimer -= Time.deltaTime;
             if (waitTimer <= 0)
             {
                 isWaiting = false;
+                // ← ЗАПУСКАЕМ снова
+                agent.isStopped = false;
                 SetNewDestination();
             }
         }
@@ -143,6 +142,7 @@ public class PatrolNPC : MonoBehaviour
 
         Vector2 randomCircle = Random.insideUnitCircle * patrolRadius;
         targetPoint = startPosition + new Vector3(randomCircle.x, 0, randomCircle.y);
+        targetPoint.y = startPosition.y; // ← Сохраняем высоту!
 
         if (NavMesh.SamplePosition(targetPoint, out NavMeshHit hit, patrolRadius, NavMesh.AllAreas))
         {
@@ -155,10 +155,6 @@ public class PatrolNPC : MonoBehaviour
             Invoke(nameof(SetNewDestination), 1f);
         }
     }
-
-    // ============================================================
-    // PUBLIC METHODS
-    // ============================================================
 
     public void StopPatrol()
     {
