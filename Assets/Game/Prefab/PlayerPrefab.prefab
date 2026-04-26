@@ -8977,6 +8977,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveManager
   inventoryManager: {fileID: 7525040380494279768}
+  saveItem: {fileID: 0}
 --- !u!82 &924956933376190133
 AudioSource:
   m_ObjectHideFlags: 0
