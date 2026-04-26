@@ -17,7 +17,7 @@ public class SaveManager : MonoBehaviour
     private string savePathScene_test;
     private string currentSavePathScene;
     [SerializeField] private InventoryManager inventoryManager;
-    [SerializeField] private Transform saveItem; // Пустышка с предметами коротые нужно сохранять  
+    [SerializeField] private Transform saveItem; // Пустышка с предметами коротые нужно сохранять      
 
     public void Start()
     {
@@ -134,6 +134,12 @@ public class SaveManager : MonoBehaviour
         string json = JsonUtility.ToJson(sceneData, true); // true = красивое форматирование
         File.WriteAllText(currentSavePathScene, json);
     }
+    IEnumerator InitializeWeaponLater()
+    {
+        // Ждем 1 кадр, чтобы все Start() выполнились
+        yield return null;
+        LoadSceneItem();
+    }
 
     public void LoadSceneItem()
     {
@@ -158,8 +164,10 @@ public class SaveManager : MonoBehaviour
                 break;
         }
 
-        if (File.Exists(currentSavePathScene))
+        if (File.Exists(currentSavePathScene)) // Загружаем из файла, если он есть
         {
+            Debug.Log("Загружаем из файла");
+
             string json = File.ReadAllText(currentSavePathScene);
             SaveSceneData sceneData = JsonUtility.FromJson<SaveSceneData>(json);
 
@@ -178,14 +186,17 @@ public class SaveManager : MonoBehaviour
                 }
             }
         }
+        else // Загружаем пресет
+        {
+            Debug.Log("Загреаем пресет");
+
+            for (int i = 0; i < saveItem.childCount; i++)
+            {
+                saveItem.GetChild(i).gameObject.SetActive(true);
+            }
+        }
     }
 
-    IEnumerator InitializeWeaponLater()
-    {
-        // Ждем 1 кадр, чтобы все Start() выполнились
-        yield return null;
-        LoadSceneItem();
-    }
 }
 
 [System.Serializable]
