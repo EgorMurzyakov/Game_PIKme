@@ -27,9 +27,11 @@ public class HitDetector : MonoBehaviour // Универсальный (и для игрока и для вр
     private void OnTriggerStay(Collider other) // Вызывается каждый кадр, по идеи урон должен проходить тоже каждый кадр (что является ошибкой), но этого вроде не происходит
     {
         Debug.Log($"Объект {other.name} вошел в триггер");
-
-        other.GetComponent<DamageDetector>().GetDamage(weaponDamage);
-        sounds.PlaySound(Sounds.SoundType.Hit); // Звук попадания по врагу (не нанесения урона)
+        if (other.GetComponent<DamageDetector>())
+        {
+            other.GetComponent<DamageDetector>().GetDamage(weaponDamage);
+            sounds.PlaySound(Sounds.SoundType.Hit); // Звук попадания по врагу (не нанесения урона)
+        }
     }
 
     private void ColliderOn()
