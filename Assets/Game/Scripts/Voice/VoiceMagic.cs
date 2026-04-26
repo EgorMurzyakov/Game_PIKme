@@ -1,4 +1,7 @@
 using UnityEngine;
+using System.Diagnostics;
+using System.IO;
+using System.Threading;
 using UnityDebug = UnityEngine.Debug;
 
 public class VoiceMagic : MonoBehaviour
@@ -12,6 +15,8 @@ public class VoiceMagic : MonoBehaviour
 
     private float lastCastTime = -999f;
     private string lastSpell = null;
+    private Process process;
+    private string pendingSpell;
 
     public Transform cameraTransform;
     public Transform playerTransform;
@@ -24,6 +29,8 @@ public class VoiceMagic : MonoBehaviour
     [Tooltip("Включить управление заклинаниями с клавиатуры")]
     public bool enableKeyboardSpells = true;
 
+    public string PendingSpell => Interlocked.Exchange(ref pendingSpell, null);
+
     void Start()
     {
         if (cameraTransform == null && Camera.main != null)
@@ -31,7 +38,11 @@ public class VoiceMagic : MonoBehaviour
 
         // Процесс запускается в VoiceProcessManager, здесь ничего не делаем
         if (VoiceProcessManager.Instance == null)
+        {
             UnityDebug.LogWarning("VoiceMagic: VoiceProcessManager не найден!");
+            StartVoiceProcess();
+            UnityDebug.LogWarning("VoiceMagic: VoiceProcessManager запущен вручную!");
+        }
     }
 
     void Update()
@@ -48,6 +59,13 @@ public class VoiceMagic : MonoBehaviour
         if (VoiceProcessManager.Instance != null)
         {
             string spell = VoiceProcessManager.Instance.PendingSpell;
+            if (!string.IsNullOrEmpty(spell))
+                HandleSpellCast(spell);
+        }
+        else
+        {
+            // Если VoiceProcessManager не найден, используем свой PendingSpell
+            string spell = PendingSpell;
             if (!string.IsNullOrEmpty(spell))
                 HandleSpellCast(spell);
         }
@@ -109,6 +127,53 @@ public class VoiceMagic : MonoBehaviour
                 UnityDebug.Log("Ice arrow cast");
                 // Добавьте логику для ледяной стрелы, если есть
                 break;
+        }
+    }
+
+    private void StartVoiceProcess()
+    {
+        try
+        {
+            string exePath = Path.Combine(
+                Application.streamingAssetsPath,
+                "Voice/spell_recognizer/spell_recognizer.exe"
+            );
+
+            if (!File.Exists(exePath))
+            {
+                UnityDebug.LogError("VoiceMagic: файл не найден: " + exePath);
+                return;
+            }
+
+            process = new Process();
+            process.StartInfo.FileName = exePath;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.WorkingDirectory = Path.GetDirectoryName(exePath);
+
+            process.OutputDataReceived += (s, e) =>
+            {
+                if (!string.IsNullOrEmpty(e.Data))
+                    Interlocked.Exchange(ref pendingSpell, e.Data.Trim());
+            };
+
+            process.ErrorDataReceived += (s, e) =>
+            {
+                if (!string.IsNullOrEmpty(e.Data))
+                    UnityDebug.LogError("SPELL_RECOGNIZER ERR: " + e.Data);
+            };
+
+            process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+
+            UnityDebug.Log("VoiceMagic: процесс запущен.");
+        }
+        catch (System.Exception e)
+        {
+            UnityDebug.LogError("VoiceMagic: ошибка запуска: " + e.Message);
         }
     }
 

@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -8,11 +9,13 @@ public class DialogueManager : MonoBehaviour
 
     public GameObject dialoguePanel;
     public TextMeshProUGUI dialogueText;
-    public Button continueButton;     
-    public TextMeshProUGUI buttonLabel; 
+    public Button continueButton;
+    public Button acceptButton;
 
-    private string[] currentLines;
-    private int currentIndex = 0;
+    private string[] lines;
+    private int currentIndex;
+    private bool isRewardDialogue = false;
+
     public bool IsOpen { get; private set; }
 
     void Awake() { Instance = this; }
@@ -20,56 +23,54 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         dialoguePanel.SetActive(false);
-        continueButton.onClick.AddListener(OnContinuePressed);
+        continueButton.onClick.AddListener(NextLine);
+        acceptButton.onClick.AddListener(CloseDialogue);
     }
 
-    public void OpenDialogue(string[] lines)
+    public void OpenDialogue(string[] dialogueLines, bool isReward = false)
     {
-        currentLines = lines;
-        currentIndex = 0;
-        IsOpen = true;
+        lines             = dialogueLines;
+        currentIndex      = 0;
+        isRewardDialogue  = isReward;
 
         dialoguePanel.SetActive(true);
+        IsOpen = true;
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        Cursor.visible   = true;
 
-        ShowCurrentLine();
+        ShowLine();
     }
 
-    void ShowCurrentLine()
+    void NextLine()
     {
-        dialogueText.text = currentLines[currentIndex];
-
-        // Меняем текст кнопки на последнем блоке
-        if (currentIndex == currentLines.Length - 1)
-            buttonLabel.text = "Принять";
-        else
-            buttonLabel.text = "Продолжить";
+        currentIndex++;
+        ShowLine();
     }
 
-    void OnContinuePressed()
+    void ShowLine()
     {
-        // Если есть следующий блок — показываем его
-        if (currentIndex < currentLines.Length - 1)
+        dialogueText.text = lines[currentIndex];
+        bool isLast = currentIndex >= lines.Length - 1;
+
+        Debug.Log($"Страница {currentIndex}, последняя: {isLast}, статус квеста: {QuestManager.Instance.Data.questStatus}");
+
+        continueButton.gameObject.SetActive(!isLast);
+        acceptButton.gameObject.SetActive(isLast);
+
+        if (isLast && !isRewardDialogue)
         {
-            currentIndex++;
-            ShowCurrentLine();
-        }
-        else
-        {
-            // Последний блок — закрываем диалог
-            CloseDialogue();
+            if (QuestManager.Instance.Data.questStatus == "inactive")
+                QuestManager.Instance.StartKillPhase();
         }
     }
 
-    void CloseDialogue()
+    public void CloseDialogue()
     {
         dialoguePanel.SetActive(false);
         IsOpen = false;
-        currentIndex = 0;
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        Cursor.visible   = false;
     }
 }

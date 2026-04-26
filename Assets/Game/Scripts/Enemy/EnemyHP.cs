@@ -11,16 +11,20 @@ public class EnemyHP : HitPoint
         currentHitPoint = startHitPoint;
     }
 
-    protected override void Death()
-    {
-        stateMachine.GoDeathState();
-        gameObject.layer = LayerMask.NameToLayer("DeadEnemy");
-        //animator.SetTrigger("Death");
-    }
+protected override void Death()
+{
+    stateMachine.GoDeathState();
+    gameObject.layer = LayerMask.NameToLayer("DeadEnemy");
+
+    if (KillCounter.Instance != null)
+        KillCounter.Instance.ReportKill();
+
+    Debug.Log("Р’СЂР°Рі СѓРјРµСЂ, СЃР»РѕР№ РёР·РјРµРЅС‘РЅ РЅР°: " + gameObject.layer);
+}
 
     //public override void TakeDamage(int damage)
     //{
-    //    Debug.Log("Урон по ВРАГУ без брони");
+    //    Debug.Log("пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ");
     //}
 
 }
