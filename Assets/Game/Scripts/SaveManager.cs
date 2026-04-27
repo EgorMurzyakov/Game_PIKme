@@ -30,7 +30,6 @@ public class SaveManager : MonoBehaviour
         savePathScene_test = Application.persistentDataPath + "/sceneTest.json";
 
         StartCoroutine(InitializeWeaponLater());
-        //LoadSceneItem();
     }
 
     public void Update()
@@ -60,9 +59,6 @@ public class SaveManager : MonoBehaviour
             data.weaponSlotItem = new ItemSaveDateWeapon(inventoryManager.weaponSlot.item.itemID,
                 ((WeaponItem)inventoryManager.weaponSlot.item).GetBaceDamage(),
                 ((WeaponItem)inventoryManager.weaponSlot.item).GetUpgradePrice());
-            //data.weaponSlotItem.itemID = inventoryManager.weaponSlot.item.itemID;
-            //data.weaponSlotItem.baseDamage = ((WeaponItem)inventoryManager.weaponSlot.item).GetBaceDamage();
-            //data.weaponSlotItem.UpPrice = ((WeaponItem)inventoryManager.weaponSlot.item).GetUpgradePrice();
         }
         else
         {
@@ -125,10 +121,10 @@ public class SaveManager : MonoBehaviour
 
         for (int i = 0; i < saveItem.childCount; i++)
         {
-            //sceneData.itemSceneData.Add(new ItemSaveScaneData(saveItem.GetChild(i).position,
-            //    saveItem.GetChild(i).GetComponent<Item>().itemScriptableObject.itemID,
-            //    saveItem.GetChild(i).GetComponent<Item>().amount));
-            sceneData.itemName.Add(saveItem.GetChild(i).name);
+            if (saveItem.GetChild(i).gameObject.activeSelf)
+            {
+                sceneData.itemName.Add(saveItem.GetChild(i).name);
+            }
         }
 
         string json = JsonUtility.ToJson(sceneData, true); // true = красивое форматирование
@@ -186,9 +182,9 @@ public class SaveManager : MonoBehaviour
                 }
             }
         }
-        else // Загружаем пресет
+        else // Загружаем пресет 
         {
-            Debug.Log("Загреаем пресет");
+            Debug.Log("Загружаем пресет");
 
             for (int i = 0; i < saveItem.childCount; i++)
             {
@@ -255,8 +251,7 @@ public class ItemSaveDateWeapon // Сохраняемые данные о оружие
 
 [System.Serializable]
 public class SaveSceneData
-{
-    //public List<ItemSaveScaneData> itemSceneData = new List<ItemSaveScaneData>();
+{   
     public List<string> itemName = new List<string>();
 }
 

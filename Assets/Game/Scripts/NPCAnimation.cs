@@ -23,7 +23,7 @@ public class NPCAnimation : MonoBehaviour
         // Отладка
         if (Time.frameCount % 10 == 0)
         {
-            Debug.Log($"[DEBUG] Velocity: {speed:F3} | Animator Speed: {animator.GetFloat("Speed"):F3}");
+            //Debug.Log($"[DEBUG] Velocity: {speed:F3} | Animator Speed: {animator.GetFloat("Speed"):F3}");
         }
     }
 }
