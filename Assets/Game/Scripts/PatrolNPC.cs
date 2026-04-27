@@ -104,7 +104,7 @@ public class PatrolNPC : MonoBehaviour
         startPosition = transform.position;
         isInitialized = true;
 
-        Debug.Log($"[{name}] ✅ Патрулирование запущено!");
+        //Debug.Log($"[{name}] ✅ Патрулирование запущено!");
 
         SetNewDestination();
     }
