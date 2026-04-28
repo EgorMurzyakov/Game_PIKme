@@ -8,6 +8,8 @@ public class ColliderSwitch : MonoBehaviour // Универсальный (и для игрока и для
 
     public event Action weaponColliderOn;
     public event Action weaponColliderOff;
+    public event Action footColliderOn;
+    public event Action footColliderOff;
 
     public void ChoosingAction(state _st)
     {
@@ -31,4 +33,16 @@ public class ColliderSwitch : MonoBehaviour // Универсальный (и для игрока и для
         weaponColliderOff?.Invoke();
     }
 
+    public void GolemFootColliderOn()
+    {
+        if (currentState == state.Attack) // Защита от случайного срабатывания (на случай, если состояние сменится, а Анимационное событие будет вызвано)
+        {
+            footColliderOn?.Invoke();
+        }
+    }
+
+    public void GolemFootColliderOff()
+    {
+        footColliderOff?.Invoke();
+    }
 }
