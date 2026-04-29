@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Windows;
 
-public enum state { Idle, Walk, Run, Sprint, Dodge, Attack, Empty, Action, Damage, Death }
+public enum state { Idle, Walk, Run, Sprint, Dodge, Attack, AttackB, Empty, Action, Damage, Death }
 
 public class PlayerStateMachine : MonoBehaviour
 {

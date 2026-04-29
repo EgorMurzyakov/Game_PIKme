@@ -25,6 +25,10 @@ public class GolemAnimation : MonoBehaviour
 
             case state.Attack:
                 anim.SetTrigger("goAttack");
+                break;            
+            
+            case state.AttackB:
+                anim.SetTrigger("goAttackB");
                 break;
 
             case state.Action:

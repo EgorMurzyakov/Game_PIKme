@@ -109,7 +109,7 @@ public class GoatControl : MonoBehaviour
 
         canChageState = false;
         PlayAnimation();
-        Debug.Log(currentState);
+        //Debug.Log(currentState);
     }
 
     private void GoToNextPoint()

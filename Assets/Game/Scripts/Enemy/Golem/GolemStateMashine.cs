@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class GolemStateMashine : MonoBehaviour
 {
+    public enum golemPhase { First, Second, Third }    
+
     [SerializeField] private GameObject player;
     private GolemMovment movment;
     private GolemAnimation anim;
@@ -9,10 +11,15 @@ public class GolemStateMashine : MonoBehaviour
 
     private state currentState = state.Idle;
     private state prevState = state.Empty;
+    //private golemPhase currentPhase = golemPhase.First;
+    public golemPhase currentPhase = golemPhase.First; // ¬ременно дл€ отладки
 
     [SerializeField] private bool isActiv;
-    [SerializeField] private float attackRange = 1f; // ƒистанци€ атаки
+    [SerializeField] private float footAttackRange; // ƒистанци€ атаки ногой
+    [SerializeField] private float weaponAttackRange; // ƒистанци€ атаки оружием
     [SerializeField] private float attackCooldown = 1f; // «адержка атак
+    private string[] combo = { "A", "B", "AB", "AA", "AAA", "BA"};
+    private string currentCombo;
     private float startAttckColdown;
     private bool canAttack = true;    
 
@@ -40,11 +47,11 @@ public class GolemStateMashine : MonoBehaviour
         }
 
         movment.GetMoving(currentState);
-        if (currentState != prevState)
+        if (currentState != prevState) // Ќе даст каждый кадр включать анимацию заново
         {
             anim.GetAnimation(currentState);
             colliderSwitch.ChoosingAction(currentState);
-            Debug.Log(currentState);
+            //Debug.Log(currentState);
             prevState = currentState;
         }
     }
@@ -52,6 +59,13 @@ public class GolemStateMashine : MonoBehaviour
     private void UpdateState()
     {
         canAttack = (Time.time - attackCooldown) > startAttckColdown;
+
+        if (Input.GetKeyDown(KeyCode.T)) // ¬ременно
+        {
+            SetVisualLoss();
+        }
+
+
 
         if (death)
         {
@@ -66,8 +80,15 @@ public class GolemStateMashine : MonoBehaviour
         switch (currentState)
         {
             case state.Idle:
-                if (distanceToPlayer < attackRange && canAttack)
+                if (distanceToPlayer < footAttackRange && canAttack)
                 {
+                    currentCombo = "B";
+                    currentState = state.AttackB;
+                    startAttckColdown = Time.time;
+                }
+                else if (distanceToPlayer < weaponAttackRange && canAttack)
+                {
+                    currentCombo = "A";
                     currentState = state.Attack;
                     startAttckColdown = Time.time;
                 }
@@ -83,8 +104,15 @@ public class GolemStateMashine : MonoBehaviour
                 break;
 
             case state.Walk:
-                if (distanceToPlayer < attackRange && canAttack)
+                if (distanceToPlayer < footAttackRange && canAttack)
                 {
+                    currentCombo = "B";
+                    currentState = state.AttackB;
+                    startAttckColdown = Time.time;
+                }
+                else if (distanceToPlayer < weaponAttackRange && canAttack)
+                {
+                    currentCombo = "A";
                     currentState = state.Attack;
                     startAttckColdown = Time.time;
                 }
@@ -98,20 +126,101 @@ public class GolemStateMashine : MonoBehaviour
             case state.Attack:
                 if (canChangeState)
                 {
-                    if (distanceToPlayer < attackRange && canAttack)
+                    // 1 фаза: выпад или удар ногой
+                    // 2 фаза: выпад + удар ногой или удар ногой
+                    // 3 фаза: выпад + выпад + выпад или удар ногой + выпад
+                    // сразу после атаки тер€ет игрока
+
+
+
+                    if (currentPhase == golemPhase.First)
                     {
-                        currentState = state.Attack;
-                        prevState = state.Empty;
-                        startAttckColdown = Time.time;
+                        currentState = state.Action;
+                        //if (visualLoss)
+                        //{
+                        //    visualLoss = false;
+                        //    currentState = state.Action;
+                        //}
+
+                        //else if (distanceToPlayer < footAttackRange && canAttack)
+                        //{
+                        //    currentState = state.AttackB;
+                        //    prevState = state.Empty;
+                        //    startAttckColdown = Time.time;
+                        //}
+                        //else if (distanceToPlayer < weaponAttackRange && canAttack)
+                        //{
+                        //    currentState = state.Attack;
+                        //    prevState = state.Empty;
+                        //    startAttckColdown = Time.time;
+                        //}
+                        //else
+                        //{
+                        //    currentState = state.Walk;
+                        //}
                     }
-                    else if (visualLoss)
+                    else if (currentPhase == golemPhase.Second)
                     {
-                        visualLoss = false;
+                        currentCombo += "B";
+
+                        if (BattleChecker())
+                        {
+                            currentState = state.AttackB;
+                        }
+                        else
+                        {
+                            currentState = state.Action;
+                        }
+                    }
+                    else if (currentPhase == golemPhase.Third)
+                    {
+                        currentCombo += "A";
+
+                        if (BattleChecker())
+                        {
+                            Debug.Log(currentCombo);
+
+                            currentState = state.Attack;
+                            prevState = state.Empty; // ѕозволит проиграть анимацию заново
+                        }
+                        else
+                        {
+                            currentState = state.Action;
+                        }
+                    }
+
+                    canChangeState = false;
+                }
+                break;
+
+            case state.AttackB:
+                if (canChangeState)
+                {
+                    // 1 фаза: выпад или удар ногой
+                    // 2 фаза: выпад + удар ногой или удар ногой
+                    // 3 фаза: выпад + выпад + выпад или удар ногой + выпад
+                    // сразу после атаки тер€ет игрока
+
+                    if (currentPhase == golemPhase.First)
+                    {
                         currentState = state.Action;
                     }
-                    else
+                    else if (currentPhase == golemPhase.Second)
                     {
-                        currentState = state.Walk;
+                        currentState = state.Action; // ѕри любом исходе это последний удар (2 фаза), нет смысла делать проверку
+                    }
+                    else if (currentPhase == golemPhase.Third)
+                    {
+                        currentCombo += "A";
+
+                        if (BattleChecker())
+                        {
+                            currentState = state.Attack;
+                        }
+                        else
+                        {
+                            currentState = state.Action;
+                        }
                     }
 
                     canChangeState = false;
@@ -121,8 +230,18 @@ public class GolemStateMashine : MonoBehaviour
             case state.Action:
                 if (canChangeState)
                 {
-                    if (distanceToPlayer < attackRange && canAttack)
+                    currentCombo = "";
+
+                    if (distanceToPlayer < footAttackRange && canAttack)
                     {
+                        currentCombo = "B";
+                        currentState = state.AttackB;
+                        prevState = state.Empty;
+                        startAttckColdown = Time.time;
+                    }
+                    else if (distanceToPlayer < weaponAttackRange && canAttack)
+                    {
+                        currentCombo = "A";
                         currentState = state.Attack;
                         prevState = state.Empty;
                         startAttckColdown = Time.time;
@@ -139,8 +258,16 @@ public class GolemStateMashine : MonoBehaviour
             case state.Damage:
                 if (canChangeState)
                 {
-                    if (distanceToPlayer < attackRange && canAttack)
+                    if (distanceToPlayer < footAttackRange && canAttack)
                     {
+                        currentCombo = "B";
+                        currentState = state.AttackB;
+                        prevState = state.Empty;
+                        startAttckColdown = Time.time;
+                    }
+                    else if (distanceToPlayer < weaponAttackRange && canAttack)
+                    {
+                        currentCombo = "A";
                         currentState = state.Attack;
                         prevState = state.Empty;
                         startAttckColdown = Time.time;
@@ -157,6 +284,15 @@ public class GolemStateMashine : MonoBehaviour
             case state.Death:
                 break;
         }
+    }
+
+    private bool BattleChecker() // ¬ернет true, если такое комбо есть
+    {
+        foreach (string _cur in combo)
+        {
+            if (_cur == currentCombo) return true;
+        }
+        return false;
     }
 
     public void EndChangeState() // ¬ызываетс€ из анимационных событий, canChangeState -> true -> можем сменить состо€ние 
@@ -178,5 +314,10 @@ public class GolemStateMashine : MonoBehaviour
     public void SetVisualLoss()
     {
         visualLoss = true;
+    }
+
+    public void SetGolemPhase()
+    {
+
     }
 }
