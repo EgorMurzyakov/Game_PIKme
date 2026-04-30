@@ -104,7 +104,7 @@ Material:
     - _Mode: 3
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _QueueControl: -1
+    - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _SNOWONOFF: 0
@@ -126,9 +126,9 @@ Material:
     - _Translucency: 10
     - _UVSec: 0
     - _WINDMASKONOFF: 0
-    - _WindDensity: 3.3
-    - _WindMovement: 1.15
-    - _WindStrength: 0.3
+    - _WindDensity: 0.92
+    - _WindMovement: 1
+    - _WindStrength: 0.86
     - _ZWrite: 0
     - __dirty: 0
     m_Colors:
