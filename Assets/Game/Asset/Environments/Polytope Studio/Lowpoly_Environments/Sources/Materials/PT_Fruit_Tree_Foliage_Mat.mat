@@ -39,6 +39,7 @@ Material:
     - _Gradient: 0.123
     - _GradientPower: 1.74
     - _LeavesThickness: 0.6
+    - _QueueControl: 0
     - _SnowGradient: 0.784
     - _TransAmbient: 0
     - _Translucency: 10
