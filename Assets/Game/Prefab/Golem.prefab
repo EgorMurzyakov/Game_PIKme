@@ -357,7 +357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitDetector
   character: {fileID: 4094310759846638764}
-  weaponDamage: 20
+  weaponDamage: 75
   thisDamageCollider: 1
 --- !u!54 &8913794565234127607
 Rigidbody:
@@ -772,20 +772,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Sounds
   sounds:
   - name: 
-    voluem: 0
+    voluem: 1
     audioClip: []
-  - name: 
-    voluem: 0
-    audioClip: []
-  - name: 
-    voluem: 0
-    audioClip: []
-  - name: 
-    voluem: 0
-    audioClip: []
-  - name: 
-    voluem: 0
-    audioClip: []
+  - name: Dodge(Wave)
+    voluem: 1
+    audioClip:
+    - {fileID: 8300000, guid: 674258a055e994b72bbb15a28eb79838, type: 3}
+  - name: Attack
+    voluem: 1
+    audioClip:
+    - {fileID: 8300000, guid: 8a44b12d3e3f24b1a89dc7f0b66756f4, type: 3}
+  - name: Hit(Footstep)
+    voluem: 0.2
+    audioClip:
+    - {fileID: 8300000, guid: cdfae31f0b58546d3ac1015effc38f01, type: 3}
+  - name: Damage(Attack)
+    voluem: 1
+    audioClip:
+    - {fileID: 8300000, guid: 90af38775c5bd43c084091ac77fe7257, type: 3}
   groundLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -810,8 +814,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 11.208364
+  MinDistance: 6
+  MaxDistance: 18
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -846,7 +850,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1166,7 +1170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitDetector
   character: {fileID: 4094310759846638764}
-  weaponDamage: 10
+  weaponDamage: 100
   thisDamageCollider: 0
 --- !u!54 &7209114773157926180
 Rigidbody:
