@@ -11,16 +11,16 @@ public class EnemyHP : HitPoint
         currentHitPoint = startHitPoint;
     }
 
-protected override void Death()
-{
-    stateMachine.GoDeathState();
-    gameObject.layer = LayerMask.NameToLayer("DeadEnemy");
+    protected override void Death()
+    {
+        stateMachine.GoDeathState();
+        gameObject.layer = LayerMask.NameToLayer("DeadEnemy");
 
-    if (KillCounter.Instance != null)
-        KillCounter.Instance.ReportKill();
+        if (KillCounter.Instance != null)
+            KillCounter.Instance.ReportKill();
 
-    Debug.Log("Враг умер, слой изменён на: " + gameObject.layer);
-}
+        //Debug.Log("Враг умер, слой изменён на: " + gameObject.layer);
+    }
 
     //public override void TakeDamage(int damage)
     //{
