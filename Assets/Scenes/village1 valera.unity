@@ -5547,6 +5547,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1111486097}
+  - {fileID: 97890916}
   - {fileID: 1382414423}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6795,6 +6796,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 574558972}
   m_SourcePrefab: {fileID: 100100000, guid: e05ae677c7b3bc546bd36b488586fb0c, type: 3}
+--- !u!4 &97890916 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2592359518822711262, guid: 0f9f67eb85f52d345915aa2c63c9924c, type: 3}
+  m_PrefabInstance: {fileID: 882672145}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &98283381 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4848591325366998362, guid: 3ade7fcf53c8246418eb3c493d6d2178, type: 3}
@@ -77136,6 +77142,67 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6cdd667aa0034cd4dadc8d58a65fb098, type: 3}
+--- !u!1001 &882672145
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 84081121}
+    m_Modifications:
+    - target: {fileID: 2592359518822711262, guid: 0f9f67eb85f52d345915aa2c63c9924c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -64.83778
+      objectReference: {fileID: 0}
+    - target: {fileID: 2592359518822711262, guid: 0f9f67eb85f52d345915aa2c63c9924c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.22481918
+      objectReference: {fileID: 0}
+    - target: {fileID: 2592359518822711262, guid: 0f9f67eb85f52d345915aa2c63c9924c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -36.39748
+      objectReference: {fileID: 0}
+    - target: {fileID: 2592359518822711262, guid: 0f9f67eb85f52d345915aa2c63c9924c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.006170542
+      objectReference: {fileID: 0}
+    - target: {fileID: 2592359518822711262, guid: 0f9f67eb85f52d345915aa2c63c9924c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7070799
+      objectReference: {fileID: 0}
+    - target: {fileID: 2592359518822711262, guid: 0f9f67eb85f52d345915aa2c63c9924c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7070799
+      objectReference: {fileID: 0}
+    - target: {fileID: 2592359518822711262, guid: 0f9f67eb85f52d345915aa2c63c9924c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.006170542
+      objectReference: {fileID: 0}
+    - target: {fileID: 2592359518822711262, guid: 0f9f67eb85f52d345915aa2c63c9924c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2592359518822711262, guid: 0f9f67eb85f52d345915aa2c63c9924c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 2592359518822711262, guid: 0f9f67eb85f52d345915aa2c63c9924c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2932469614169810276, guid: 0f9f67eb85f52d345915aa2c63c9924c, type: 3}
+      propertyPath: m_Name
+      value: Tornado Book
+      objectReference: {fileID: 0}
+    - target: {fileID: 2932469614169810276, guid: 0f9f67eb85f52d345915aa2c63c9924c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0f9f67eb85f52d345915aa2c63c9924c, type: 3}
 --- !u!1001 &883152943
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -175176,6 +175243,8 @@ MonoBehaviour:
   introFile: npc_fabian_intro.json
   rewardFile: npc_fabian_reward.json
   doneFile: npc_fabian_done.json
+  rewardSpawnPrefab: {fileID: 2932469614169810276, guid: 0f9f67eb85f52d345915aa2c63c9924c, type: 3}
+  rewardSpawnOffset: {x: 0, y: 0.5, z: 1}
 --- !u!65 &1920935467
 BoxCollider:
   m_ObjectHideFlags: 0

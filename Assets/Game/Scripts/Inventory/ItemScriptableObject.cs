@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum ItemType { Default, Food, Weapon, Book, Money }
+public enum ItemType { Default, Food, Weapon, Book, Money, Flower }
 
 public class ItemScriptableObject : ScriptableObject
 {

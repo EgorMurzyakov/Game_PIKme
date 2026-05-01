@@ -3,6 +3,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Tornado Book", menuName = "Inventory/Items/New Tornado Book")]
 public class TornadoBook : BookItem
 {
+    private void Awake()
+    {
+        if (string.IsNullOrEmpty(itemID))
+            itemID = "TornadoBook";
+    }
+
     public override ItemScriptableObject Clone()
     {
         TornadoBook clone = ScriptableObject.CreateInstance<TornadoBook>();

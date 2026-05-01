@@ -389,6 +389,44 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
+    public bool HasBlackRose()
+    {
+        if (bookSlot != null && bookSlot.item is FlowerItem bookFlower && bookFlower.IsBlackRose())
+            return true;
+
+        foreach (InventorySlot slot in slots)
+        {
+            if (slot != null && !slot.isEmpty && slot.item is FlowerItem inventoryFlower && inventoryFlower.IsBlackRose())
+                return true;
+        }
+
+        return false;
+    }
+
+    public bool GiveItemByID(string itemID, int amount)
+    {
+        if (allItems == null || allItems.Length == 0)
+            allItems = Resources.LoadAll<ItemScriptableObject>("Items");
+
+        foreach (ItemScriptableObject item in allItems)
+        {
+            if (item == null) continue;
+
+            if (!string.IsNullOrEmpty(item.itemID) && item.itemID.Equals(itemID, StringComparison.OrdinalIgnoreCase))
+            {
+                return AddItem(item.Clone(), amount);
+            }
+
+            if (!string.IsNullOrEmpty(item.itemName) && item.itemName.Equals(itemID, StringComparison.OrdinalIgnoreCase))
+            {
+                return AddItem(item.Clone(), amount);
+            }
+        }
+
+        Debug.LogWarning($"InventoryManager: item с ID или именем '{itemID}' не найден.");
+        return false;
+    }
+
     private void InventoryNavigation() // ��������� �� ���������
     {
         // �������

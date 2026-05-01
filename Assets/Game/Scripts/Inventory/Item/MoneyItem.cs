@@ -8,7 +8,7 @@ public class MoneyItem : ItemScriptableObject
 
     public override ItemScriptableObject Clone()
     {
-        MoneyItem clone = ScriptableObject.CreateInstance<MoneyItem>();
+        FoodItem clone = ScriptableObject.CreateInstance<FoodItem>();
 
         // �������� ��� ����
         clone.itemID = itemID;
