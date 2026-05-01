@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BookItem : ItemScriptableObject
 {
-    [SerializeField] private Spells magicSpells;
+    [SerializeField] protected Spells magicSpells;
 
     public override ItemScriptableObject Clone()
     {
@@ -18,7 +18,7 @@ public class BookItem : ItemScriptableObject
         clone.itemDescription = this.itemDescription;
         clone.maximumAmount = this.maximumAmount;
         clone.icon = this.icon;
-        clone.magicSpells = magicSpells;
+        clone.magicSpells = magicSpells != null ? magicSpells.Clone() : null;
         return clone;
     }
 
@@ -29,8 +29,10 @@ public class BookItem : ItemScriptableObject
 
     public Spells GetMagicSpells()
     {
-        return magicSpells.Clone();
+        return magicSpells != null ? magicSpells.Clone() : null;
     }
+
+    public bool HasTornadoSpell => magicSpells != null && magicSpells.tornado;
 }
 
 [System.Serializable]

@@ -25,6 +25,9 @@ public class VoiceMagic : MonoBehaviour
     public FireballSpell fireballSpell;
     public TornadoSpell tornadoSpell;
 
+    [Header("Связи")]
+    public InventoryManager inventoryManager;
+
     [Header("Управление с клавиатуры")]
     [Tooltip("Включить управление заклинаниями с клавиатуры")]
     public bool enableKeyboardSpells = true;
@@ -35,6 +38,9 @@ public class VoiceMagic : MonoBehaviour
     {
         if (cameraTransform == null && Camera.main != null)
             cameraTransform = Camera.main.transform;
+
+        if (inventoryManager == null)
+            inventoryManager = FindObjectOfType<InventoryManager>();
 
         // Процесс запускается в VoiceProcessManager, здесь ничего не делаем
         if (VoiceProcessManager.Instance == null)
@@ -115,6 +121,11 @@ public class VoiceMagic : MonoBehaviour
 
             case "TORNADO":
                 UnityDebug.Log("Tornado cast");
+                if (!CanUseTornado())
+                {
+                    UnityDebug.LogWarning("VoiceMagic: книга Торнадо не найдена в инвентаре.");
+                    return;
+                }
                 if (tornadoSpell == null)
                 {
                     UnityEngine.Debug.LogError("tornadoSpell не назначен в Inspector.");
@@ -175,6 +186,14 @@ public class VoiceMagic : MonoBehaviour
         {
             UnityDebug.LogError("VoiceMagic: ошибка запуска: " + e.Message);
         }
+    }
+
+    private bool CanUseTornado()
+    {
+        if (inventoryManager == null)
+            return false;
+
+        return inventoryManager.HasTornadoBook();
     }
 
 }

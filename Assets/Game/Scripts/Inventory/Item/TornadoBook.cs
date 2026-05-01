@@ -1,16 +1,12 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Money Item", menuName = "Inventory/Items/New Money Item")]
-
-public class MoneyItem : ItemScriptableObject
-{    
-
+[CreateAssetMenu(fileName = "Tornado Book", menuName = "Inventory/Items/New Tornado Book")]
+public class TornadoBook : BookItem
+{
     public override ItemScriptableObject Clone()
     {
-        MoneyItem clone = ScriptableObject.CreateInstance<MoneyItem>();
+        TornadoBook clone = ScriptableObject.CreateInstance<TornadoBook>();
 
-        // �������� ��� ����
         clone.itemID = itemID;
         clone.type = this.type;
         clone.ItemPrefab = this.ItemPrefab;
@@ -18,11 +14,8 @@ public class MoneyItem : ItemScriptableObject
         clone.itemDescription = this.itemDescription;
         clone.maximumAmount = this.maximumAmount;
         clone.icon = this.icon;
+        clone.magicSpells = magicSpells != null ? magicSpells.Clone() : null;
 
         return clone;
-    }
-    public void Start()
-    {
-        type = ItemType.Money;
     }
 }
