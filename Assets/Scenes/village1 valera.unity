@@ -15871,6 +15871,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4683887731364344810, guid: b003e23dae6f05d448e1fc4608d1bf0c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 479942200}
+    - target: {fileID: 4683887731364344810, guid: b003e23dae6f05d448e1fc4608d1bf0c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SaveGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 4683887731364344810, guid: b003e23dae6f05d448e1fc4608d1bf0c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SaveManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 5401656535283563944, guid: b003e23dae6f05d448e1fc4608d1bf0c, type: 3}
       propertyPath: m_SortingOrder
       value: 10
@@ -40675,6 +40687,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 750211204992862766, guid: 9de25cb83282c7046b4dc6d17d18c281, type: 3}
   m_PrefabInstance: {fileID: 1498513579}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &479942200 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5184116532292491096, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+  m_PrefabInstance: {fileID: 936086434}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c7da7631d93984409d5defae02913f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveManager
 --- !u!1 &479989381 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 740135015118879361, guid: e4509b8ffa235574993d4e43936eec8d, type: 3}
@@ -90536,6 +90559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SceneTransitionZone
   targetScene: VladTest2
   spawnID: from_gate
+  saveManager: {fileID: 479942200}
 --- !u!65 &1022914018
 BoxCollider:
   m_ObjectHideFlags: 0

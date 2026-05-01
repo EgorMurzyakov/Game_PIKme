@@ -29171,6 +29171,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2070246274}
   m_SourcePrefab: {fileID: 100100000, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+--- !u!114 &1288152951 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5184116532292491096, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+  m_PrefabInstance: {fileID: 1288152950}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941782079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c7da7631d93984409d5defae02913f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveManager
 --- !u!1001 &1291274499
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30583,6 +30594,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SceneTransitionZone
   targetScene: village1 valera
   spawnID: from_bridge
+  saveManager: {fileID: 0}
 --- !u!65 &1335962580
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -43295,7 +43307,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.26666668
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: f861c43f3d2f077468a2d858f5c47c63, type: 2}
   m_BuildHeightMesh: 0
@@ -45417,6 +45429,18 @@ PrefabInstance:
     - target: {fileID: 2500020562463760678, guid: b003e23dae6f05d448e1fc4608d1bf0c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4683887731364344810, guid: b003e23dae6f05d448e1fc4608d1bf0c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1288152951}
+    - target: {fileID: 4683887731364344810, guid: b003e23dae6f05d448e1fc4608d1bf0c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SaveGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 4683887731364344810, guid: b003e23dae6f05d448e1fc4608d1bf0c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SaveManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 9172498723445804887, guid: b003e23dae6f05d448e1fc4608d1bf0c, type: 3}
       propertyPath: m_Name

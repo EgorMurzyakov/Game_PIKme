@@ -9,7 +9,7 @@ using System.Collections;
 
 public class SaveManager : MonoBehaviour
 {
-    private string savePath; // Путь к файлу сохранения
+    private string savePath; // пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     private string savePathScene_1;
     private string savePathScene_2;
     private string savePathScene_3;
@@ -17,11 +17,11 @@ public class SaveManager : MonoBehaviour
     private string savePathScene_test;
     private string currentSavePathScene;
     [SerializeField] private InventoryManager inventoryManager;
-    [SerializeField] private Transform saveItem; // Пустышка с предметами коротые нужно сохранять      
+    [SerializeField] private Transform saveItem; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ      
 
     public void Start()
     {
-        // Задаём путь для сохранения (специальная папка для игры)
+        // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ)
         savePath = Application.persistentDataPath + "/money.json";
         savePathScene_1 = Application.persistentDataPath + "/scene1.json";
         savePathScene_2 = Application.persistentDataPath + "/scene2.json";
@@ -45,16 +45,16 @@ public class SaveManager : MonoBehaviour
         SaveScene();
         SaveInventory();
 
-        Debug.Log("Сохраняю...");
+        Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ...");
     }
 
     public void SaveInventory()
     {
         SaveDate data = new SaveDate();
 
-        data.money = inventoryManager.playerMoney; // Деньги
+        data.money = inventoryManager.playerMoney; // пїЅпїЅпїЅпїЅпїЅпїЅ
 
-        if (inventoryManager.weaponSlot.item != null) // Слот оружия
+        if (inventoryManager.weaponSlot.item != null) // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         {
             data.weaponSlotItem = new ItemSaveDateWeapon(inventoryManager.weaponSlot.item.itemID,
                 ((WeaponItem)inventoryManager.weaponSlot.item).GetBaceDamage(),
@@ -65,7 +65,7 @@ public class SaveManager : MonoBehaviour
             data.weaponSlotItem = null;
         }
 
-        if (inventoryManager.bookSlot.item != null) // Слот книги
+        if (inventoryManager.bookSlot.item != null) // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         {
             data.bookSlotItemID = inventoryManager.bookSlot.item.itemID;
         }
@@ -74,29 +74,29 @@ public class SaveManager : MonoBehaviour
             data.bookSlotItemID = null;
         }
 
-        foreach (InventorySlot _slot in inventoryManager.slots) // Инчентарь
+        foreach (InventorySlot _slot in inventoryManager.slots) // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         {
             if (_slot.item != null)
             {
-                if (_slot.item.type == ItemType.Weapon) // Оружие
+                if (_slot.item.type == ItemType.Weapon) // пїЅпїЅпїЅпїЅпїЅпїЅ
                 {
                     data.inventoryWeapon.Add(new ItemSaveDateWeapon(_slot.item.itemID, ((WeaponItem)_slot.item).GetBaceDamage(),
                         ((WeaponItem)_slot.item).GetUpgradePrice()));
                 }
-                else // Остальное (включая книги)
+                else // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ)
                 {
                     data.inventory.Add(new ItemSaveDate(_slot.item.itemID, _slot.amount));
                 }
             }
         }
 
-        string json = JsonUtility.ToJson(data, true); // true = красивое форматирование
+        string json = JsonUtility.ToJson(data, true); // true = пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         File.WriteAllText(savePath, json);
     }
 
     public void SaveScene()
     {
-        // Получаем имя текущей сцены
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         string currentLocation = SceneManager.GetActiveScene().name;
 
         switch (currentLocation)
@@ -115,6 +115,12 @@ public class SaveManager : MonoBehaviour
             case "EgorTest":
                 currentSavePathScene = savePathScene_test;
                 break;
+        }
+
+        if (string.IsNullOrEmpty(currentSavePathScene))
+        {
+            Debug.LogWarning($"РќРµ Р·Р°РґР°РЅ РїСѓС‚СЊ СЃРѕС…СЂР°РЅРµРЅРёСЏ РґР»СЏ СЃС†РµРЅС‹: {currentLocation}");
+            return;
         }
 
         SaveSceneData sceneData = new SaveSceneData();
@@ -127,19 +133,19 @@ public class SaveManager : MonoBehaviour
             }
         }
 
-        string json = JsonUtility.ToJson(sceneData, true); // true = красивое форматирование
+        string json = JsonUtility.ToJson(sceneData, true); // true = пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         File.WriteAllText(currentSavePathScene, json);
     }
     IEnumerator InitializeWeaponLater()
     {
-        // Ждем 1 кадр, чтобы все Start() выполнились
+        // пїЅпїЅпїЅпїЅ 1 пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ Start() пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         yield return null;
         LoadSceneItem();
     }
 
     public void LoadSceneItem()
     {
-        // Получаем имя текущей сцены
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         string currentLocation = SceneManager.GetActiveScene().name;
 
         switch (currentLocation)
@@ -160,9 +166,15 @@ public class SaveManager : MonoBehaviour
                 break;
         }
 
-        if (File.Exists(currentSavePathScene)) // Загружаем из файла, если он есть
+        if (string.IsNullOrEmpty(currentSavePathScene))
         {
-            Debug.Log("Загружаем из файла");
+            Debug.LogWarning($"РќРµ Р·Р°РґР°РЅ РїСѓС‚СЊ Р·Р°РіСЂСѓР·РєРё РґР»СЏ СЃС†РµРЅС‹: {currentLocation}");
+            return;
+        }
+
+        if (File.Exists(currentSavePathScene)) // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
+        {
+            Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ");
 
             string json = File.ReadAllText(currentSavePathScene);
             SaveSceneData sceneData = JsonUtility.FromJson<SaveSceneData>(json);
@@ -182,9 +194,9 @@ public class SaveManager : MonoBehaviour
                 }
             }
         }
-        else // Загружаем пресет 
+        else // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 
         {
-            Debug.Log("Загружаем пресет");
+            Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ");
 
             for (int i = 0; i < saveItem.childCount; i++)
             {
@@ -206,7 +218,7 @@ public class SaveDate
 }
 
 [System.Serializable]
-public class ItemSaveDate // Сохраняемые данные о дефолтных вещах
+public class ItemSaveDate // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 {
     public string itemID;
     public int amount;
@@ -221,7 +233,7 @@ public class ItemSaveDate // Сохраняемые данные о дефолтных вещах
 }
 
 [System.Serializable]
-public class ItemSaveDateWeapon // Сохраняемые данные о оружие
+public class ItemSaveDateWeapon // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 {
     public string itemID;
     public int baseDamage;
@@ -235,9 +247,9 @@ public class ItemSaveDateWeapon // Сохраняемые данные о оружие
     }
 }
 
-// НЕ НУЖНО (нет механики для изменения заклинаний в книге, поэтому нет смысла сохранять их), но пусть будет
+// пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ), пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 
-//public class ItemSaveDataBook // Сохраняемые данные о книгах
+//public class ItemSaveDataBook // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 //{
 //    public string itemID;
 //    public Spells spells;
