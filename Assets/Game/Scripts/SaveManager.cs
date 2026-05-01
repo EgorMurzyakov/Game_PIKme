@@ -107,8 +107,9 @@ public class SaveManager : MonoBehaviour
             case "VladTest2":
                 currentSavePathScene = savePathScene_2;
                 break;
-            //case "":
-            //    break;
+            case "SCENES3":
+                currentSavePathScene = savePathScene_3;
+                break;
             case "ValeraAD_old_from_commit":
                 currentSavePathScene = savePathScene_4;
                 break;
@@ -156,8 +157,9 @@ public class SaveManager : MonoBehaviour
             case "VladTest2":
                 currentSavePathScene = savePathScene_2;
                 break;
-            //case "":
-            //    break;
+            case "SCENES3":
+                currentSavePathScene = savePathScene_3;
+                break;
             case "ValeraAD_old_from_commit":
                 currentSavePathScene = savePathScene_4;
                 break;
