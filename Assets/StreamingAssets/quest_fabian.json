@@ -1,5 +1,5 @@
 {
-    "questStatus": "inactive",
+    "questStatus": "kill_phase",
     "questCompleted": false,
     "rewardGiven": false,
     "killCount": 0,
