@@ -3,16 +3,20 @@ using System.Collections;
 
 public class PlatformTrigger : MonoBehaviour
 {
-    [SerializeField] private Transform[] platforms;   // Платформы
-    [SerializeField] private float riseHeight = 5f;   // На сколько подняться
-    [SerializeField] private float riseSpeed = 2f;    // Скорость подъёма
+    [SerializeField] private Transform[] platforms;
+    [SerializeField] private float riseHeight = 5f;
+    [SerializeField] private float riseSpeed = 2f;
+
+    [Header("Вращение (опционально)")]
+    [SerializeField] private bool changeRotation = false;
+    [SerializeField] private Vector3 targetRotation = Vector3.zero;
+    [SerializeField] private float rotateSpeed = 90f;
 
     private bool activated = false;
 
     private void OnTriggerEnter(Collider other)
     {
         if (activated) return;
-
         if (other.CompareTag("Player"))
         {
             activated = true;
@@ -25,15 +29,35 @@ public class PlatformTrigger : MonoBehaviour
 
     private IEnumerator RisePlatform(Transform platform)
     {
-        Vector3 startPos = platform.position;
-        Vector3 targetPos = startPos + Vector3.up * riseHeight;
+        Vector3 targetPos = platform.position + Vector3.up * riseHeight;
+        Quaternion targetRot = platform.rotation * Quaternion.Euler(targetRotation);
 
-        while (platform.position.y < targetPos.y - 0.01f)
+        bool positionDone = false;
+        bool rotationDone = !changeRotation;
+
+        while (!positionDone || !rotationDone)
         {
-            platform.position = Vector3.MoveTowards(platform.position, targetPos, riseSpeed * Time.deltaTime);
+            if (!positionDone)
+            {
+                platform.position = Vector3.MoveTowards(platform.position, targetPos, riseSpeed * Time.deltaTime);
+                if (Vector3.Distance(platform.position, targetPos) < 0.01f)
+                {
+                    platform.position = targetPos;
+                    positionDone = true;
+                }
+            }
+
+            if (!rotationDone)
+            {
+                platform.rotation = Quaternion.RotateTowards(platform.rotation, targetRot, rotateSpeed * Time.deltaTime);
+                if (Quaternion.Angle(platform.rotation, targetRot) < 0.1f)
+                {
+                    platform.rotation = targetRot;
+                    rotationDone = true;
+                }
+            }
+
             yield return null;
         }
-
-        platform.position = targetPos;
     }
 }
