@@ -19,6 +19,6 @@ MonoBehaviour:
   itemDescription: Sour Apple
   maximumAmount: 3
   icon: {fileID: 21300000, guid: c1d0e6764d9c5f8458571840fb1d57d3, type: 3}
-  healthAmount: 31
+  healthAmount: 35
   upCoeff: 1
   durationEffect: 0
