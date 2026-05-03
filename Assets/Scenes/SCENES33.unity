@@ -35939,6 +35939,7 @@ GameObject:
   - component: {fileID: 797162902}
   - component: {fileID: 797162901}
   - component: {fileID: 797162900}
+  - component: {fileID: 797162904}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -36064,6 +36065,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 461002409}
   m_LocalEulerAnglesHint: {x: 16.463, y: 0, z: 0}
+--- !u!114 &797162904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 797162899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5df131a4e864f324c83dcac8106f9e8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraShake
+  delay: 0
+  duration: 0.5
+  strength: 0.2
+  fadeInTime: 0.2
+  fadeOutTime: 0.4
+  playOnStart: 0
 --- !u!1001 &797271126
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40402,10 +40421,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1602395545781653931, guid: 28029af0743a40b4abe02c10246f1b13, type: 3}
+      propertyPath: cameraShake
+      value: 
+      objectReference: {fileID: 797162904}
+    - target: {fileID: 1602395545781653931, guid: 28029af0743a40b4abe02c10246f1b13, type: 3}
+      propertyPath: shakeDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1602395545781653931, guid: 28029af0743a40b4abe02c10246f1b13, type: 3}
+      propertyPath: shakeStrength
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 1770636612566391411, guid: 28029af0743a40b4abe02c10246f1b13, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 159283637}
+    - target: {fileID: 2696966050808055599, guid: 28029af0743a40b4abe02c10246f1b13, type: 3}
+      propertyPath: thirdPhase
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2696966050808055599, guid: 28029af0743a40b4abe02c10246f1b13, type: 3}
+      propertyPath: secondPhase
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2696966050808055599, guid: 28029af0743a40b4abe02c10246f1b13, type: 3}
+      propertyPath: startHitPoint
+      value: 3000
+      objectReference: {fileID: 0}
     - target: {fileID: 3718347514245000726, guid: 28029af0743a40b4abe02c10246f1b13, type: 3}
       propertyPath: m_LocalPosition.x
       value: 23.04

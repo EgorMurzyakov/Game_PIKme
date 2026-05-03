@@ -3,6 +3,10 @@ using System.Collections;
 
 public class GolemVFX : MonoBehaviour
 {
+    [Header("Тряска камеры (опционально)")]
+    [SerializeField] private CameraShake cameraShake;
+
+    [Header("VFX (основа)")]
     [SerializeField] private ParticleSystem particles_1;
     [SerializeField] private ParticleSystem particles_2;
     [SerializeField] private GameObject eyasA;
@@ -10,15 +14,17 @@ public class GolemVFX : MonoBehaviour
 
     public void StartParticle(int _a)
     {
-        Debug.Log("fkejrghlijriheigherigeirgreg");
-
         switch (_a)
         {
             case 0:
                 SpawnVFX(particles_1);
+                if (cameraShake != null)
+                    cameraShake.Shake(0.5f, 0.2f, 0.2f, 0.4f, 0f);
                 break;
             case 1:
                 SpawnVFX(particles_2);
+                if (cameraShake != null)
+                    cameraShake.Shake(0.4f, 0.15f, 0.15f, 0.4f, 0f);
                 break;
         }
     }
