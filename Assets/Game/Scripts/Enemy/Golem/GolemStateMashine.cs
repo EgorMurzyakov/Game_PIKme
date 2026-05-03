@@ -4,7 +4,7 @@ public class GolemStateMashine : MonoBehaviour
 {
     public enum golemPhase { First, Second, Third }    
 
-    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject player;    
     private GolemMovment movment;
     private GolemAnimation anim;
     private ColliderSwitch colliderSwitch;
