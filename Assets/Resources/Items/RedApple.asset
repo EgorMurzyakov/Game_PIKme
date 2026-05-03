@@ -19,6 +19,6 @@ MonoBehaviour:
   itemDescription: Sweet Apple
   maximumAmount: 2
   icon: {fileID: 21300000, guid: da7129ed6a246f048a49d8d97de2d2d4, type: 3}
-  healthAmount: 43
+  healthAmount: 60
   upCoeff: 1.2
   durationEffect: 20

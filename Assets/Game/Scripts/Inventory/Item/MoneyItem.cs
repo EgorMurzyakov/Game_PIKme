@@ -10,7 +10,7 @@ public class MoneyItem : ItemScriptableObject
     {
         FoodItem clone = ScriptableObject.CreateInstance<FoodItem>();
 
-        // Копируем все поля
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
         clone.itemID = itemID;
         clone.type = this.type;
         clone.ItemPrefab = this.ItemPrefab;

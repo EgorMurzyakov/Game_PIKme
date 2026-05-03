@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponItem
   itemID: silver_sword_1
   type: 2
-  ItemPrefab: {fileID: 5631673566334751013, guid: 2a8cda2da5bbde54eac88b787907f003, type: 3}
+  ItemPrefab: {fileID: 6291402893461504652, guid: 2a8cda2da5bbde54eac88b787907f003, type: 3}
   itemName: SilverSword
   itemDescription: Silver sword
   maximumAmount: 1
   icon: {fileID: 21300000, guid: 95052c6b62fb3de4695beaa99f842ac2, type: 3}
   baceDamage: 50
-  upgradePrice: 40
+  upgradePrice: 78
   upgradePriceCoeff: 1.3

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e90f9d0c75c66cf4c97563f68e07ed91, type: 3}
+  m_Name: Poleaxe
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponItem
+  itemID: poleax_1
+  type: 2
+  ItemPrefab: {fileID: 9193952718858151186, guid: 0ec7c8a764bd5664bad14dc31993ecd6, type: 3}
+  itemName: Poleaxe
+  itemDescription: Poleaxe
+  maximumAmount: 1
+  icon: {fileID: 21300000, guid: a30e9a59a4ffb884489afda27a4945c3, type: 3}
+  baceDamage: 100
+  upgradePrice: 150
+  upgradePriceCoeff: 1.2

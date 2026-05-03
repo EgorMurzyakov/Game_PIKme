@@ -1,6 +1,7 @@
 {
-  "questStatus": "active",
-  "questCompleted": false,
-  "killCount": 0,
-  "totalEnemies": 0
+    "questStatus": "kill_phase",
+    "questCompleted": false,
+    "rewardGiven": false,
+    "killCount": 0,
+    "totalEnemies": 1
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum ItemType { Default, Food, Weapon, Book, Money }
+public enum ItemType { Default, Food, Weapon, Book, Money, Flower }
 
 public class ItemScriptableObject : ScriptableObject
 {
@@ -16,7 +16,8 @@ public class ItemScriptableObject : ScriptableObject
     {
         ItemScriptableObject clone = ScriptableObject.CreateInstance<ItemScriptableObject>();
 
-        // Копируем все поля
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+        clone.itemID = this.itemID;
         clone.type = this.type;
         clone.ItemPrefab = this.ItemPrefab;
         clone.itemName = this.itemName;

@@ -16,8 +16,6 @@ public class EnemyHP : HitPoint
         stateMachine.GoDeathState();
         gameObject.layer = LayerMask.NameToLayer("DeadEnemy");
 
-        if (KillCounter.Instance != null)
-            KillCounter.Instance.ReportKill();
 
         //Debug.Log("Враг умер, слой изменён на: " + gameObject.layer);
     }

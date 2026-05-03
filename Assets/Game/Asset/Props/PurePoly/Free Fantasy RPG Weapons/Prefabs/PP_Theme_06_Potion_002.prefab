@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4507231721959680468}
   - component: {fileID: 7309663920202609300}
   - component: {fileID: 3589927344662649508}
-  - component: {fileID: 8016797445421820511}
   m_Layer: 0
   m_Name: PP_Theme_06_Potion_Glass_002
   m_TagString: Untagged
@@ -89,29 +88,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8016797445421820511
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2864207674201080559}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -618494941626050153, guid: f922323834fbadf4e8c8b6a238620de1, type: 3}
 --- !u!1 &3771452789413926460
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,7 +101,7 @@ GameObject:
   - component: {fileID: 4547849442272480390}
   - component: {fileID: 626826552349492003}
   - component: {fileID: 3410940311994890217}
-  - component: {fileID: 626826552349492004}
+  - component: {fileID: 6694061782128350992}
   m_Layer: 0
   m_Name: PP_Theme_06_Potion_002
   m_TagString: Untagged
@@ -202,9 +180,10 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &626826552349492004
-MeshCollider:
+--- !u!65 &6694061782128350992
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -221,7 +200,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 1937605934907240374, guid: f922323834fbadf4e8c8b6a238620de1, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.15462855, y: 0.344174, z: 0.1528207}
+  m_Center: {x: 0.0000015087426, y: 0.18434678, z: 0.00053283945}

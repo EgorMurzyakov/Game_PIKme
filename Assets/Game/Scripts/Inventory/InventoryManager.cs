@@ -22,11 +22,11 @@ public class InventoryManager : MonoBehaviour
     public Transform inventoryPanel;
     public PlayerStateMachine playerStateMachine;
     public TMP_Text itemInfoText;
-    public TMP_Text startStatUI; // Текстовое поле (нынешний урон) - Прокачка
-    public TMP_Text newStatUI; // Текстовое поле (новый урон) - Прокачка
+    public TMP_Text startStatUI; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ) - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    public TMP_Text newStatUI; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ) - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     public TMP_Text moneyUI;
     public TMP_Text priceUI;
-    private float improvCoeff = 1.1f; // Коэфицент увеличения урона при прокачке
+    private float improvCoeff = 1.1f; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     public int playerMoney = 0;
     //public List<InventorySlot> slots = new List<InventorySlot>();
     public InventorySlot[,] slots;
@@ -35,26 +35,26 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private InventorySlot pumpSlot;
     public ItemScriptableObject startWeapon;
     public ItemScriptableObject startBook;
-    private bool isOpened = false; // Выключен в начале игры
+    private bool isOpened = false; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 
     public event Action<WeaponItem> ChangeWeapon;
     public event Action<FoodItem> EatFood;   
 
-    private int row; // Строки 
-    private int col; // Столбцы
+    private int row; // пїЅпїЅпїЅпїЅпїЅпїЅ 
+    private int col; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     private int curRow = 0;
     private int curCol = 0;
         
-    private string savePath; // Путь к файлу сохранения
+    private string savePath; // пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     ItemScriptableObject[] allItems; // Item Asset
 
-    private List<GameObject> itemsInRange = new List<GameObject>(); // Список предметов, которые можно подобрать   
+    private List<GameObject> itemsInRange = new List<GameObject>(); // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ   
 
     public void Start()
     {
-        // Задаём путь для сохранения (специальная папка для игры)
+        // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ)
         savePath = Application.persistentDataPath + "/money.json";
-        //Debug.Log("Файл сохранения находится здесь: " + Application.persistentDataPath);
+        //Debug.Log("пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: " + Application.persistentDataPath);
 
 
         col = inventoryPanel.childCount;
@@ -72,11 +72,11 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        allItems = Resources.LoadAll<ItemScriptableObject>("Items"); // Обязательно до LoadMoney()
+        allItems = Resources.LoadAll<ItemScriptableObject>("Items"); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ LoadMoney()
         LoadMoney();
-        StartCoroutine(InitializeWeaponLater()); // Включаем оружие с задержкой в кадр (должно спасать в случае, если ChangeWeapon не успеет подписаться на событие)
+        StartCoroutine(InitializeWeaponLater()); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ ChangeWeapon пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 
-        UIPanel.SetActive(false); // Принудительно выключаем при старте игры
+        UIPanel.SetActive(false); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
         UIActionPanel.SetActive(false);
         UIPumpPanel.SetActive(false);
         UIHelp.SetActive(false);
@@ -98,19 +98,19 @@ public class InventoryManager : MonoBehaviour
 
     IEnumerator InitializeWeaponLater()
     {
-        // Ждем 1 кадр, чтобы все Start() выполнились
+        // пїЅпїЅпїЅпїЅ 1 пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ Start() пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         yield return null;
 
         if (weaponSlot.item != null)
         {
-            playerStateMachine.SetWeaponInHand(true); // В слоте появилось оружие -> можно атаковать
-            ChangeWeapon?.Invoke((WeaponItem)weaponSlot.item); // Событие - положили оружие в слот, класс - ActiveWeapon
+            playerStateMachine.SetWeaponInHand(true); // пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ -> пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            ChangeWeapon?.Invoke((WeaponItem)weaponSlot.item); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ - ActiveWeapon
         }
     }
 
         public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I)) // Вкл/Выкл инвентаря в игре
+        if (Input.GetKeyDown(KeyCode.I)) // пїЅпїЅпїЅ/пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ
         {
             isOpened = !isOpened;
             if (isOpened)
@@ -136,16 +136,16 @@ public class InventoryManager : MonoBehaviour
             TryPickupItem();
         }
 
-        if (isOpened) // Если инвентарь открыт
+        if (isOpened) // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         {
-            InventoryNavigation(); // Навигация по инвентарю
-            ShowItemInfo(); // Показывает описание предмета
+            InventoryNavigation(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            ShowItemInfo(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-            if (Input.GetKeyDown(KeyCode.Q)) // Выбрасываем предмет
+            if (Input.GetKeyDown(KeyCode.Q)) // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             {
                 DropItem(true);
             }
-            if (Input.GetKeyDown(KeyCode.E)) // Действие с предметом
+            if (Input.GetKeyDown(KeyCode.E)) // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             {
                 ActionItem();
             }
@@ -157,7 +157,7 @@ public class InventoryManager : MonoBehaviour
                     int upgradePrice = ((WeaponItem)pumpSlot.item).GetUpgradePrice();
                     if (playerMoney >= upgradePrice) {
                         ((WeaponItem)pumpSlot.item).SetBaceDamage((int)(((WeaponItem)pumpSlot.item).GetBaceDamage() * improvCoeff));
-                        ((WeaponItem)pumpSlot.item).UpdateUpgradePrice(); // Обновляем цену
+                        ((WeaponItem)pumpSlot.item).UpdateUpgradePrice(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
                         playerMoney -= upgradePrice;
                         UpdateUI();
                     }
@@ -167,13 +167,13 @@ public class InventoryManager : MonoBehaviour
 
     }
 
-    // Сохраняем деньги
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     //public void SaveMoney()
     //{
-    //    // Превращаем число в текст (JSON)
-    //    string json = "{\"money\":" + playerMoney + "}"; // Деньги
+    //    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ (JSON)
+    //    string json = "{\"money\":" + playerMoney + "}"; // пїЅпїЅпїЅпїЅпїЅпїЅ
 
-    //    foreach (InventorySlot _slot in slots) // Содержимое инвентаря
+    //    foreach (InventorySlot _slot in slots) // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     //    {
     //        if (_slot.item != null)
     //        {
@@ -181,10 +181,10 @@ public class InventoryManager : MonoBehaviour
     //        }
     //    }
 
-    //    // Записываем текст в файл
+    //    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ
     //    File.WriteAllText(savePath, json);
 
-    //    Debug.Log("Деньги сохранены: " + playerMoney);
+    //    Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " + playerMoney);
     //}
 
     public void LoadMoney()
@@ -227,26 +227,26 @@ public class InventoryManager : MonoBehaviour
                     }
                 }
 
-                foreach (ItemSaveDate _itemDate in data.inventory) // Предметы кроме оружия
+                foreach (ItemSaveDate _itemDate in data.inventory) // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
                 {
                     string ID = _itemDate.itemID;
                     foreach (ItemScriptableObject _itemSO in allItems)
                     {
                         if (_itemSO.itemID == ID)
                         {
-                            AddItem(_itemSO.Clone(), _itemDate.amount); // Это нужный предмет
+                            AddItem(_itemSO.Clone(), _itemDate.amount); // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                         }
                     }
                 }
 
-                foreach (ItemSaveDateWeapon _itemDate in data.inventoryWeapon) // Оружие
+                foreach (ItemSaveDateWeapon _itemDate in data.inventoryWeapon) // пїЅпїЅпїЅпїЅпїЅпїЅ
                 {
                     string ID = _itemDate.itemID;
                     foreach (ItemScriptableObject _itemSO in allItems)
                     {
                         if (_itemSO.itemID == ID)
                         {
-                            WeaponItem weapon = (WeaponItem)_itemSO.Clone(); // Берем то же оружие, но меняем хар-ки которые можно качать
+                            WeaponItem weapon = (WeaponItem)_itemSO.Clone(); // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
                             weapon.SetBaceDamage(_itemDate.baseDamage);
                             weapon.UpdateUpgradePrice(_itemDate.UpPrice);
                             AddItem(weapon, 1); 
@@ -257,41 +257,41 @@ public class InventoryManager : MonoBehaviour
             else
             {
                 playerMoney = 0;
-                Debug.LogWarning("Не удалось загрузить, используем значение по умолчанию");
+                Debug.LogWarning("пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
             }
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Item")) // Подбор предметов
+        if (other.CompareTag("Item")) // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         {
             itemsInRange.Add(other.gameObject);
-            Debug.Log($"Предмет {other.name} в зоне подбора");
+            Debug.Log($"пїЅпїЅпїЅпїЅпїЅпїЅпїЅ {other.name} пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
         }
         if (itemsInRange.Count > 0)
         {
             UIHelp.SetActive(true);
         }
 
-        if (other.CompareTag("TraderNPC")) // Прокачка у торговца
+        if (other.CompareTag("TraderNPC")) // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         {
             isTrader = true;
         }
     }
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Item")) // Подбор предметов
+        if (other.CompareTag("Item")) // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         {
             itemsInRange.Remove(other.gameObject);
-            Debug.Log($"Предмет {other.name} покинул зону");
+            Debug.Log($"пїЅпїЅпїЅпїЅпїЅпїЅпїЅ {other.name} пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ");
         }
         if (itemsInRange.Count == 0)
         {
             UIHelp.SetActive(false);
         }
 
-        if (other.CompareTag("TraderNPC")) // Прокачка у торговца
+        if (other.CompareTag("TraderNPC")) // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         {
             isTrader = false;
         }
@@ -301,7 +301,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (itemsInRange.Count > 0)
         {
-            // Берем первый предмет в списке (или ближайший)
+            // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
             GameObject itemToPick = GetClosestItem();
 
             if (itemToPick != null)
@@ -309,7 +309,7 @@ public class InventoryManager : MonoBehaviour
                 Item item = itemToPick.GetComponent<Item>();
                 if (AddItem(item.itemScriptableObject, item.amount))
                 {
-                    Debug.Log($"Вы подобрали - {item.itemScriptableObject.itemName}");
+                    Debug.Log($"пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ - {item.itemScriptableObject.itemName}");
                     Destroy(itemToPick);
                     itemsInRange.Remove(itemToPick);
                 }
@@ -321,7 +321,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    GameObject GetClosestItem() // Выбирает предмет из списка
+    GameObject GetClosestItem() // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     {
         GameObject closest = null;
         float minDistance = float.MaxValue;
@@ -341,7 +341,7 @@ public class InventoryManager : MonoBehaviour
         return closest;
     }
 
-    private bool AddItem(ItemScriptableObject _itemSO, int _amount) // Возвращаем true, если есть место
+    private bool AddItem(ItemScriptableObject _itemSO, int _amount) // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ true, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     {
         if (_itemSO.type == ItemType.Money)
         {
@@ -352,7 +352,7 @@ public class InventoryManager : MonoBehaviour
 
         foreach (InventorySlot slot in slots)
         {
-            if (slot.isEmpty) // Если слот пустой
+            if (slot.isEmpty) // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             {
                 slot.item = _itemSO;
                 slot.amount = _amount;
@@ -361,24 +361,76 @@ public class InventoryManager : MonoBehaviour
                 slot.textItemAmount.text = _amount.ToString();
                 return true;
             }
-            else if (slot.item.itemName == _itemSO.itemName) // Если слот НЕ пустой 
+            else if (slot.item.itemName == _itemSO.itemName) // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 
             {
                 if (slot.amount + _amount <= _itemSO.maximumAmount)
                 {
                     slot.amount += _amount;
-                    Debug.Log("Вызвалось, кол-во " + slot.amount);
+                    Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ-пїЅпїЅ " + slot.amount);
                     slot.textItemAmount.text = slot.amount.ToString();
                     return true;
                 }
             }
         }
-        return false; // Инвентарь полон
+        return false; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     }
 
-    private void InventoryNavigation() // Навигация по инвентарю
+    public bool HasTornadoBook()
     {
-        // Стрелки
-        if (Input.GetKeyDown(KeyCode.UpArrow)) // Нажата стрелка вверх
+        if (bookSlot != null && bookSlot.item is BookItem book && book.HasTornadoSpell)
+            return true;
+
+        foreach (InventorySlot slot in slots)
+        {
+            if (slot != null && !slot.isEmpty && slot.item is BookItem inventoryBook && inventoryBook.HasTornadoSpell)
+                return true;
+        }
+
+        return false;
+    }
+
+    public bool HasBlackRose()
+    {
+        if (bookSlot != null && bookSlot.item is FlowerItem bookFlower && bookFlower.IsBlackRose())
+            return true;
+
+        foreach (InventorySlot slot in slots)
+        {
+            if (slot != null && !slot.isEmpty && slot.item is FlowerItem inventoryFlower && inventoryFlower.IsBlackRose())
+                return true;
+        }
+
+        return false;
+    }
+
+    public bool GiveItemByID(string itemID, int amount)
+    {
+        if (allItems == null || allItems.Length == 0)
+            allItems = Resources.LoadAll<ItemScriptableObject>("Items");
+
+        foreach (ItemScriptableObject item in allItems)
+        {
+            if (item == null) continue;
+
+            if (!string.IsNullOrEmpty(item.itemID) && item.itemID.Equals(itemID, StringComparison.OrdinalIgnoreCase))
+            {
+                return AddItem(item.Clone(), amount);
+            }
+
+            if (!string.IsNullOrEmpty(item.itemName) && item.itemName.Equals(itemID, StringComparison.OrdinalIgnoreCase))
+            {
+                return AddItem(item.Clone(), amount);
+            }
+        }
+
+        Debug.LogWarning($"InventoryManager: item СЃ ID РёР»Рё РёРјРµРЅРµРј '{itemID}' РЅРµ РЅР°Р№РґРµРЅ.");
+        return false;
+    }
+
+    private void InventoryNavigation() // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    {
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        if (Input.GetKeyDown(KeyCode.UpArrow)) // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         {
             slots[curCol, curRow].GetComponent<Image>().color = new Color(255,255,255,255);
 
@@ -390,7 +442,7 @@ public class InventoryManager : MonoBehaviour
 
             slots[curCol, curRow].GetComponent<Image>().color = new Color(255,0,0,255);
         }
-        if (Input.GetKeyDown(KeyCode.DownArrow)) // Нажата стрелка вниз
+        if (Input.GetKeyDown(KeyCode.DownArrow)) // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
         {
             slots[curCol, curRow].GetComponent<Image>().color = new Color(255, 255, 255, 255);
 
@@ -402,7 +454,7 @@ public class InventoryManager : MonoBehaviour
 
             slots[curCol, curRow].GetComponent<Image>().color = new Color(255, 0, 0, 255);
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) // Нажата стрелка влево
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         {
             slots[curCol, curRow].GetComponent<Image>().color = new Color(255, 255, 255, 255);
 
@@ -414,7 +466,7 @@ public class InventoryManager : MonoBehaviour
 
             slots[curCol, curRow].GetComponent<Image>().color = new Color(255, 0, 0, 255);
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow)) // Нажата стрелка вправо
+        if (Input.GetKeyDown(KeyCode.RightArrow)) // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         {
             slots[curCol, curRow].GetComponent<Image>().color = new Color(255, 255, 255, 255);
 
@@ -428,9 +480,9 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    private void ShowItemInfo() // Показывает описание предмета
+    private void ShowItemInfo() // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     {
-        if (slots[curCol, curRow].isEmpty == false) // Если слот НЕ пустой
+        if (slots[curCol, curRow].isEmpty == false) // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         {
             if (slots[curCol, curRow].item.type == ItemType.Weapon)
             {
@@ -447,24 +499,24 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    private void DropItem(bool _dropPrefab) // true - спавним предмет в мире, false - нет
+    private void DropItem(bool _dropPrefab) // true - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ, false - пїЅпїЅпїЅ
     {
-        if (slots[curCol, curRow].isEmpty == false) // Если слот НЕ пустой
+        if (slots[curCol, curRow].isEmpty == false) // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         {
             slots[curCol, curRow].amount -= 1;
             slots[curCol, curRow].textItemAmount.text = slots[curCol, curRow].amount.ToString();
 
             if (_dropPrefab)
             {
-                // Спавн выброшенного предмета
+                // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 GameObject newObject2 = Instantiate(slots[curCol, curRow].item.ItemPrefab, transform.position + new Vector3(2f, 2f, 0), Quaternion.identity);
             }
             if (slots[curCol, curRow].amount == 0)
             {
-                Debug.Log("Больше нечего выкинуть");
+                Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
                 slots[curCol, curRow].isEmpty = true;
                 slots[curCol, curRow].item = null;
-                slots[curCol, curRow].iconGO.GetComponent<Image>().color = new Color(0, 0, 0, 0); // Делаю слот прозрачным чтобы он не загораживал выделение
+                slots[curCol, curRow].iconGO.GetComponent<Image>().color = new Color(0, 0, 0, 0); // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 slots[curCol, curRow].iconGO.GetComponent<Image>().sprite = null;
                 slots[curCol, curRow].textItemAmount.text = " ";
             }
@@ -504,25 +556,25 @@ public class InventoryManager : MonoBehaviour
     {
         if (slots[curCol, curRow].item.type == ItemType.Weapon)
         {
-            // Запоминаем орижие в слоте
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
             ItemScriptableObject prevWeaponSlotItem = null;
             if (weaponSlot != null)
             {
                 prevWeaponSlotItem = weaponSlot.item;
             }            
-            // Добавляем в слот оружия
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             weaponSlot.item = slots[curCol, curRow].item;
             weaponSlot.amount = slots[curCol, curRow].amount;
             weaponSlot.isEmpty = false;
             weaponSlot.SetIcon(slots[curCol, curRow].item.icon);
 
-            playerStateMachine.SetWeaponInHand(true); // В слоте появилось оружие -> можно атаковать
+            playerStateMachine.SetWeaponInHand(true); // пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ -> пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-            ChangeWeapon?.Invoke((WeaponItem)weaponSlot.item); // Событие - положили оружие в слот, класс - ActiveWeapon
+            ChangeWeapon?.Invoke((WeaponItem)weaponSlot.item); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ - ActiveWeapon
 
-            // Удаляем оружие из инвентаря
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             DropItem(false);
-            // Добавляем оружие
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             if (prevWeaponSlotItem != null)
             {
                 AddItem(prevWeaponSlotItem, 1);
@@ -530,21 +582,21 @@ public class InventoryManager : MonoBehaviour
         }
         else if (slots[curCol, curRow].item.type == ItemType.Book)
         {
-            // Запоминаем книгу в слоте
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
             ItemScriptableObject prevBookSlotItem = null;
             if (bookSlot != null)
             {
                 prevBookSlotItem = bookSlot.item;
             }
-            // Добавляем в слот книги
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
             bookSlot.item = slots[curCol, curRow].item;
             bookSlot.amount = slots[curCol, curRow].amount;
             bookSlot.isEmpty = false;
             bookSlot.SetIcon(slots[curCol, curRow].item.icon);
 
-            // Удаляем книгу из инвентаря
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             DropItem(false);
-            // Добавляем книгу
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
             if (prevBookSlotItem != null)
             {
                 AddItem(prevBookSlotItem, 1);
@@ -552,8 +604,8 @@ public class InventoryManager : MonoBehaviour
         }
         else if (slots[curCol, curRow].item.type == ItemType.Food)
         {
-            EatFood?.Invoke((FoodItem)slots[curCol, curRow].item); // Вызываем событие
-            DropItem(false); // Удалаем предмет
+            EatFood?.Invoke((FoodItem)slots[curCol, curRow].item); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            DropItem(false); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         }
         else if (slots[curCol, curRow].item.type == ItemType.Default)
         {
@@ -563,9 +615,9 @@ public class InventoryManager : MonoBehaviour
 
     private void UpdateUI()
     {
-        moneyUI.text = playerMoney.ToString(); // Обновляем балланс в UI
+        moneyUI.text = playerMoney.ToString(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ UI
         if (pumpSlot.item != null) {
-            priceUI.text = ((WeaponItem)pumpSlot.item).GetUpgradePrice().ToString(); // Обновляем цену в UI        
+            priceUI.text = ((WeaponItem)pumpSlot.item).GetUpgradePrice().ToString(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ UI        
             startStatUI.text = "Start: " + ((WeaponItem)slots[curCol, curRow].item).GetBaceDamage();
             newStatUI.text = "New: " + (int)(((WeaponItem)slots[curCol, curRow].item).GetBaceDamage() * improvCoeff);
         }
