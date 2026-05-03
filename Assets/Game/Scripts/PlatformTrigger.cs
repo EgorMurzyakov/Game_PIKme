@@ -12,6 +12,14 @@ public class PlatformTrigger : MonoBehaviour
     [SerializeField] private Vector3 targetRotation = Vector3.zero;
     [SerializeField] private float rotateSpeed = 90f;
 
+    [Header("Тряска камеры (опционально)")]
+    [SerializeField] private CameraShake cameraShake;
+    [SerializeField] private float shakeDelay = 0f;
+    [SerializeField] private float shakeDuration = 1f;
+    [SerializeField] private float shakeStrength = 0.5f;
+    [SerializeField] private float shakeFadeIn = 0.2f;
+    [SerializeField] private float shakeFadeOut = 0.4f;
+
     private bool activated = false;
 
     private void OnTriggerEnter(Collider other)
@@ -20,10 +28,12 @@ public class PlatformTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             activated = true;
+
             foreach (var platform in platforms)
-            {
                 StartCoroutine(RisePlatform(platform));
-            }
+
+            if (cameraShake != null)
+                cameraShake.Shake(shakeDuration, shakeStrength, shakeFadeIn, shakeFadeOut, shakeDelay);
         }
     }
 

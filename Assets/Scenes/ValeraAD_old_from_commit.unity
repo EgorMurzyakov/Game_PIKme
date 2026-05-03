@@ -8141,15 +8141,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8234436724202565122, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 70.5
+      value: 65.68
       objectReference: {fileID: 0}
     - target: {fileID: 8234436724202565122, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -14.87
+      value: -15.53
       objectReference: {fileID: 0}
     - target: {fileID: 8234436724202565122, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -150.79
+      value: -154.11
       objectReference: {fileID: 0}
     - target: {fileID: 8508335263455685879, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
       propertyPath: m_AnchorMax.y
@@ -11636,6 +11636,12 @@ MonoBehaviour:
   changeRotation: 0
   targetRotation: {x: 0, y: 0, z: 0}
   rotateSpeed: 90
+  cameraShake: {fileID: 963194230}
+  shakeDelay: 2
+  shakeDuration: 3
+  shakeStrength: 0.1
+  shakeFadeIn: 0.6
+  shakeFadeOut: 0.6
 --- !u!65 &933591997
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11692,6 +11698,12 @@ MonoBehaviour:
   changeRotation: 0
   targetRotation: {x: 0, y: 0, z: 0}
   rotateSpeed: 90
+  cameraShake: {fileID: 0}
+  shakeDelay: 0
+  shakeDuration: 1
+  shakeStrength: 0.5
+  shakeFadeIn: 0.2
+  shakeFadeOut: 0.4
 --- !u!1001 &939645071
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11922,6 +11934,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -12047,6 +12060,24 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5df131a4e864f324c83dcac8106f9e8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraShake
+  delay: 0
+  duration: 1
+  strength: 0.5
+  fadeInTime: 0.2
+  fadeOutTime: 0.4
+  playOnStart: 0
 --- !u!1001 &965878789
 PrefabInstance:
   m_ObjectHideFlags: 0

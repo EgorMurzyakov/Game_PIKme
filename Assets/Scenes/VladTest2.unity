@@ -14393,7 +14393,6 @@ GameObject:
   m_Component:
   - component: {fileID: 539474472}
   - component: {fileID: 539474471}
-  - component: {fileID: 539474473}
   - component: {fileID: 539474470}
   m_Layer: 0
   m_Name: PlatformTrigger
@@ -14442,6 +14441,12 @@ MonoBehaviour:
   changeRotation: 1
   targetRotation: {x: 0, y: 30, z: 0}
   rotateSpeed: 30
+  cameraShake: {fileID: 1574712599}
+  shakeDelay: 0
+  shakeDuration: 1.2
+  shakeStrength: 0.1
+  shakeFadeIn: 0.3
+  shakeFadeOut: 0.3
 --- !u!4 &539474472
 Transform:
   m_ObjectHideFlags: 0
@@ -14457,25 +14462,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -61.464, z: 0}
---- !u!114 &539474473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 539474469}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c640032541659eb4e9b8672f7597222d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlatformTrigger
-  platforms:
-  - {fileID: 0}
-  riseHeight: 5
-  riseSpeed: 2
-  changeRotation: 1
-  targetRotation: {x: 0, y: 0, z: 0}
-  rotateSpeed: 90
 --- !u!1001 &542645051
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33852,15 +33838,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8234436724202565122, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.81
+      value: 6.48
       objectReference: {fileID: 0}
     - target: {fileID: 8234436724202565122, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.69
+      value: 1.966
       objectReference: {fileID: 0}
     - target: {fileID: 8234436724202565122, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.49
+      value: 0.32
       objectReference: {fileID: 0}
     - target: {fileID: 8234436724202565122, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
       propertyPath: m_LocalRotation.w
@@ -42695,6 +42681,7 @@ GameObject:
   - component: {fileID: 1574712596}
   - component: {fileID: 1574712595}
   - component: {fileID: 1574712598}
+  - component: {fileID: 1574712599}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -42820,6 +42807,24 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &1574712599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1574712594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5df131a4e864f324c83dcac8106f9e8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraShake
+  delay: 0
+  duration: 1
+  strength: 0.5
+  fadeInTime: 0.2
+  fadeOutTime: 0.4
+  playOnStart: 0
 --- !u!1001 &1577463374
 PrefabInstance:
   m_ObjectHideFlags: 0
