@@ -17,6 +17,7 @@ public class CameraShake : MonoBehaviour
 
     private Vector3 originalLocalPos;
     private bool isShaking = false;
+    private Vector3 shakeOffset; // Добавляем отдельное смещение для тряски
 
     private void Start()
     {
@@ -26,11 +27,21 @@ public class CameraShake : MonoBehaviour
             Shake();
     }
 
+    private void LateUpdate()
+    {
+        // Применяем тряску поверх исходной позиции
+        if (isShaking)
+        {
+            transform.localPosition = originalLocalPos + shakeOffset;
+        }
+    }
+
     public void Shake()
     {
         if (isShaking)
         {
             StopAllCoroutines();
+            shakeOffset = Vector3.zero;
             transform.localPosition = originalLocalPos;
             isShaking = false;
         }
@@ -47,6 +58,9 @@ public class CameraShake : MonoBehaviour
         isShaking = true;
         float elapsed = 0f;
 
+        // Запоминаем позицию, которую установил скрипт зума
+        originalLocalPos = transform.localPosition;
+
         while (elapsed < duration)
         {
             float t = elapsed / duration;
@@ -56,19 +70,18 @@ public class CameraShake : MonoBehaviour
             float fadeOutFactor = (fadeOutTime > 0f) ? Mathf.Clamp01((duration - elapsed) / fadeOutTime) : 1f;
             float currentStrength = strength * fadeInFactor * fadeOutFactor;
 
-            // Случайное смещение
-            Vector3 offset = new Vector3(
+            // Случайное смещение (только для тряски)
+            shakeOffset = new Vector3(
                 Random.Range(-1f, 1f),
                 Random.Range(-1f, 1f),
                 0f
             ) * currentStrength;
 
-            transform.localPosition = originalLocalPos + offset;
-
             elapsed += Time.deltaTime;
             yield return null;
         }
 
+        shakeOffset = Vector3.zero;
         transform.localPosition = originalLocalPos;
         isShaking = false;
     }

@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections;
 
 
 public class EnemyStateMachine : MonoBehaviour
@@ -18,19 +19,15 @@ public class EnemyStateMachine : MonoBehaviour
     private float startAttckColdown;
     private bool canAttack = true;
 
-    private float rayThickness = 0.1f; // Толщина луча (для визуализации)
-    private Vector3 popopo;
-    private RaycastHit hit;
     private bool inVisibilityArea;
 
-    private bool canChangeState = false;
+    private bool canChangeState = true;
     private bool takingDamage = false;
     private bool death = false;
     private float distanceToPlayer;
 
     public void Start()
     {
-        popopo = new Vector3 (0, 1.3f, 0);
         movment = GetComponent<EnemyMovment>();
         anim = GetComponent<EnemyAnimation>();
         colliderSwitch = GetComponent<ColliderSwitch>();        
@@ -39,7 +36,7 @@ public class EnemyStateMachine : MonoBehaviour
     public void Update()
     {
         distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
-        RunRayCast(); // Рейкасты, меняет inVisibilityArea
+        inVisibilityArea = distanceToPlayer < rayRange; // Упрощение заместо рейкастов
 
         UpdateState();
 
@@ -53,24 +50,6 @@ public class EnemyStateMachine : MonoBehaviour
         }
     }
 
-    private void RunRayCast() // Запуск рейкастов для определения нахождения в зоне видимости
-    {
-        Ray ray = new Ray(transform.position + popopo, (player.transform.position - transform.position).normalized);
-
-        if (Physics.Raycast(ray, out hit, rayRange) && hit.collider.CompareTag("Player"))
-        {
-            // Попали - рисуем жирную зеленую линию
-            DrawThickRay(ray.origin, hit.point, Color.green, rayThickness);
-            inVisibilityArea = true;
-        }
-        else
-        {
-            // Не попали - жирная красная
-            DrawThickRay(ray.origin, ray.origin + ray.direction * rayRange, Color.red, rayThickness);
-            inVisibilityArea = false;
-        }
-    }
-
     private void UpdateState()
     {
         canAttack = (Time.time - attackCooldown) > startAttckColdown;
@@ -79,33 +58,32 @@ public class EnemyStateMachine : MonoBehaviour
         {
             currentState = state.Death;
         }
-        else if (takingDamage) // Самое приоритетное (нет)
+        else if (takingDamage) 
         {
             currentState = state.Damage;
-            prevState = state.Empty;
         }
 
         switch (currentState)
         {
             case state.Idle:
-                if (inVisibilityArea && distanceToPlayer < attackRange && canAttack)
+                if (inVisibilityArea && distanceToPlayer < attackRange && canAttack) // -> Attack
                 {
                     currentState = state.Attack;
                     startAttckColdown = Time.time;
                 }
-                else if (inVisibilityArea)
+                else if (inVisibilityArea) // -> Walk
                 {
                     currentState = state.Walk;
                 }
                 break;
 
             case state.Walk:
-                if (inVisibilityArea && distanceToPlayer < attackRange && canAttack)
+                if (inVisibilityArea && distanceToPlayer < attackRange && canAttack) // -> Attack
                 {
                     currentState = state.Attack;
                     startAttckColdown = Time.time;
                 }
-                else if (inVisibilityArea == false)
+                else if (inVisibilityArea == false) // -> Idle
                 {
                     currentState = state.Idle;
                 }
@@ -114,7 +92,7 @@ public class EnemyStateMachine : MonoBehaviour
             case state.Attack:
                 if (canChangeState)
                 {
-                    if (inVisibilityArea && distanceToPlayer < attackRange && canAttack)
+                    if (inVisibilityArea && distanceToPlayer < attackRange && canAttack) // -> Attack
                     {
                         currentState = state.Attack;
                         prevState = state.Empty;
@@ -122,11 +100,11 @@ public class EnemyStateMachine : MonoBehaviour
                     }
                     else if (inVisibilityArea)
                     {
-                        currentState = state.Walk;
+                        currentState = state.Walk; // -> Walk
                     }
                     else
                     {
-                        currentState = state.Idle;
+                        currentState = state.Idle; // -> Idle
                     }
 
                     canChangeState = false;
@@ -139,19 +117,19 @@ public class EnemyStateMachine : MonoBehaviour
             case state.Damage:
                 if (canChangeState)
                 {
-                    if (inVisibilityArea && distanceToPlayer < attackRange && canAttack)
+                    if (inVisibilityArea && distanceToPlayer < attackRange && canAttack) // -> Attack
                     {
                         currentState = state.Attack;
                         prevState = state.Empty;
                         startAttckColdown = Time.time;
                     }
-                    else if (inVisibilityArea)
+                    else if (inVisibilityArea) // -> Walk
                     {
                         currentState = state.Walk;
                     }
                     else
                     {
-                        currentState = state.Idle;
+                        currentState = state.Idle; // -> Idle
                     }
 
                     canChangeState = false;
@@ -167,42 +145,28 @@ public class EnemyStateMachine : MonoBehaviour
     {
         canChangeState = true;
         takingDamage = false;
-        Debug.Log("Вызвалось - " + canChangeState);
-    }
-
-
-
-    void DrawThickRay(Vector3 start, Vector3 end, Color color, float thickness) // Метод для рисования толстых линий (визуализация RayCast)
-    {
-        // Рисуем несколько линий рядом для эффекта толщины
-        Vector3 up = Vector3.up * thickness;
-        Vector3 right = Vector3.right * thickness;
-
-        Debug.DrawLine(start, end, color);
-        Debug.DrawLine(start + up, end + up, color);
-        Debug.DrawLine(start - up, end - up, color);
-        Debug.DrawLine(start + right, end + right, color);
-        Debug.DrawLine(start - right, end - right, color);
-
-        // Для совсем толстых - еще диагонали
-        if (thickness > 0.2f)
-        {
-            Debug.DrawLine(start + up + right, end + up + right, color);
-            Debug.DrawLine(start + up - right, end + up - right, color);
-            Debug.DrawLine(start - up + right, end - up + right, color);
-            Debug.DrawLine(start - up - right, end - up - right, color);
-        }
     }
 
     public void GoDamageState() // Получаем урон - true, не получаем - false
     {
-        //prevState = state.Empty;
         takingDamage = true;
     }
 
     public void GoDeathState()
     {
         death = true;
+        StartCoroutine(DieSequence());
+    }
+
+    private IEnumerator DieSequence()
+    {
+        // Останавливаем навигацию
+        movment.StopNavAgent();
+
+        // Ждём 
+        yield return new WaitForSeconds(30f);
+
+        Destroy(gameObject);
     }
 }
 
