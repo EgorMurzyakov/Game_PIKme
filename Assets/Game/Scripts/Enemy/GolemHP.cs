@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class GolemHP : HitPoint
 {
-    [SerializeField] private GolemStateMashine stateMachine;    
+    [SerializeField] private GolemStateMashine stateMachine;
+    [SerializeField] private GolemUI golemUI;
     [SerializeField] private int secondPhase;
     [SerializeField] private int thirdPhase;   
 
@@ -15,6 +16,7 @@ public class GolemHP : HitPoint
     protected override void Death()
     {
         stateMachine.GoDeathState();
+        golemUI.DeleteHpSlider();
         gameObject.layer = LayerMask.NameToLayer("DeadEnemy");
 
         //if (KillCounter.Instance != null)
@@ -43,5 +45,7 @@ public class GolemHP : HitPoint
             currentHitPoint = 0;
             Death();
         }
+
+        golemUI.SetHitPointUI(currentHitPoint, maxHitPoint, secondPhase, thirdPhase);
     }
 }

@@ -66,4 +66,9 @@ public class EnemyMovment : MonoBehaviour
 
         }
     }
+
+    public void StopNavAgent()
+    {
+        agent.isStopped = true;
+    }
 }

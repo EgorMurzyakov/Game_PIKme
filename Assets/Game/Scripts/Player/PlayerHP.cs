@@ -47,16 +47,12 @@ public class PlayerHP : HitPoint
 
     public override void TakeDamage(int _damage) // Нанесение урона
     {
-        Debug.Log("Базовый урон");
         if (currentHitPoint - _damage > 0)
         {
-            Debug.Log("Было - " + currentHitPoint);
             currentHitPoint -= _damage;
-            Debug.Log("Стало - " + currentHitPoint);
         }
         else
         {
-            Debug.Log("Death");
             currentHitPoint = 0;
             Death();
         }
