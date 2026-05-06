@@ -22,11 +22,10 @@ public class CameraSpeedZoom : MonoBehaviour
         state curState = playerState.GetPlayerState();
 
         // Какие состояния требуют зума
-        bool shouldZoom = (curState == state.Run ||
-                          curState == state.Sprint ||
-                          curState == state.Attack ||
-                          curState == state.AttackB ||
-                          curState == state.Dodge);
+        bool shouldZoom = (curState == state.Sprint ||
+                           curState == state.Attack ||
+                           curState == state.AttackB ||
+                           curState == state.Dodge);
 
         if (shouldZoom)
         {
