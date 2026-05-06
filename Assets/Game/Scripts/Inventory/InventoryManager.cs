@@ -122,7 +122,9 @@ public class InventoryManager : MonoBehaviour
             else
             {
                 UIPanel.SetActive(false);
-                pumpSlot.SetIcon(null);
+                //pumpSlot.SetIcon(null);
+                pumpSlot.iconGO.GetComponent<Image>().color = new Color(0, 0, 0, 0); 
+                pumpSlot.iconGO.GetComponent<Image>().sprite = null;
                 pumpSlot.item = null;
 
                 startStatUI.text = "Current damage";
