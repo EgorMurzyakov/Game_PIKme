@@ -46,7 +46,7 @@ public class VoiceMagic : MonoBehaviour
         if (VoiceProcessManager.Instance == null)
         {
             UnityDebug.LogWarning("VoiceMagic: VoiceProcessManager не найден!");
-            StartVoiceProcess();
+
             UnityDebug.LogWarning("VoiceMagic: VoiceProcessManager запущен вручную!");
         }
     }
@@ -141,52 +141,6 @@ public class VoiceMagic : MonoBehaviour
         }
     }
 
-    private void StartVoiceProcess()
-    {
-        try
-        {
-            string exePath = Path.Combine(
-                Application.streamingAssetsPath,
-                "Voice/spell_recognizer/spell_recognizer.exe"
-            );
-
-            if (!File.Exists(exePath))
-            {
-                UnityDebug.LogError("VoiceMagic: файл не найден: " + exePath);
-                return;
-            }
-
-            process = new Process();
-            process.StartInfo.FileName = exePath;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true;
-            process.StartInfo.CreateNoWindow = true;
-            process.StartInfo.WorkingDirectory = Path.GetDirectoryName(exePath);
-
-            process.OutputDataReceived += (s, e) =>
-            {
-                if (!string.IsNullOrEmpty(e.Data))
-                    Interlocked.Exchange(ref pendingSpell, e.Data.Trim());
-            };
-
-            process.ErrorDataReceived += (s, e) =>
-            {
-                if (!string.IsNullOrEmpty(e.Data))
-                    UnityDebug.LogError("SPELL_RECOGNIZER ERR: " + e.Data);
-            };
-
-            process.Start();
-            process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
-
-            UnityDebug.Log("VoiceMagic: процесс запущен.");
-        }
-        catch (System.Exception e)
-        {
-            UnityDebug.LogError("VoiceMagic: ошибка запуска: " + e.Message);
-        }
-    }
 
     private bool CanUseTornado()
     {

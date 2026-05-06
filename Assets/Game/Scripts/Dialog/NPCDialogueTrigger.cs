@@ -4,9 +4,9 @@ using UnityEngine;
 public class NPCDialogueTrigger : MonoBehaviour
 {
     public DialogueManager dialogueManager;
-    public string introFile   = "npc_fabian_intro.json";
-    public string rewardFile  = "npc_fabian_reward.json";
-    public string doneFile    = "npc_fabian_done.json";
+    public string introFile  = "npc_fabian_intro.json";
+    public string rewardFile = "npc_fabian_reward.json";
+    public string doneFile   = "npc_fabian_done.json";
 
     public GameObject rewardSpawnPrefab;
     public Vector3 rewardSpawnOffset = new Vector3(0f, 0.5f, 1f);
@@ -16,8 +16,7 @@ public class NPCDialogueTrigger : MonoBehaviour
     private string[] doneLines;
 
     private InventoryManager inventoryManager;
-    private bool playerInRange  = false;
-    private bool rewardGiven    = false;
+    private bool playerInRange = false;
 
     void Start()
     {
@@ -53,19 +52,23 @@ public class NPCDialogueTrigger : MonoBehaviour
     {
         if (!playerInRange || !Input.GetKeyDown(KeyCode.E)) return;
         if (DialogueManager.Instance.IsOpen) return;
+
         string status = QuestManager.Instance.Data.questStatus;
         bool hasBlackRose = inventoryManager != null && inventoryManager.HasBlackRose();
 
+        // Если есть роза и квест ещё не выполнен — завершаем
         if (status != "completed" && hasBlackRose)
         {
             QuestManager.Instance.CompleteQuestWithBlackRose();
             status = QuestManager.Instance.Data.questStatus;
-            Debug.Log("Квест завершен с черной розой");
+            Debug.Log("Квест завершён с чёрной розой");
         }
 
+        // Выдаём награду
         if (status == "completed" && !QuestManager.Instance.Data.rewardGiven)
         {
             bool rewardSuccess = false;
+
             if (inventoryManager != null)
                 rewardSuccess = inventoryManager.GiveItemByID("TornadoBook", 1);
 
@@ -73,16 +76,16 @@ public class NPCDialogueTrigger : MonoBehaviour
             {
                 Instantiate(rewardSpawnPrefab, transform.position + rewardSpawnOffset, Quaternion.identity);
                 rewardSuccess = true;
-                Debug.Log("NPCDialogueTrigger: TornadoBook не добавилась в инвентарь, но prefab заспавнен в мире.");
+                Debug.Log("TornadoBook не в инвентаре — заспавнен префаб.");
             }
 
             QuestManager.Instance.Data.rewardGiven = true;
             QuestManager.Instance.SaveQuestState();
 
             if (!rewardSuccess)
-                Debug.LogWarning("NPCDialogueTrigger: не удалось выдать TornadoBook и нет prefab для спавна.");
+                Debug.LogWarning("Не удалось выдать TornadoBook и нет префаба.");
             else
-                Debug.Log("TornadoBook успешно выдана или заспавнена.");
+                Debug.Log("TornadoBook выдана.");
 
             dialogueManager.OpenDialogue(rewardLines, isReward: true);
         }
@@ -92,7 +95,6 @@ public class NPCDialogueTrigger : MonoBehaviour
         }
         else
         {
-            // kill_phase или уже получил награду
             dialogueManager.OpenDialogue(doneLines);
         }
     }

@@ -17,6 +17,7 @@ public class DialogueManager : MonoBehaviour
     private bool isRewardDialogue = false;
 
     public bool IsOpen { get; private set; }
+    public bool isStarostaDialogue = false;
 
     void Awake() { Instance = this; }
 
@@ -57,11 +58,19 @@ public class DialogueManager : MonoBehaviour
 
         continueButton.gameObject.SetActive(!isLast);
         acceptButton.gameObject.SetActive(isLast);
-
+        
         if (isLast && !isRewardDialogue)
         {
-            if (QuestManager.Instance.Data.questStatus == "inactive")
-                QuestManager.Instance.StartKillPhase();
+            if (isStarostaDialogue)
+            {
+                if (QuestManager_Starosta.Instance.Data.questStatus == "inactive")
+                    QuestManager_Starosta.Instance.StartQuest();
+            }
+            else
+            {
+                if (QuestManager.Instance.Data.questStatus == "inactive")
+                    QuestManager.Instance.StartKillPhase();
+            }
         }
     }
 

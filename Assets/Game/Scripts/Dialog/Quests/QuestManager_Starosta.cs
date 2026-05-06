@@ -1,18 +1,10 @@
-using System.IO;
 using UnityEngine;
-using TMPro;
 
 public class QuestManager_Starosta : MonoBehaviour
 {
     public static QuestManager_Starosta Instance;
 
-    [Header("Настройки")]
-
-    [Header("UI")]
-    public TextMeshProUGUI questText;
-
     public QuestData Data { get; private set; }
-    private string questSavePath;
 
     void Awake()
     {
@@ -24,111 +16,30 @@ public class QuestManager_Starosta : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        questSavePath = Path.Combine(Application.streamingAssetsPath, "quest_Starosta.json");
-
         Data = new QuestData
         {
-            questStatus   = "inactive",
+            questStatus    = "inactive",
             questCompleted = false,
-            rewardGiven    = false,
-            killCount      = 0
+            rewardGiven    = false
         };
-
-        LoadQuestState();
-    }
-
-    void Start()
-    {
-        if (questText != null)
-            questText.gameObject.SetActive(false);
-    }
-
-    private void LoadQuestState()
-    {
-        if (!File.Exists(questSavePath))
-            return;
-
-        try
-        {
-            string json = File.ReadAllText(questSavePath);
-            QuestData loaded = JsonUtility.FromJson<QuestData>(json);
-            if (loaded != null)
-            {
-                Data = loaded;
-                if (Data.questStatus == "active")
-                    Data.questStatus = "inactive";
-            }
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogWarning("QuestManager_Starosta: не удалось загрузить состояние квеста: " + e.Message);
-        }
-    }
-
-    public void SaveQuestState()
-    {
-        try
-        {
-            File.WriteAllText(questSavePath, JsonUtility.ToJson(Data, true));
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError("QuestManager_Starosta: не удалось сохранить состояние квеста: " + e.Message);
-        }
-    }
-
-    public void CompleteQuestWithBlackRose()
-    {
-        if (Data.questCompleted)
-            return;
-
-        Data.questStatus = "completed";
-        Data.questCompleted = true;
-
-        if (questText != null)
-        {
-            questText.gameObject.SetActive(true);
-            questText.text = "Квест выполнен";
-        }
-
-        SaveQuestState();
     }
 
     // Вызывается DialogueManager когда игрок дочитал вводный диалог
-    public void StartKillPhase()
+    public void StartQuest()
     {
         if (Data.questStatus != "inactive") return;
 
-        Data.questStatus  = "kill_phase";
-        Data.killCount    = 0;
-
-        SaveQuestState();
-
-        if (questText != null)
-        {
-            questText.gameObject.SetActive(true);
-        }
-
-        Debug.Log("Квест начат. Убей врагов: ");
+        Data.questStatus = "active";
+        Debug.Log("Квест Старосты начат.");
     }
 
-    // Вызывается EnemyCounter когда все враги мертвы
-    public void OnAllEnemiesKilled()
+    // Вызывается триггером на другой сцене
+    public void CompleteQuest()
     {
-        if (Data.questStatus != "kill_phase") return;
+        if (Data.questStatus != "active") return;
 
-        Data.questStatus   = "completed";
+        Data.questStatus    = "completed";
         Data.questCompleted = true;
-        Data.killCount      = Data.totalEnemies;
-        SaveQuestState();
-
-        if (questText != null)
-            questText.text = "Вернись к Фабиану";
-
-        Debug.Log("Все враги убиты. Возвращайся к NPC.");
+        Debug.Log("Квест Старосты выполнен.");
     }
-
-
-
-
 }
