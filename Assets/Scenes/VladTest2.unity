@@ -1692,6 +1692,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 941782079}
+    - target: {fileID: 420062078510008520, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
+      propertyPath: rayRange
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 1553148347283824250, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
       propertyPath: m_Name
       value: Orc
@@ -15864,7 +15868,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: 9e77fe92cdbf81549b9173b0e8b349e6, type: 2}
+  sharedProfile: {fileID: 11400000, guid: f6f20f106116d4e4298ff1d781f0ddaf, type: 2}
 --- !u!4 &542812777
 Transform:
   m_ObjectHideFlags: 0
@@ -29306,6 +29310,151 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3218621239399248873, guid: a8a88672087b8864f9276c4537b48bf9, type: 3}
   m_PrefabInstance: {fileID: 1023756367}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1027796731
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1027796734}
+  - component: {fileID: 1027796733}
+  - component: {fileID: 1027796732}
+  m_Layer: 0
+  m_Name: MusicEmpty
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &1027796732
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027796731}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1027796733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027796731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c652358347b1f674fb447c990e54e57c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MusicManager
+  normalMusic: {fileID: 8300000, guid: ed8784121c5796a4fb11c695db0bcae1, type: 3}
+  battleMusic: {fileID: 8300000, guid: d4dadd67abcfb06459e953c3165cb8c6, type: 3}
+  fadeTime: 1
+--- !u!4 &1027796734
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027796731}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.91982, y: -0, z: 4.4972}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1031460482
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46182,6 +46331,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 941782079}
+    - target: {fileID: 420062078510008520, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
+      propertyPath: rayRange
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 1553148347283824250, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
       propertyPath: m_Name
       value: Orc (2)
@@ -54296,6 +54449,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 941782079}
+    - target: {fileID: 420062078510008520, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
+      propertyPath: rayRange
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 1553148347283824250, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
       propertyPath: m_Name
       value: Orc (1)
@@ -64099,3 +64256,4 @@ SceneRoots:
   - {fileID: 1711347817}
   - {fileID: 242258678}
   - {fileID: 542812777}
+  - {fileID: 1027796734}
