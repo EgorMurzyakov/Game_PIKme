@@ -29,6 +29,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ValeraAD_old_from_commit.unity
     guid: 4cbfe34677b4a3048b6413e5671a57bd
+  - enabled: 1
+    path: Assets/Scenes/SCENES33.unity
+    guid: d8424af467af7fd419269bbb86629aee
   - enabled: 0
     path: Assets/Scenes/1_mereg_2_scens.unity
     guid: 2320b8bd65e0d074a89ff122a262c729
