@@ -30,7 +30,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     // Комбо 
     private string[] combo = { "L", "LL", "LLL", "R", "RR", "RRR", "LLR", "LLRR", "RRL", "RRLL" };
-    private string currentCombo;
+    private string currentCombo = "";
 
     public void Start()
     {
@@ -74,14 +74,7 @@ public class PlayerStateMachine : MonoBehaviour
                 }
                 else if ((input.PKM || input.LKM) && canChangeStateAttack && weaponInHand) // Idle -> Attack
                 {
-                    if (input.PKM)
-                    {
-                        currentCombo = "R";
-                    }
-                    else
-                    {
-                        currentCombo = "L";
-                    }
+                    currentCombo = input.PKM ? "R" : "L";
                     currentState = state.Attack;
                     movControl.SetTurnAllow(false);
                 }
@@ -103,14 +96,7 @@ public class PlayerStateMachine : MonoBehaviour
                 }
                 else if ((input.PKM || input.LKM) && canChangeStateAttack && weaponInHand) // Walk -> Attack
                 {
-                    if (input.PKM)
-                    {
-                        currentCombo = "R";
-                    }
-                    else
-                    {
-                        currentCombo = "L";
-                    }
+                    currentCombo = input.PKM ? "R" : "L";
                     currentState = state.Attack;
                     movControl.SetTurnAllow(false);
                 }
@@ -132,14 +118,7 @@ public class PlayerStateMachine : MonoBehaviour
                 }
                 else if ((input.PKM || input.LKM) && canChangeStateAttack && weaponInHand) // Run -> Attack
                 {
-                    if (input.PKM)
-                    {
-                        currentCombo = "R";
-                    }
-                    else
-                    {
-                        currentCombo = "L";
-                    }
+                    currentCombo = input.PKM ? "R" : "L";
                     currentState = state.Attack;
                     movControl.SetTurnAllow(false);
                 }
@@ -161,14 +140,7 @@ public class PlayerStateMachine : MonoBehaviour
                 }
                 else if ((input.PKM || input.LKM) && canChangeStateAttack && weaponInHand) // Sprint -> Attack
                 {
-                    if (input.PKM)
-                    {
-                        currentCombo = "R";
-                    }
-                    else
-                    {
-                        currentCombo = "L";
-                    }
+                    currentCombo = input.PKM ? "R" : "L";
                     currentState = state.Attack;
                     movControl.SetTurnAllow(false);
                 }
@@ -185,20 +157,13 @@ public class PlayerStateMachine : MonoBehaviour
             case state.Dodge:
                 if ((input.PKM || input.LKM) && flagAttack && canChangeStateAttack && weaponInHand) // Dodge -> Attack
                 {
-                    if (input.PKM)
-                    {
-                        currentCombo = "R";
-                    }
-                    else
-                    {
-                        currentCombo = "L";
-                    }
+                    currentCombo = input.PKM ? "R" : "L";
                     blockFlagMovment = true;
                     flagAttack = false; // <- Очищаем после использования
                     currentState = state.Attack;
                     movControl.SetTurnAllow(false);
                 }
-                if (flagMovment)
+                else if (flagMovment)
                 {
                     lastDodgeTime = Time.time;
 
@@ -271,10 +236,10 @@ public class PlayerStateMachine : MonoBehaviour
         movControl.ChoosingAction(currentState, input.Move); // Для движения сообщаем о новом состоянии всегда
         if (currentState != prevState)
         {
-            animControl.ChoosingAction(currentState, input.LKM, input.PKM); // Для аттаки сообщаем о новом состоянии только, если оно сменилось
+            animControl.ChoosingAction(currentState, currentCombo.Length > 0 ? currentCombo[currentCombo.Length - 1] : 'N'); // Для аттаки сообщаем о новом состоянии только, если оно сменилось
             colliderSwitch.ChoosingAction(currentState); // Коллайдер меча
             prevState = currentState;
-            Debug.Log("Текущее комбо - " + currentCombo);
+            //Debug.Log("Текущее комбо - " + currentCombo);
         }
     }
 
