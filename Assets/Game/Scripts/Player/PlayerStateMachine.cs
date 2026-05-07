@@ -225,30 +225,25 @@ public class PlayerStateMachine : MonoBehaviour
                 //    Переход           движения           на движение (Это кто-то читает?)
                 //  (Кроме уклонения)
 
+
                 if (input.Alt && flagMovment) // 1. Всегда можем уклониться  (Больше нет)
                 {
                     blockFlagAttack = true;
                     currentState = state.Dodge; // Attack -> Dodge
                     movControl.SetTurnAllow(false);
-                    //animControl.ProbAOA();
                 }
-                else if (flagAttack && ((input.PKM || input.LKM))) // 2. Можем атаковать только если flagAttack == true 
+                else if (flagAttack && (input.PKM || input.LKM)) // 2. Можем атаковать только если flagAttack == true 
                 {
-                    if (input.PKM)
-                    {
-                        currentCombo += "R";
-                    }
-                    else
-                    {
-                        currentCombo += "L";
-                    }
+                    flagAttack = false; // <- Очищаем после использования               
 
-                    blockFlagMovment = BattleChecker();
-
-                    flagAttack = false; // <- Очищаем после использования
-                    currentState = state.Attack; // Attack -> Attack
-                    movControl.SetTurnAllow(false);
-                    prevState = state.Empty; // Чтобы перейти в новую анимацию
+                    currentCombo += input.PKM ? "R" : "L";
+                    if (BattleChecker()) // Проверяем, существует ли такое комбо
+                    {
+                        blockFlagMovment = true; // Защита
+                        currentState = state.Attack; // Attack -> Attack
+                        movControl.SetTurnAllow(false);
+                        prevState = state.Empty; // Чтобы перейти в новую анимацию
+                    }
                 }
                 else if (flagMovment) // 3. Можем ходить только если flagMovment == true
                 {
@@ -279,7 +274,7 @@ public class PlayerStateMachine : MonoBehaviour
             animControl.ChoosingAction(currentState, input.LKM, input.PKM); // Для аттаки сообщаем о новом состоянии только, если оно сменилось
             colliderSwitch.ChoosingAction(currentState); // Коллайдер меча
             prevState = currentState;
-            //Debug.Log(currentState);
+            Debug.Log("Текущее комбо - " + currentCombo);
         }
     }
 
@@ -289,7 +284,6 @@ public class PlayerStateMachine : MonoBehaviour
         flagAttack = true;
         blockFlagMovment = false;
         movControl.SetTurnAllow(true); // Разрешаем изменять направление
-        Debug.Log("Было");
     }
 
     public void StartChangeState() // Начало промежутка в котором можно сменить состояние 
