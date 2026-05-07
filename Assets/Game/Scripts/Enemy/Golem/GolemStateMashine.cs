@@ -4,7 +4,8 @@ public class GolemStateMashine : MonoBehaviour
 {
     public enum golemPhase { First, Second, Third }    
 
-    [SerializeField] private GameObject player;    
+    [SerializeField] private GameObject player;
+    [SerializeField] MusicManager musicManager;
     private GolemMovment movment;
     private GolemAnimation anim;
     private ColliderSwitch colliderSwitch;
@@ -14,7 +15,7 @@ public class GolemStateMashine : MonoBehaviour
     private golemPhase currentPhase = golemPhase.First;
     //public golemPhase currentPhase = golemPhase.First; // Временно для отладки
 
-    [SerializeField] private bool isActiv;
+    private bool isActiv = false;
     [SerializeField] private float footAttackRange; // Дистанция атаки ногой
     [SerializeField] private float weaponAttackRange; // Дистанция атаки оружием
     private string[] combo = { "A", "B", "AB", "AA", "AAA", "BA"};
@@ -36,6 +37,8 @@ public class GolemStateMashine : MonoBehaviour
         anim = GetComponent<GolemAnimation>();
         colliderSwitch = GetComponent<ColliderSwitch>();
         prevColdownDate = Time.time;
+
+        SetActiv(); // Временно
     }
 
     public void Update()
@@ -308,6 +311,7 @@ public class GolemStateMashine : MonoBehaviour
     public void GoDeathState()
     {
         death = true;
+        musicManager.SwitchToNormalMusic();
     }
 
     public void SetVisualLoss()
@@ -318,5 +322,11 @@ public class GolemStateMashine : MonoBehaviour
     public void SetGolemPhase(golemPhase _ph) // Устанавливает GolemHP
     {
         currentPhase = _ph;
+    }
+
+    public void SetActiv()
+    {
+        isActiv = true;
+        musicManager.SwitchToBattleMusic();
     }
 }
