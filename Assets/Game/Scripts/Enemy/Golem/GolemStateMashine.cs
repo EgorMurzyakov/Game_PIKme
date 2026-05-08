@@ -37,8 +37,6 @@ public class GolemStateMashine : MonoBehaviour
         anim = GetComponent<GolemAnimation>();
         colliderSwitch = GetComponent<ColliderSwitch>();
         prevColdownDate = Time.time;
-
-        SetActiv(); // Временно
     }
 
     public void Update()
@@ -57,6 +55,11 @@ public class GolemStateMashine : MonoBehaviour
             colliderSwitch.ChoosingAction(currentState);
             //Debug.Log(currentState);
             prevState = currentState;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            SetActiv(); // Временно
         }
     }
 
