@@ -28,13 +28,10 @@ public class InventoryManager : MonoBehaviour
     public TMP_Text priceUI;
     private float improvCoeff = 1.1f; // ��������� ���������� ����� ��� ��������
     public int playerMoney = 0;
-    //public List<InventorySlot> slots = new List<InventorySlot>();
     public InventorySlot[,] slots;
     public InventorySlot weaponSlot;
     public InventorySlot bookSlot;
     [SerializeField] private InventorySlot pumpSlot;
-    public ItemScriptableObject startWeapon;
-    public ItemScriptableObject startBook;
     private bool isOpened = false; // �������� � ������ ����
 
     public event Action<WeaponItem> ChangeWeapon;
@@ -54,7 +51,6 @@ public class InventoryManager : MonoBehaviour
     {
         // ����� ���� ��� ���������� (����������� ����� ��� ����)
         savePath = Application.persistentDataPath + "/money.json";
-        //Debug.Log("���� ���������� ��������� �����: " + Application.persistentDataPath);
 
 
         col = inventoryPanel.childCount;
@@ -80,15 +76,6 @@ public class InventoryManager : MonoBehaviour
         UIActionPanel.SetActive(false);
         UIPumpPanel.SetActive(false);
         UIHelp.SetActive(false);
-
-        if (startWeapon != null)
-        {
-            AddItem(startWeapon.Clone(), 1);
-        }
-        if (startBook != null)
-        {
-            AddItem(startBook.Clone(), 1);
-        }
 
         moneyUI.text = playerMoney.ToString();
         startStatUI.text = "Current damage";
@@ -166,28 +153,8 @@ public class InventoryManager : MonoBehaviour
                 }
             }
         }
-
     }
 
-    // ��������� ������
-    //public void SaveMoney()
-    //{
-    //    // ���������� ����� � ����� (JSON)
-    //    string json = "{\"money\":" + playerMoney + "}"; // ������
-
-    //    foreach (InventorySlot _slot in slots) // ���������� ���������
-    //    {
-    //        if (_slot.item != null)
-    //        {
-    //            json += "{\"itemID\":" + _slot.item.itemID + "}";
-    //        }
-    //    }
-
-    //    // ���������� ����� � ����
-    //    File.WriteAllText(savePath, json);
-
-    //    Debug.Log("������ ���������: " + playerMoney);
-    //}
 
     public void LoadMoney()
     {
@@ -260,6 +227,27 @@ public class InventoryManager : MonoBehaviour
             {
                 playerMoney = 0;
                 Debug.LogWarning("�� ������� ���������, ���������� �������� �� ���������");
+            }
+        }
+        else
+        {
+            foreach (ItemScriptableObject _itemSO in allItems) // Weapon
+            {
+                if (_itemSO.itemID == "sword_1")
+                {
+                    WeaponItem weapon = (WeaponItem)_itemSO.Clone();
+                    weaponSlot.item = weapon;
+                    weaponSlot.SetIcon(weapon.icon);
+                }
+            }
+
+            foreach (ItemScriptableObject _itemSO in allItems) // Book
+            {
+                if (_itemSO.itemID == "bace_book_1")
+                {
+                    bookSlot.item = _itemSO;
+                    bookSlot.SetIcon(_itemSO.icon);
+                }
             }
         }
     }
