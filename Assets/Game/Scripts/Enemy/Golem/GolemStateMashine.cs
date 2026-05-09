@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class GolemStateMashine : MonoBehaviour
 {
-    public enum golemPhase { First, Second, Third }    
+    public enum golemPhase { First, Second, Third }
 
     [SerializeField] private GameObject player;
-    [SerializeField] MusicManager musicManager;
+    [SerializeField] private MusicManager musicManager;
+    private PlayerStateMachine playerStateMachine;
     private GolemMovment movment;
     private GolemAnimation anim;
     private ColliderSwitch colliderSwitch;
@@ -18,25 +19,33 @@ public class GolemStateMashine : MonoBehaviour
     private bool isActiv = false;
     [SerializeField] private float footAttackRange; // Дистанция атаки ногой
     [SerializeField] private float weaponAttackRange; // Дистанция атаки оружием
-    private string[] combo = { "A", "B", "AB", "AA", "AAA", "BA"};
-    private string currentCombo;     
+    private string[] combo = { "A", "B", "AB", "AA", "AAA", "BA" };
+    private string currentCombo;
 
     private bool canChangeState = false;
     private bool takingDamage = false;
     private bool death = false;
-    private float distanceToPlayer;
+    private float distanceToPlayer;    
 
     private float takingDamageColdown = 5f;
     private float prevColdownDate;
 
-    private bool visualLoss = false; 
+    private bool visualLoss = false;
 
     public void Start()
-    {        
+    {
+        playerStateMachine = player.GetComponent<PlayerStateMachine>();
         movment = GetComponent<GolemMovment>();
         anim = GetComponent<GolemAnimation>();
         colliderSwitch = GetComponent<ColliderSwitch>();
         prevColdownDate = Time.time;
+
+        playerStateMachine.playerDeath += RestartGolem;
+    }
+
+    public void OnDestroy()
+    {
+        playerStateMachine.playerDeath -= RestartGolem;
     }
 
     public void Update()
@@ -45,7 +54,7 @@ public class GolemStateMashine : MonoBehaviour
 
         if (isActiv)
         {
-            UpdateState();            
+            UpdateState();
         }
 
         movment.GetMoving(currentState);
@@ -55,11 +64,6 @@ public class GolemStateMashine : MonoBehaviour
             colliderSwitch.ChoosingAction(currentState);
             //Debug.Log(currentState);
             prevState = currentState;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            SetActiv(); // Временно
         }
     }
 
@@ -327,9 +331,26 @@ public class GolemStateMashine : MonoBehaviour
         currentPhase = _ph;
     }
 
-    public void SetActiv()
+    public void SetActiv(bool _isActiv)
     {
-        isActiv = true;
-        musicManager.SwitchToBattleMusic();
+        isActiv = _isActiv;
+        if (_isActiv)
+        {
+            musicManager.SwitchToBattleMusic();
+        }
+        else
+        {
+            musicManager.SwitchToNormalMusic();
+        }
+    }
+
+    public void RestartGolem()
+    {
+        SetActiv(false);
+        anim.GoIdle();
+        anim.ResetAllTrigger();
+        currentState = state.Idle;
+        prevState = state.Empty;
+        currentPhase = golemPhase.First;
     }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Windows;
+using System;
 
 public enum state { Idle, Walk, Run, Sprint, Dodge, Attack, AttackB, Empty, Action, Damage, Death }
 
@@ -31,6 +32,8 @@ public class PlayerStateMachine : MonoBehaviour
     // Комбо 
     private string[] combo = { "L", "LL", "LLL", "R", "RR", "RRR", "LLR", "LLRR", "RRL", "RRLL" };
     private string currentCombo = "";
+
+    public event Action playerDeath;
 
     public void Start()
     {
@@ -280,6 +283,13 @@ public class PlayerStateMachine : MonoBehaviour
     public void GoDeathState()
     {
         death = true;
+        StartCoroutine(InvokeDeathEventWithDelay());
+    }
+
+    private System.Collections.IEnumerator InvokeDeathEventWithDelay()
+    {
+        yield return new WaitForSeconds(1.5f);
+        playerDeath?.Invoke();
     }
 
     public state GetPlayerState()

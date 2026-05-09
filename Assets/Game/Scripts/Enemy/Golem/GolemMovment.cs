@@ -10,11 +10,13 @@ public class GolemMovment : MonoBehaviour
     private bool canRotate = true;
     private CharacterController charControl;
     private NavMeshAgent agent;
+    private Vector3 startPosition;  
 
     public void Start()
     {
         charControl = GetComponent<CharacterController>();
         agent = GetComponent<NavMeshAgent>();
+        startPosition = transform.position;
 
         currentSpeed = speed;
     }

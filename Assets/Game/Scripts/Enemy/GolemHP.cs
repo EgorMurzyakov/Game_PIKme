@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class GolemHP : HitPoint
 {
-    [SerializeField] private GolemStateMashine stateMachine;
+    [SerializeField] private PlayerStateMachine playerStateMachine;
+    [SerializeField] private GolemStateMashine golemStateMachine;
     [SerializeField] private GolemUI golemUI;
     [SerializeField] private int secondPhase;
     [SerializeField] private int thirdPhase;   
@@ -11,11 +12,18 @@ public class GolemHP : HitPoint
     {
         maxHitPoint = startHitPoint;
         currentHitPoint = startHitPoint;
+
+        playerStateMachine.playerDeath += RestartGolem;
+    }
+
+    public void OnDestroy()
+    {
+        playerStateMachine.playerDeath -= RestartGolem;
     }
 
     protected override void Death()
     {
-        stateMachine.GoDeathState();
+        golemStateMachine.GoDeathState();
         golemUI.DeleteHpSlider();
         gameObject.layer = LayerMask.NameToLayer("DeadEnemy");
 
@@ -33,11 +41,11 @@ public class GolemHP : HitPoint
 
             if (currentHitPoint < thirdPhase)
             {
-                stateMachine.SetGolemPhase(GolemStateMashine.golemPhase.Third);
+                golemStateMachine.SetGolemPhase(GolemStateMashine.golemPhase.Third);
             }
             else if (currentHitPoint < secondPhase)
             {
-                stateMachine.SetGolemPhase(GolemStateMashine.golemPhase.Second);
+                golemStateMachine.SetGolemPhase(GolemStateMashine.golemPhase.Second);
             }
         }
         else
@@ -46,6 +54,12 @@ public class GolemHP : HitPoint
             Death();
         }
 
+        golemUI.SetHitPointUI(currentHitPoint, maxHitPoint, secondPhase, thirdPhase);
+    }
+
+    public void RestartGolem()
+    {
+        currentHitPoint = startHitPoint;
         golemUI.SetHitPointUI(currentHitPoint, maxHitPoint, secondPhase, thirdPhase);
     }
 }
