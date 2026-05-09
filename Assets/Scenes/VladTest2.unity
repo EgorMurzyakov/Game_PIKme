@@ -306,6 +306,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6666883904527352285, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
+      propertyPath: weaponDamage
+      value: 83
+      objectReference: {fileID: 0}
     - target: {fileID: 6680354047153013933, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
       propertyPath: target
       value: 
@@ -5963,6 +5967,10 @@ PrefabInstance:
     - target: {fileID: 420062078510008520, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
       propertyPath: rayRange
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 573270529965572891, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
+      propertyPath: weaponDamage
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 1553148347283824250, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
       propertyPath: m_Name
@@ -28431,6 +28439,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 941782079}
+    - target: {fileID: 573270529965572891, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
+      propertyPath: weaponDamage
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 1553148347283824250, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
       propertyPath: m_Name
       value: Orc (1)
@@ -28486,6 +28498,10 @@ PrefabInstance:
     - target: {fileID: 4506550484622479263, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0.399
+      objectReference: {fileID: 0}
+    - target: {fileID: 5342637071116109206, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
+      propertyPath: startHitPoint
+      value: 732
       objectReference: {fileID: 0}
     - target: {fileID: 6729151999781914905, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
       propertyPath: m_AnchorMax.x
@@ -28600,6 +28616,10 @@ PrefabInstance:
     - target: {fileID: 6276180857168037601, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666883904527352285, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
+      propertyPath: weaponDamage
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 6680354047153013933, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
       propertyPath: target
@@ -41856,7 +41876,7 @@ Transform:
   m_GameObject: {fileID: 429452144}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 597.3, y: 11.8, z: 85.2}
+  m_LocalPosition: {x: 597.3, y: 11.8, z: 68.8}
   m_LocalScale: {x: 25, y: 16, z: 18}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -61627,6 +61647,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 941782079}
+    - target: {fileID: 573270529965572891, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
+      propertyPath: weaponDamage
+      value: 67
+      objectReference: {fileID: 0}
     - target: {fileID: 1553148347283824250, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
       propertyPath: m_Name
       value: Orc
@@ -61670,6 +61694,10 @@ PrefabInstance:
     - target: {fileID: 2217517719633659072, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5342637071116109206, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
+      propertyPath: startHitPoint
+      value: 378
       objectReference: {fileID: 0}
     - target: {fileID: 6729151999781914905, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
       propertyPath: m_AnchorMax.x
@@ -150804,6 +150832,10 @@ PrefabInstance:
       propertyPath: rayRange
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 573270529965572891, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
+      propertyPath: weaponDamage
+      value: 76
+      objectReference: {fileID: 0}
     - target: {fileID: 1553148347283824250, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
       propertyPath: m_Name
       value: Orc (2)
@@ -179696,6 +179728,10 @@ PrefabInstance:
     - target: {fileID: 420062078510008520, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
       propertyPath: rayRange
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 573270529965572891, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
+      propertyPath: weaponDamage
+      value: 79
       objectReference: {fileID: 0}
     - target: {fileID: 1553148347283824250, guid: 2743f846accbef54985d7e463bb512f3, type: 3}
       propertyPath: m_Name
