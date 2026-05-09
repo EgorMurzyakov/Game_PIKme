@@ -67,5 +67,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneTransitionZone
   targetScene: village1 valera
-  spawnID: from_bridge
-  saveManager: {fileID: 0}
+  spawnID: main_1

@@ -36907,7 +36907,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f141313c92907334989c1a7093a73c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
-  pointID: from_gate
+  pointID: main_1
 --- !u!4 &376943194
 Transform:
   m_ObjectHideFlags: 0
@@ -36917,7 +36917,7 @@ Transform:
   m_GameObject: {fileID: 376943192}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 150.903, y: 3.02, z: 333.05}
+  m_LocalPosition: {x: 150.903, y: 3.05, z: 333.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -40834,8 +40834,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneTransitionZone
   targetScene: SCENES33
-  spawnID: SCENES33
-  saveManager: {fileID: 0}
+  spawnID: dungeon
+  saveManager: {fileID: 2070246291}
 --- !u!65 &423317821
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -74269,8 +74269,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 780583076}
+  - component: {fileID: 780583077}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: spawn_from_dage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74285,12 +74286,25 @@ Transform:
   m_GameObject: {fileID: 780583075}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 666.08405, y: 97.73, z: 625.49}
+  m_LocalPosition: {x: 661.72, y: 95.194, z: 629.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &780583077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780583075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f141313c92907334989c1a7093a73c3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
+  pointID: main_2
 --- !u!1 &780845738
 GameObject:
   m_ObjectHideFlags: 0
@@ -126489,6 +126503,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8722707484499129528, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+      insertIndex: 4
+      addedObject: {fileID: 2070246289}
     - targetCorrespondingSourceObject: {fileID: 8722707484499129528, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2070246273}
@@ -180736,6 +180753,51 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f4b08501754f224c808ecef80684866, type: 3}
+--- !u!1 &1812436568
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1812436570}
+  - component: {fileID: 1812436569}
+  m_Layer: 0
+  m_Name: spawn from ad
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1812436569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812436568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f141313c92907334989c1a7093a73c3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
+  pointID: main_3
+--- !u!4 &1812436570
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812436568}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.24722429, z: -0, w: 0.9689584}
+  m_LocalPosition: {x: 586.59, y: 7.840004, z: 268.04}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1814237158
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -207460,6 +207522,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f34b4a5630140341affad3d547f54e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStateMachine
+--- !u!114 &2070246289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941782079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51e78068451ded1418cc68a1b12074b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSpawner
+--- !u!114 &2070246291 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5184116532292491096, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+  m_PrefabInstance: {fileID: 1288152950}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941782079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c7da7631d93984409d5defae02913f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveManager
 --- !u!1001 &2070483283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -214819,7 +214904,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3660268551178949042, guid: f88f4f34ba3c55d45bb10dab3bcdba2f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.84
+      value: 7.840004
       objectReference: {fileID: 0}
     - target: {fileID: 3660268551178949042, guid: f88f4f34ba3c55d45bb10dab3bcdba2f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -214855,8 +214940,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6697696210145670810, guid: f88f4f34ba3c55d45bb10dab3bcdba2f, type: 3}
       propertyPath: spawnID
-      value: 
+      value: ad
       objectReference: {fileID: 0}
+    - target: {fileID: 6697696210145670810, guid: f88f4f34ba3c55d45bb10dab3bcdba2f, type: 3}
+      propertyPath: saveManager
+      value: 
+      objectReference: {fileID: 2070246291}
     - target: {fileID: 6697696210145670810, guid: f88f4f34ba3c55d45bb10dab3bcdba2f, type: 3}
       propertyPath: targetScene
       value: ValeraAD_old_from_commit
@@ -214894,7 +214983,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 7
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &2145272885 stripped
 Transform:
@@ -215360,6 +215449,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6697696210145670810, guid: f88f4f34ba3c55d45bb10dab3bcdba2f, type: 3}
+      propertyPath: spawnID
+      value: village
+      objectReference: {fileID: 0}
+    - target: {fileID: 6697696210145670810, guid: f88f4f34ba3c55d45bb10dab3bcdba2f, type: 3}
+      propertyPath: saveManager
+      value: 
+      objectReference: {fileID: 2070246291}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -215859,6 +215956,8 @@ SceneRoots:
   - {fileID: 376943194}
   - {fileID: 3067026475508827540}
   - {fileID: 423317822}
+  - {fileID: 1812436570}
+  - {fileID: 2145216265}
   - {fileID: 780583076}
   - {fileID: 1343237083}
   - {fileID: 6384160862733208290}
@@ -215940,7 +216039,6 @@ SceneRoots:
   - {fileID: 242258678}
   - {fileID: 542812777}
   - {fileID: 1027796734}
-  - {fileID: 2145216265}
   - {fileID: 1934017823}
   - {fileID: 1397425721}
   - {fileID: 1974629824}
