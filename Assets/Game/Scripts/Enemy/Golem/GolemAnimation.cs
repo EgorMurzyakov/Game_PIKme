@@ -45,12 +45,17 @@ public class GolemAnimation : MonoBehaviour
         }
     }
 
-    private void ResetAllTrigger()
+    public void ResetAllTrigger()
     {
         anim.ResetTrigger("goIdle");
         anim.ResetTrigger("goWalk");
         anim.ResetTrigger("goAttack");
         anim.ResetTrigger("goAction");
         anim.ResetTrigger("goDamage");
+    }
+
+    public void GoIdle()
+    {
+        anim.Play("GiantIdle");
     }
 }
