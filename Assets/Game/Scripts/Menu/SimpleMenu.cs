@@ -9,14 +9,13 @@ public class SimpleMenu : MonoBehaviour
     public static SimpleMenu Instance { get; private set; }
 
     [Header("Ссылки")]
-    public GameObject menuCanvasObject;
+    public GameObject menuCanvasObject;  // Canvas — НЕ трогаем
+    public GameObject menuPanel;         // ← добавь это поле (MenuPanel)
+    public GameObject settingsPanel;
     public Button btnContinue;
     public Button btnSave;
     public Button btnSettings;
     public Button btnQuit;
-
-    [Header("Панель настроек")]
-    public GameObject settingsPanel;    // ← новый объект с MicrophoneSettings.cs
 
     [Header("Инвентарь (для блокировки)")]
     public GameObject inventoryUI;
@@ -44,10 +43,17 @@ public class SimpleMenu : MonoBehaviour
 
         if (menuCanvasObject != null) menuCanvasObject.SetActive(false);
         if (settingsPanel != null)    settingsPanel.SetActive(false);   // скрыть настройки
+        // menuPanel не трогаем, он внутри Canvas
+
+        // Сначала очищаем все listeners чтобы не накапливались
+        if (btnContinue) btnContinue.onClick.RemoveAllListeners();
+        if (btnSave)     btnSave.onClick.RemoveAllListeners();
+        if (btnSettings) btnSettings.onClick.RemoveAllListeners();
+        if (btnQuit)     btnQuit.onClick.RemoveAllListeners();
 
         if (btnContinue) btnContinue.onClick.AddListener(Resume);
         if (btnSave)     btnSave.onClick.AddListener(SaveDummy);
-        if (btnSettings) btnSettings.onClick.AddListener(OpenSettings); // ← изменено
+        if (btnSettings) btnSettings.onClick.AddListener(OpenSettings);
         if (btnQuit)     btnQuit.onClick.AddListener(QuitGame);
     }
 
@@ -75,7 +81,8 @@ public class SimpleMenu : MonoBehaviour
             inventoryUI.SetActive(false);
         }
 
-        if (menuCanvasObject != null) menuCanvasObject.SetActive(true);
+        if (menuCanvasObject != null) menuCanvasObject.SetActive(true); // Canvas всегда включён
+        if (menuPanel != null) menuPanel.SetActive(true);               // показываем меню
     }
 
     public void Resume()
@@ -86,6 +93,7 @@ public class SimpleMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         if (menuCanvasObject != null) menuCanvasObject.SetActive(false);
+        if (menuPanel != null)        menuPanel.SetActive(false);
         if (settingsPanel != null)    settingsPanel.SetActive(false);
 
         if (inventoryUI != null) inventoryUI.SetActive(wasInventoryActive);
@@ -96,15 +104,16 @@ public class SimpleMenu : MonoBehaviour
     // Открыть панель настроек (скрыть меню паузы)
     public void OpenSettings()
     {
-        if (menuCanvasObject != null) menuCanvasObject.SetActive(false);
-        if (settingsPanel != null)    settingsPanel.SetActive(true);
+        if (menuPanel != null)     menuPanel.SetActive(false);      // скрыть меню
+        if (settingsPanel != null) settingsPanel.SetActive(false);  // сброс
+        if (settingsPanel != null) settingsPanel.SetActive(true);   // OnEnable сработает
     }
 
     // Вернуться из настроек в меню паузы
     public void ShowPauseMenu()
     {
-        if (settingsPanel != null)    settingsPanel.SetActive(false);
-        if (menuCanvasObject != null) menuCanvasObject.SetActive(true);
+        if (settingsPanel != null) settingsPanel.SetActive(false);
+        if (menuPanel != null)     menuPanel.SetActive(true);
     }
 
     public void SaveDummy() { Debug.Log("Сохранено (пустышка)"); }
