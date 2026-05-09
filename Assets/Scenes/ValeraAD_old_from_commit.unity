@@ -9024,6 +9024,12 @@ PrefabInstance:
       addedObject: {fileID: 776045319}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8722707484499129528, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 2125548331}
+    - targetCorrespondingSourceObject: {fileID: 8722707484499129528, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+      insertIndex: 18
+      addedObject: {fileID: 2125548330}
+    - targetCorrespondingSourceObject: {fileID: 8722707484499129528, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2125548329}
   m_SourcePrefab: {fileID: 100100000, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
@@ -9043,6 +9049,39 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5251107426523682287, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
   m_PrefabInstance: {fileID: 659315704}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &659315707 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7525040380494279768, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+  m_PrefabInstance: {fileID: 659315704}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125548291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10667b374bf3d3540aa13bc7c8a6adf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
+--- !u!114 &659315708 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5716285196221697463, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+  m_PrefabInstance: {fileID: 659315704}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125548291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45759108c56d5f748842e3b6d1669f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TornadoSpell
+--- !u!114 &659315709 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3784058422663575842, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+  m_PrefabInstance: {fileID: 659315704}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125548291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8b2e817658c66a4db13ea188b86008d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FireballSpell
 --- !u!1001 &669689632
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9553,6 +9592,18 @@ PrefabInstance:
     - target: {fileID: 3660268551178949042, guid: f88f4f34ba3c55d45bb10dab3bcdba2f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.799
+      objectReference: {fileID: 0}
+    - target: {fileID: 6697696210145670810, guid: f88f4f34ba3c55d45bb10dab3bcdba2f, type: 3}
+      propertyPath: spawnID
+      value: main_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6697696210145670810, guid: f88f4f34ba3c55d45bb10dab3bcdba2f, type: 3}
+      propertyPath: saveManager
+      value: 
+      objectReference: {fileID: 659315705}
+    - target: {fileID: 6697696210145670810, guid: f88f4f34ba3c55d45bb10dab3bcdba2f, type: 3}
+      propertyPath: targetScene
+      value: VladTest2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10508,6 +10559,14 @@ PrefabInstance:
     - target: {fileID: 2047565304110414055, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
       propertyPath: startHitPoint
       value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 6276180857168037601, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6276180857168037601, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6680354047153013933, guid: 9b540cf1a3be68e438a434d4b18f13d0, type: 3}
       propertyPath: target
@@ -24632,6 +24691,38 @@ MonoBehaviour:
   stateMachine: {fileID: 2125548324}
   playerHP: {fileID: 2125548320}
   respawnDelay: 3
+--- !u!114 &2125548330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125548291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 997b97923a9a10c4893739ba3e2ae61d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VoiceMagic
+  spellCooldownSeconds: 1
+  blockSameSpellDuringCooldown: 1
+  cameraTransform: {fileID: 776045319}
+  playerTransform: {fileID: 191380214}
+  fireballSpell: {fileID: 659315709}
+  tornadoSpell: {fileID: 659315708}
+  inventoryManager: {fileID: 659315707}
+  enableKeyboardSpells: 1
+--- !u!114 &2125548331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125548291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c4420dd8d1fe2f49987187937fddab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSpawner
 --- !u!1001 &2136220281
 PrefabInstance:
   m_ObjectHideFlags: 0
