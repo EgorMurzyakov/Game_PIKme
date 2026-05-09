@@ -19,6 +19,7 @@ public class InventoryManager : MonoBehaviour
     public GameObject UIPumpPanel;
     private bool isTrader = false;
     public GameObject UIHelp;
+    public TMP_Text UIHelpText;
     public Transform inventoryPanel;
     public PlayerStateMachine playerStateMachine;
     public TMP_Text itemInfoText;
@@ -76,6 +77,7 @@ public class InventoryManager : MonoBehaviour
         UIActionPanel.SetActive(false);
         UIPumpPanel.SetActive(false);
         UIHelp.SetActive(false);
+        UIHelpText = UIHelp.transform.GetChild(0).GetComponent<TMP_Text>();
 
         moneyUI.text = playerMoney.ToString();
         startStatUI.text = "Current damage";
@@ -257,16 +259,19 @@ public class InventoryManager : MonoBehaviour
         if (other.CompareTag("Item")) // ������ ���������
         {
             itemsInRange.Add(other.gameObject);
-            Debug.Log($"������� {other.name} � ���� �������");
         }
-        if (itemsInRange.Count > 0)
-        {
-            UIHelp.SetActive(true);
-        }
+
 
         if (other.CompareTag("TraderNPC")) // �������� � ��������
         {
             isTrader = true;
+            UIHelp.SetActive(true);
+            UIHelpText.text = "Press 'I' to trade...";
+        }
+        else if (itemsInRange.Count > 0)
+        {
+            UIHelp.SetActive(true);
+            UIHelpText.text = "Press 'R' to raise...";
         }
     }
     void OnTriggerExit(Collider other)
@@ -276,14 +281,15 @@ public class InventoryManager : MonoBehaviour
             itemsInRange.Remove(other.gameObject);
             Debug.Log($"������� {other.name} ������� ����");
         }
-        if (itemsInRange.Count == 0)
-        {
-            UIHelp.SetActive(false);
-        }
 
         if (other.CompareTag("TraderNPC")) // �������� � ��������
         {
             isTrader = false;
+            UIHelp.SetActive(false);
+        }
+        else if (itemsInRange.Count == 0)
+        {
+            UIHelp.SetActive(false);
         }
     }
 
