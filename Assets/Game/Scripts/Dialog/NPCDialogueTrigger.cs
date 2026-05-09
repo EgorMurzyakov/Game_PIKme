@@ -11,6 +11,9 @@ public class NPCDialogueTrigger : MonoBehaviour
     public GameObject rewardSpawnPrefab;
     public Vector3 rewardSpawnOffset = new Vector3(0f, 0.5f, 1f);
 
+    [Header("Подсказка")]
+    public InteractionHint interactionHint;
+
     private string[] introLines;
     private string[] rewardLines;
     private string[] doneLines;
@@ -40,12 +43,18 @@ public class NPCDialogueTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) playerInRange = true;
+        if (!other.CompareTag("Player")) return;
+        playerInRange = true;
+        // Показываем только если диалог не открыт
+        if (!DialogueManager.Instance.IsOpen)
+            interactionHint?.Show();
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player")) playerInRange = false;
+        if (!other.CompareTag("Player")) return;
+        playerInRange = false;
+        interactionHint?.Hide();
     }
 
     void Update()
@@ -53,18 +62,20 @@ public class NPCDialogueTrigger : MonoBehaviour
         if (!playerInRange || !Input.GetKeyDown(KeyCode.E)) return;
         if (DialogueManager.Instance.IsOpen) return;
 
+        // Прячем подсказку — диалог вот-вот откроется
+        interactionHint?.Hide();
+
         string status = QuestManager.Instance.Data.questStatus;
         bool hasBlackRose = inventoryManager != null && inventoryManager.HasBlackRose();
 
-        // Если есть роза и квест ещё не выполнен — завершаем
         if (status != "completed" && hasBlackRose)
         {
             QuestManager.Instance.CompleteQuestWithBlackRose();
             status = QuestManager.Instance.Data.questStatus;
-            Debug.Log("Квест завершён с чёрной розой");
+            inventoryManager?.RemoveItemByID("Rose");
+            Debug.Log("Квест завершён с чёрной розой — роза удалена из инвентаря");
         }
 
-        // Выдаём награду
         if (status == "completed" && !QuestManager.Instance.Data.rewardGiven)
         {
             bool rewardSuccess = false;
