@@ -85594,7 +85594,10 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8722707484499129528, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
-      insertIndex: 17
+      insertIndex: 3
+      addedObject: {fileID: 936086466}
+    - targetCorrespondingSourceObject: {fileID: 8722707484499129528, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+      insertIndex: 18
       addedObject: {fileID: 936086453}
   m_SourcePrefab: {fileID: 100100000, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
 --- !u!114 &936086435 stripped
@@ -85661,6 +85664,18 @@ MonoBehaviour:
   tornadoSpell: {fileID: 936086439}
   inventoryManager: {fileID: 936086436}
   enableKeyboardSpells: 1
+--- !u!114 &936086466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537609557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c4420dd8d1fe2f49987187937fddab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSpawner
 --- !u!1001 &936312582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -93322,7 +93337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneTransitionZone
   targetScene: VladTest2
-  spawnID: from_gate
+  spawnID: main_1
   saveManager: {fileID: 479942200}
 --- !u!65 &1022914018
 BoxCollider:
@@ -128699,7 +128714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f141313c92907334989c1a7093a73c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
-  pointID: from_bridge
+  pointID: village
 --- !u!4 &1387098215
 Transform:
   m_ObjectHideFlags: 0
@@ -128709,7 +128724,7 @@ Transform:
   m_GameObject: {fileID: 1387098213}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.2671184, z: -0, w: 0.96366376}
-  m_LocalPosition: {x: 123.92, y: 22.493, z: 21.16}
+  m_LocalPosition: {x: 37.84, y: 22.57, z: -26.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

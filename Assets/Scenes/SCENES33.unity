@@ -7754,7 +7754,10 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8722707484499129528, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
-      insertIndex: 17
+      insertIndex: 3
+      addedObject: {fileID: 235639702}
+    - targetCorrespondingSourceObject: {fileID: 8722707484499129528, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+      insertIndex: 18
       addedObject: {fileID: 235639686}
   m_SourcePrefab: {fileID: 100100000, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
 --- !u!114 &171597651 stripped
@@ -7779,6 +7782,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8b2e817658c66a4db13ea188b86008d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FireballSpell
+--- !u!114 &171597653 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5184116532292491096, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+  m_PrefabInstance: {fileID: 171597650}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159283637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c7da7631d93984409d5defae02913f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveManager
 --- !u!1 &173080075
 GameObject:
   m_ObjectHideFlags: 0
@@ -10613,8 +10627,31 @@ MonoBehaviour:
   playerTransform: {fileID: 235639670}
   fireballSpell: {fileID: 171597652}
   tornadoSpell: {fileID: 171597651}
-  inventoryManager: {fileID: 0}
+  inventoryManager: {fileID: 235639692}
   enableKeyboardSpells: 1
+--- !u!114 &235639692 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7525040380494279768, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+  m_PrefabInstance: {fileID: 171597650}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159283637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10667b374bf3d3540aa13bc7c8a6adf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
+--- !u!114 &235639702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159283637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c4420dd8d1fe2f49987187937fddab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSpawner
 --- !u!1001 &239520589
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24989,6 +25026,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4097341494364599573, guid: e92f28a0fc6621d4f937f31c446add2d, type: 3}
   m_PrefabInstance: {fileID: 1516387334}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &622315689
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 622315690}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &622315690
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622315689}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 25.66741, y: 4.413, z: -8.42371}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &623753478 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4218747327760710, guid: 37435aefe5da6f74f8b28c81bb4ffad4, type: 3}
@@ -41486,7 +41554,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 424068561402705712, guid: f88f4f34ba3c55d45bb10dab3bcdba2f, type: 3}
       propertyPath: m_Name
-      value: Bridge_Trigger
+      value: FROMDUNGEON_Trigger
       objectReference: {fileID: 0}
     - target: {fileID: 3660268551178949042, guid: f88f4f34ba3c55d45bb10dab3bcdba2f, type: 3}
       propertyPath: m_LocalScale.x
@@ -41540,6 +41608,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6697696210145670810, guid: f88f4f34ba3c55d45bb10dab3bcdba2f, type: 3}
+      propertyPath: spawnID
+      value: main_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6697696210145670810, guid: f88f4f34ba3c55d45bb10dab3bcdba2f, type: 3}
+      propertyPath: saveManager
+      value: 
+      objectReference: {fileID: 171597653}
     - target: {fileID: 6697696210145670810, guid: f88f4f34ba3c55d45bb10dab3bcdba2f, type: 3}
       propertyPath: targetScene
       value: VladTest2
@@ -56216,6 +56292,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4723310777968246770, guid: ec076d5d33eab2e43bf2512d2b81c71f, type: 3}
   m_PrefabInstance: {fileID: 2074619194}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1435017273
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1435017275}
+  - component: {fileID: 1435017274}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1435017274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435017273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f141313c92907334989c1a7093a73c3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPoint
+  pointID: ' dungeon'
+--- !u!4 &1435017275
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435017273}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 23.987, y: 4.225, z: -6.015}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1435711115 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5154019035940641512, guid: c2c15114fef559c44b07c28466206c6d, type: 3}
@@ -82806,3 +82927,5 @@ SceneRoots:
   - {fileID: 65645707}
   - {fileID: 1096892682}
   - {fileID: 1892883201}
+  - {fileID: 622315690}
+  - {fileID: 1435017275}
