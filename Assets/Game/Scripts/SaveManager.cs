@@ -44,8 +44,6 @@ public class SaveManager : MonoBehaviour
     {
         SaveScene();
         SaveInventory();
-
-        Debug.Log("��������...");
     }
 
     public void SaveInventory()
