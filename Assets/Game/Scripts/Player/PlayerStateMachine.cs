@@ -10,6 +10,7 @@ public class PlayerStateMachine : MonoBehaviour
     private MovementController movControl;
     private AnimationController animControl;
     private ColliderSwitch colliderSwitch;
+    private SaveManager saveManager;
 
     // Очень важно!!! (Костыли)
     private state currentState = state.Idle;
@@ -41,6 +42,7 @@ public class PlayerStateMachine : MonoBehaviour
         movControl = GetComponent<MovementController>();
         animControl = GetComponent<AnimationController>();
         colliderSwitch = GetComponent<ColliderSwitch>();
+        saveManager = GetComponent<SaveManager>();
     }
 
     public void Update()
@@ -283,6 +285,7 @@ public class PlayerStateMachine : MonoBehaviour
     public void GoDeathState()
     {
         death = true;
+        saveManager.SaveGame();
         StartCoroutine(InvokeDeathEventWithDelay());
     }
 
