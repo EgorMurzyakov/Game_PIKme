@@ -34,6 +34,8 @@ public class MicrophoneSettings : MonoBehaviour
     // -------------------------------------------------------
     void OnEnable()
     {
+        Debug.Log("MicrophoneSettings OnEnable сработал");
+
         if (applyButton)  applyButton.onClick.AddListener(OnApply);
         if (closeButton)  closeButton.onClick.AddListener(OnClose);
 
@@ -48,6 +50,10 @@ public class MicrophoneSettings : MonoBehaviour
 
     void OnDisable()
     {
+        Debug.Log("MicrophoneSettings OnDisable сработал");
+
+        StopAllCoroutines();  // ← добавь эту строку первой
+
         StopMicPreview();
 
         if (applyButton)  applyButton.onClick.RemoveListener(OnApply);
@@ -128,16 +134,15 @@ public class MicrophoneSettings : MonoBehaviour
         PlayerPrefs.SetString(PREF_MIC_NAME, selectedMicDevice);
         PlayerPrefs.Save();
 
-        if (statusText)
-            statusText.text = "Сохранено! Перезапуск...";
+        if (statusText) statusText.text = "Сохранено!";
 
-        // Найти индекс среди ВСЕХ sounddevice-устройств для Python-скрипта
-        int pythonDeviceId = GetPythonDeviceId(selectedMicDevice);
+        int pythonDeviceId = selectedDeviceIndex;
 
         if (VoiceProcessManager.Instance != null)
             VoiceProcessManager.Instance.RestartWithDevice(pythonDeviceId);
 
-        StartCoroutine(ShowSavedFeedback());
+        // Закрыть панель и вернуться в меню паузы
+        OnClose();
     }
 
     private void OnClose()

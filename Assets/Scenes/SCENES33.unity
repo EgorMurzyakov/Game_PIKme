@@ -7752,7 +7752,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8722707484499129528, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 235639686}
   m_SourcePrefab: {fileID: 100100000, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
 --- !u!1 &173080075
 GameObject:
@@ -10570,6 +10573,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f34b4a5630140341affad3d547f54e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStateMachine
+--- !u!114 &235639686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159283637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 439454ce035fb2d4abaf25f70517f702, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RespawnManager
+  spawnPoint: {fileID: 1935261756}
+  stateMachine: {fileID: 235639685}
+  playerHP: {fileID: 235639697}
+  respawnDelay: 3
+--- !u!114 &235639697 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3294381731496366071, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
+  m_PrefabInstance: {fileID: 171597650}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159283637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a35fc5de16bf9e4ab860880389760f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHP
 --- !u!1001 &239520589
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -75150,6 +75180,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7065531851445900414, guid: cf8f4ea8098324d41bf52b46bce63d96, type: 3}
   m_PrefabInstance: {fileID: 239964744}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1935261755
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1935261756}
+  m_Layer: 0
+  m_Name: RespawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1935261756
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935261755}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 23.945, y: 6.244, z: 16.939}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1935504898
 GameObject:
   m_ObjectHideFlags: 0
@@ -82761,3 +82822,4 @@ SceneRoots:
   - {fileID: 65645707}
   - {fileID: 1096892682}
   - {fileID: 1892883201}
+  - {fileID: 1935261756}
