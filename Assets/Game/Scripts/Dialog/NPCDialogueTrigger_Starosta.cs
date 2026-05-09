@@ -8,9 +8,6 @@ public class NPCDialogueTrigger_Starosta : MonoBehaviour
     public string rewardFile = "npc_starosta_reward.json";
     public string doneFile   = "npc_starosta_done.json";
 
-    [Header("Подсказка")]
-    public InteractionHint interactionHint; // перетащи объект с InteractionHint сюда
-
     private string[] introLines;
     private string[] rewardLines;
     private string[] doneLines;
@@ -38,31 +35,18 @@ public class NPCDialogueTrigger_Starosta : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player")) return;
-        playerInRange = true;
-        interactionHint?.Show();
+        if (other.CompareTag("Player")) playerInRange = true;
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (!other.CompareTag("Player")) return;
-        playerInRange = false;
-        interactionHint?.Hide();
+        if (other.CompareTag("Player")) playerInRange = false;
     }
 
     void Update()
     {
-        // Прячем подсказку, пока диалог открыт
-        if (playerInRange && interactionHint != null)
-        {
-            if (DialogueManager.Instance.IsOpen) interactionHint.Hide();
-            else                                  interactionHint.Show();
-        }
-
         if (!playerInRange || !Input.GetKeyDown(KeyCode.E)) return;
         if (DialogueManager.Instance.IsOpen) return;
-
-        interactionHint?.Hide();
 
         string status = QuestManager_Starosta.Instance.Data.questStatus;
 

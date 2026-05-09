@@ -168,12 +168,7 @@ public class VoiceMagic : MonoBehaviour
             process.OutputDataReceived += (s, e) =>
             {
                 if (!string.IsNullOrEmpty(e.Data))
-                {
-                    string trimmed = e.Data.Trim();
-                    // Принимаем только известные заклинания
-                    if (trimmed == "FIREBALL" || trimmed == "TORNADO" || trimmed == "ICE_ARROW")
-                        Interlocked.Exchange(ref pendingSpell, trimmed);
-                }
+                    Interlocked.Exchange(ref pendingSpell, e.Data.Trim());
             };
 
             process.ErrorDataReceived += (s, e) =>

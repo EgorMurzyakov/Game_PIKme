@@ -423,39 +423,6 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
-    public bool RemoveItemByID(string itemID, int amount = 1)
-    {
-        foreach (InventorySlot slot in slots)
-        {
-            if (slot == null || slot.isEmpty) continue;
-            if (slot.item == null) continue;
-
-            bool match = (!string.IsNullOrEmpty(slot.item.itemID) && slot.item.itemID.Equals(itemID, StringComparison.OrdinalIgnoreCase))
-                      || (!string.IsNullOrEmpty(slot.item.itemName) && slot.item.itemName.Equals(itemID, StringComparison.OrdinalIgnoreCase));
-
-            if (match)
-            {
-                slot.amount -= amount;
-                slot.textItemAmount.text = slot.amount.ToString();
-
-                if (slot.amount <= 0)
-                {
-                    slot.isEmpty = true;
-                    slot.item = null;
-                    slot.iconGO.GetComponent<Image>().color = new Color(0, 0, 0, 0);
-                    slot.iconGO.GetComponent<Image>().sprite = null;
-                    slot.textItemAmount.text = " ";
-                }
-
-                Debug.Log($"Удалён предмет: {itemID}");
-                return true;
-            }
-        }
-
-        Debug.LogWarning($"RemoveItemByID: предмет '{itemID}' не найден в инвентаре.");
-        return false;
-    }
-
     private void InventoryNavigation() // ��������� �� ���������
     {
         // �������
