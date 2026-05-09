@@ -17,11 +17,13 @@ public class DoorGolem : MonoBehaviour
         door_2.SetActive(true);
 
         playerStateMachine.playerDeath += RestartDoor;
+        golemStateMashine.golemDeath += OpenDoor;
     }
 
     public void OnDestroy()
     {
         playerStateMachine.playerDeath -= RestartDoor;
+        golemStateMashine.golemDeath += OpenDoor;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -44,5 +46,11 @@ public class DoorGolem : MonoBehaviour
         door_2.SetActive(true);
 
         golemStateMashine.SetActiv(false);
+    }
+
+    public void OpenDoor()
+    {
+        door_1.SetActive(false);
+        door_2.SetActive(true);
     }
 }

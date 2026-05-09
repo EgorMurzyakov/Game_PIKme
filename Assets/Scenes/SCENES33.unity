@@ -23262,7 +23262,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 760072250502909517, guid: 4b3458c2071f0b74494bbfc37f2a4844, type: 3}
       propertyPath: m_Name
-      value: Gold
+      value: Gold_3
       objectReference: {fileID: 0}
     - target: {fileID: 760072250502909517, guid: 4b3458c2071f0b74494bbfc37f2a4844, type: 3}
       propertyPath: m_IsActive

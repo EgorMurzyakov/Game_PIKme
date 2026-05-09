@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class GolemStateMashine : MonoBehaviour
 {
@@ -31,6 +32,8 @@ public class GolemStateMashine : MonoBehaviour
     private float prevColdownDate;
 
     private bool visualLoss = false;
+
+    public event Action golemDeath;
 
     public void Start()
     {
@@ -319,6 +322,7 @@ public class GolemStateMashine : MonoBehaviour
     {
         death = true;
         musicManager.SwitchToNormalMusic();
+        golemDeath?.Invoke();
     }
 
     public void SetVisualLoss()
