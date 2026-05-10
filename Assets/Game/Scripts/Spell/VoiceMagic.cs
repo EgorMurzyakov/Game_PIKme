@@ -134,11 +134,6 @@ public class VoiceMagic : MonoBehaviour
                 }
                 tornadoSpell.Cast(transform, playerTransform);
                 break;
-
-            case "ICE_ARROW":
-                UnityDebug.Log("Ice arrow cast");
-                // Добавьте логику для ледяной стрелы, если есть
-                break;
         }
     }
 
