@@ -3,7 +3,7 @@ using System.IO;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Data;
-using UnityEditor.Overlays;
+// using UnityEditor.Overlays; // вызвала ошибку в сборке
 using UnityEngine.SceneManagement;
 using System.Collections;
 

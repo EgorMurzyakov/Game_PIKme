@@ -9,7 +9,7 @@ using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
 using NUnit.Framework.Constraints;
-using static UnityEditor.Progress;
+// using static UnityEditor.Progress; // вызвала ошибку в сборке
 using System.Collections;
 
 public class InventoryManager : MonoBehaviour
