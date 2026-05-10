@@ -81,22 +81,22 @@ public class NPCDialogueTrigger : MonoBehaviour
             bool rewardSuccess = false;
 
             if (inventoryManager != null)
-                rewardSuccess = inventoryManager.GiveItemByID("TornadoBook", 1);
+                rewardSuccess = inventoryManager.GiveItemByID("СЕРЕБРЯННЫЙ МЕЧ", 1);
 
             if (!rewardSuccess && rewardSpawnPrefab != null)
             {
                 Instantiate(rewardSpawnPrefab, transform.position + rewardSpawnOffset, Quaternion.identity);
                 rewardSuccess = true;
-                Debug.Log("TornadoBook не в инвентаре — заспавнен префаб.");
+                Debug.Log("СЕРЕБРЯННЫЙ МЕЧ не в инвентаре — заспавнен префаб.");
             }
 
             QuestManager.Instance.Data.rewardGiven = true;
             QuestManager.Instance.SaveQuestState();
 
             if (!rewardSuccess)
-                Debug.LogWarning("Не удалось выдать TornadoBook и нет префаба.");
+                Debug.LogWarning("Не удалось выдать СЕРЕБРЯННЫЙ МЕЧ и нет префаба.");
             else
-                Debug.Log("TornadoBook выдана.");
+                Debug.Log("СЕРЕБРЯННЫЙ МЕЧ выдана.");
 
             dialogueManager.OpenDialogue(rewardLines, isReward: true);
         }
@@ -104,9 +104,13 @@ public class NPCDialogueTrigger : MonoBehaviour
         {
             dialogueManager.OpenDialogue(introLines);
         }
-        else
+        else if (status == "completed")
         {
             dialogueManager.OpenDialogue(doneLines);
+        }
+        else
+        {
+            dialogueManager.OpenDialogue(introLines);
         }
     }
 }
