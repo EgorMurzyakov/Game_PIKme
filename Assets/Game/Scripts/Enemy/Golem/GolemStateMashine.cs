@@ -312,7 +312,7 @@ public class GolemStateMashine : MonoBehaviour
 
     public void GoDamageState() // Получаем урон - true, не получаем - false
     {
-        if (Time.time - takingDamageColdown > prevColdownDate)
+        if (Time.time - takingDamageColdown > prevColdownDate && isActiv)
         {
             takingDamage = true;
         }
