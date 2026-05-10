@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.Networking;
+using System.Collections;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
@@ -7,10 +9,7 @@ using UnityDebug = UnityEngine.Debug;
 public class VoiceMagic : MonoBehaviour
 {
     [Header("Фильтры срабатывания голоса")]
-    [Tooltip("Минимальная пауза (в секундах) между кастами.")]
     public float spellCooldownSeconds = 1.0f;
-
-    [Tooltip("Если включено, одинаковое заклинание не будет срабатывать снова, пока не пройдёт кулдаун.")]
     public bool blockSameSpellDuringCooldown = true;
 
     private float lastCastTime = -999f;
@@ -29,8 +28,12 @@ public class VoiceMagic : MonoBehaviour
     public InventoryManager inventoryManager;
 
     [Header("Управление с клавиатуры")]
-    [Tooltip("Включить управление заклинаниями с клавиатуры")]
     public bool enableKeyboardSpells = true;
+
+    // Звуки
+    private AudioSource audioSource;
+    private AudioClip fireballClip;
+    private AudioClip tornadoClip;
 
     public string PendingSpell => Interlocked.Exchange(ref pendingSpell, null);
 
@@ -42,19 +45,46 @@ public class VoiceMagic : MonoBehaviour
         if (inventoryManager == null)
             inventoryManager = FindObjectOfType<InventoryManager>();
 
-        // Процесс запускается в VoiceProcessManager, здесь ничего не делаем
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+
+        // Загружаем звуки из StreamingAssets
+        StartCoroutine(LoadClip("sounds/fireball.wav", clip => fireballClip = clip));
+        StartCoroutine(LoadClip("sounds/tornado.wav", clip => tornadoClip = clip));
+
         if (VoiceProcessManager.Instance == null)
         {
             UnityDebug.LogWarning("VoiceMagic: VoiceProcessManager не найден!");
             StartVoiceProcess();
-
             UnityDebug.LogWarning("VoiceMagic: VoiceProcessManager запущен вручную!");
+        }
+    }
+
+    private IEnumerator LoadClip(string relativePath, System.Action<AudioClip> onLoaded)
+    {
+        string fullPath = Path.Combine(Application.streamingAssetsPath, relativePath);
+        string url = "file://" + fullPath;
+
+        using (UnityWebRequest req = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.WAV))
+        {
+            yield return req.SendWebRequest();
+
+            if (req.result == UnityWebRequest.Result.Success)
+            {
+                AudioClip clip = DownloadHandlerAudioClip.GetContent(req);
+                onLoaded?.Invoke(clip);
+                UnityDebug.Log("VoiceMagic: звук загружен — " + relativePath);
+            }
+            else
+            {
+                UnityDebug.LogError("VoiceMagic: не удалось загрузить звук: " + relativePath + " | " + req.error);
+            }
         }
     }
 
     void Update()
     {
-        // Клавиатура — без изменений
         if (enableKeyboardSpells)
         {
             if (Input.GetKeyDown(KeyCode.Space)) HandleSpellCast("TORNADO");
@@ -62,7 +92,6 @@ public class VoiceMagic : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.R))     HandleSpellCast("ICE_ARROW");
         }
 
-        // Голосовые команды — берём из менеджера
         if (VoiceProcessManager.Instance != null)
         {
             string spell = VoiceProcessManager.Instance.PendingSpell;
@@ -71,14 +100,12 @@ public class VoiceMagic : MonoBehaviour
         }
         else
         {
-            // Если VoiceProcessManager не найден, используем свой PendingSpell
             string spell = PendingSpell;
             if (!string.IsNullOrEmpty(spell))
                 HandleSpellCast(spell);
         }
     }
 
-    // Общий метод для обработки заклинаний (и с голоса, и с клавиатуры)
     private void HandleSpellCast(string spell)
     {
         float now = Time.time;
@@ -93,18 +120,16 @@ public class VoiceMagic : MonoBehaviour
 
         lastCastTime = now;
         lastSpell = spell;
-
         CastSpell(spell);
     }
 
-
     private void CastSpell(string spell)
     {
-        UnityEngine.Debug.Log("CastSpell called: " + spell);
+        UnityDebug.Log("CastSpell called: " + spell);
 
         if (cameraTransform == null)
         {
-            UnityEngine.Debug.LogError("cameraTransform не задан и Camera.main не найден.");
+            UnityDebug.LogError("cameraTransform не задан и Camera.main не найден.");
             return;
         }
 
@@ -114,9 +139,10 @@ public class VoiceMagic : MonoBehaviour
                 UnityDebug.Log("Fireball cast");
                 if (fireballSpell == null)
                 {
-                    UnityEngine.Debug.LogError("fireballSpell не назначен в Inspector.");
+                    UnityDebug.LogError("fireballSpell не назначен в Inspector.");
                     return;
                 }
+                audioSource.PlayOneShot(fireballClip);
                 fireballSpell.Cast(transform, cameraTransform);
                 break;
 
@@ -129,9 +155,10 @@ public class VoiceMagic : MonoBehaviour
                 }
                 if (tornadoSpell == null)
                 {
-                    UnityEngine.Debug.LogError("tornadoSpell не назначен в Inspector.");
+                    UnityDebug.LogError("tornadoSpell не назначен в Inspector.");
                     return;
                 }
+                audioSource.PlayOneShot(tornadoClip);
                 tornadoSpell.Cast(transform, playerTransform);
                 break;
         }
@@ -183,12 +210,11 @@ public class VoiceMagic : MonoBehaviour
             UnityDebug.LogError("VoiceMagic: ошибка запуска: " + e.Message);
         }
     }
+
     private bool CanUseTornado()
     {
         if (inventoryManager == null)
             return false;
-
         return inventoryManager.HasTornadoBook();
     }
-
 }
