@@ -3059,7 +3059,7 @@ Shader "Polytope Studio/PT_Vegetation_Opaque_Shader"
 			}
 			#endif
 
-			FragmentOutput frag ( VertexOutput IN
+			GBufferFragOutput frag ( VertexOutput IN
 								#ifdef ASE_DEPTH_WRITE_ON
 								,out float outputDepth : ASE_SV_DEPTH
 								#endif
