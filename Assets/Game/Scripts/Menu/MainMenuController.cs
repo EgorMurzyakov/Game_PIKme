@@ -20,7 +20,20 @@ public class MainMenuController : MonoBehaviour
         SceneManager.LoadScene("IntroScene");
     }
 
-    // 2. Кнопка "Выход"
+    //2. Продолжить игру
+    public void ContinueGame()
+    {
+        if (VoiceProcessManager.Instance == null)
+        {
+            GameObject go = new GameObject("VoiceProcessManager");
+            go.AddComponent<VoiceProcessManager>();
+        }
+
+        PlayerPrefs.SetString("TargetScene", "village1 valera");
+        SceneManager.LoadScene("LoadingScreen");
+    }
+
+    // 3. Кнопка "Выход"
     public void QuitGame()
     {
 #if UNITY_EDITOR
