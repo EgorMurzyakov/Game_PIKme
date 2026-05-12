@@ -205,6 +205,15 @@ public class SaveManager : MonoBehaviour
         }
     }
 
+    public static void DeleteSaveFiles()
+    {
+        if (File.Exists(Application.persistentDataPath + "/money.json")) File.Delete(Application.persistentDataPath + "/money.json");
+        if (File.Exists(Application.persistentDataPath + "/scene1.json")) File.Delete(Application.persistentDataPath + "/scene1.json");
+        if (File.Exists(Application.persistentDataPath + "/scene2.json")) File.Delete(Application.persistentDataPath + "/scene2.json");
+        if (File.Exists(Application.persistentDataPath + "/scene3.json")) File.Delete(Application.persistentDataPath + "/scene3.json");
+        if (File.Exists(Application.persistentDataPath + "/scene4.json")) File.Delete(Application.persistentDataPath + "/scene4.json");
+   
+    }
 }
 
 [System.Serializable]
