@@ -25495,7 +25495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 997b97923a9a10c4893739ba3e2ae61d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VoiceMagic
-  spellCooldownSeconds: 1
+  spellCooldownSeconds: 1.7
   blockSameSpellDuringCooldown: 1
   cameraTransform: {fileID: 776045319}
   playerTransform: {fileID: 191380214}
