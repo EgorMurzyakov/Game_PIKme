@@ -23,6 +23,11 @@ public class SceneTransitionZone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            if (SceneManager.GetActiveScene().name == "ValeraAD_old_from_commit")
+            {
+                other.gameObject.GetComponent<InventoryManager>().RemoveItemByID("book_tornado", 26);
+            }
+
             SaveGame();
             PlayerPrefs.SetString("SpawnPoint", spawnID);
             PlayerPrefs.SetString("TargetScene", targetScene); // куда грузить
