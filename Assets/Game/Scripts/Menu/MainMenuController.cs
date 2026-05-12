@@ -17,6 +17,7 @@ public class MainMenuController : MonoBehaviour
             go.AddComponent<VoiceProcessManager>();
         }
 
+        SaveManager.DeleteSaveFiles(); // Удаляем файлы сохранений при запуске новой игры
         SceneManager.LoadScene("IntroScene");
     }
 

@@ -137,6 +137,11 @@ public class VoiceMagic : MonoBehaviour
         {
             case "FIREBALL":
                 UnityDebug.Log("Fireball cast");
+                if (!((BookItem)inventoryManager.bookSlot.item).GetMagicSpells().fireball)
+                {
+                    UnityDebug.LogWarning("VoiceMagic: Заклинанние огненый шар не найдено.");
+                    return;
+                }
                 if (fireballSpell == null)
                 {
                     UnityDebug.LogError("fireballSpell не назначен в Inspector.");
@@ -148,9 +153,9 @@ public class VoiceMagic : MonoBehaviour
 
             case "TORNADO":
                 UnityDebug.Log("Tornado cast");
-                if (!CanUseTornado())
+                if (!((BookItem)inventoryManager.bookSlot.item).GetMagicSpells().tornado)
                 {
-                    UnityDebug.LogWarning("VoiceMagic: книга Торнадо не найдена в инвентаре.");
+                    UnityDebug.LogWarning("VoiceMagic: Заклинание торнадо не найдено.");
                     return;
                 }
                 if (tornadoSpell == null)
@@ -211,10 +216,10 @@ public class VoiceMagic : MonoBehaviour
         }
     }
 
-    private bool CanUseTornado()
-    {
-        if (inventoryManager == null)
-            return false;
-        return inventoryManager.HasTornadoBook();
-    }
+    //private bool CanUseTornado()
+    //{
+    //    //    if (inventoryManager == null)
+    //    //        return false;
+    //    //    return inventoryManager.HasTornadoBook();
+    //}
 }
