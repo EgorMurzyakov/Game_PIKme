@@ -8,8 +8,9 @@ public class SimpleMenu : MonoBehaviour
 {
     public static SimpleMenu Instance { get; private set; }
 
-    [Header("Ссылки")]
+    [Header("Ссылки")]   
     public GameObject menuCanvasObject;
+    public SaveManager saveManager;
     public Button btnContinue;
     public Button btnSave;
     public Button btnSettings;
@@ -107,7 +108,10 @@ public class SimpleMenu : MonoBehaviour
         if (menuCanvasObject != null) menuCanvasObject.SetActive(true);
     }
 
-    public void SaveDummy() { Debug.Log("Сохранено (пустышка)"); }
+    public void SaveDummy() 
+    { 
+        saveManager.SaveGame();
+    }
 
     public void QuitGame()
     {
