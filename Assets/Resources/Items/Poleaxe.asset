@@ -19,6 +19,6 @@ MonoBehaviour:
   itemDescription: Poleaxe
   maximumAmount: 1
   icon: {fileID: 21300000, guid: a30e9a59a4ffb884489afda27a4945c3, type: 3}
-  baceDamage: 100
-  upgradePrice: 150
-  upgradePriceCoeff: 1.2
+  baceDamage: 207
+  upgradePrice: 367
+  upgradePriceCoeff: 1.6

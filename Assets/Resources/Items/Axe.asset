@@ -21,4 +21,4 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 6a08ec4b334ea1c46b8171679417a74f, type: 3}
   baceDamage: 75
   upgradePrice: 35
-  upgradePriceCoeff: 1.4
+  upgradePriceCoeff: 1.1

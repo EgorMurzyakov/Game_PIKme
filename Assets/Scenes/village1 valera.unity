@@ -119241,7 +119241,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 256904259726659210, guid: a0ed72f58d7a92849a53cc975847efbb, type: 3}
       propertyPath: m_Name
-      value: Axe
+      value: Axe_1
       objectReference: {fileID: 0}
     - target: {fileID: 256904259726659210, guid: a0ed72f58d7a92849a53cc975847efbb, type: 3}
       propertyPath: m_IsActive
@@ -168922,7 +168922,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6542435455833630746, guid: 038a28c5540f8c34988932464279599f, type: 3}
       propertyPath: m_Name
-      value: HealthPotion
+      value: HealthPotion_1
       objectReference: {fileID: 0}
     - target: {fileID: 6542435455833630746, guid: 038a28c5540f8c34988932464279599f, type: 3}
       propertyPath: m_IsActive
