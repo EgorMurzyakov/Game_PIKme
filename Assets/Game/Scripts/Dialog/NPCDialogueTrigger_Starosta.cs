@@ -1,5 +1,6 @@
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NPCDialogueTrigger_Starosta : MonoBehaviour
 {
@@ -135,7 +136,9 @@ public class NPCDialogueTrigger_Starosta : MonoBehaviour
         }
         else if (status == "completed")
         {
+            
             dialogueManager.OpenDialogue(doneLines);
+            SceneManager.LoadScene("FinaLIntroScene");
         }
         else
         {
