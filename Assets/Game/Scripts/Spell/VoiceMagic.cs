@@ -133,6 +133,8 @@ public class VoiceMagic : MonoBehaviour
             return;
         }
 
+        if (inventoryManager.bookSlot.item == null) return; // Если слот для книги пуст - скип
+
         switch (spell)
         {
             case "FIREBALL":
@@ -215,11 +217,4 @@ public class VoiceMagic : MonoBehaviour
             UnityDebug.LogError("VoiceMagic: ошибка запуска: " + e.Message);
         }
     }
-
-    //private bool CanUseTornado()
-    //{
-    //    //    if (inventoryManager == null)
-    //    //        return false;
-    //    //    return inventoryManager.HasTornadoBook();
-    //}
 }
