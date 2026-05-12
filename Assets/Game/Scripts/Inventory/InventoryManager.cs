@@ -424,37 +424,45 @@ public class InventoryManager : MonoBehaviour
     }
 
     public bool RemoveItemByID(string itemID, int amount = 1)
-{
-    foreach (InventorySlot slot in slots)
     {
-        if (slot == null || slot.isEmpty) continue;
-        if (slot.item == null) continue;
-
-        bool match = (!string.IsNullOrEmpty(slot.item.itemID) && slot.item.itemID.Equals(itemID, StringComparison.OrdinalIgnoreCase))
-                  || (!string.IsNullOrEmpty(slot.item.itemName) && slot.item.itemName.Equals(itemID, StringComparison.OrdinalIgnoreCase));
-
-        if (match)
+        if (bookSlot.item.itemID == itemID)
         {
-            slot.amount -= amount;
-            slot.textItemAmount.text = slot.amount.ToString();
-
-            if (slot.amount <= 0)
-            {
-                slot.isEmpty = true;
-                slot.item = null;
-                slot.iconGO.GetComponent<Image>().color = new Color(0, 0, 0, 0);
-                slot.iconGO.GetComponent<Image>().sprite = null;
-                slot.textItemAmount.text = " ";
-            }
-
-            Debug.Log($"Удалён предмет: {itemID}");
-            return true;
+            bookSlot.isEmpty = true;
+            bookSlot.item = null;
+            bookSlot.iconGO.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+            bookSlot.iconGO.GetComponent<Image>().sprite = null;
         }
-    }
 
-    Debug.LogWarning($"RemoveItemByID: предмет '{itemID}' не найден в инвентаре.");
-    return false;
-}
+        foreach (InventorySlot slot in slots)
+        {
+            if (slot == null || slot.isEmpty) continue;
+            if (slot.item == null) continue;
+
+            bool match = (!string.IsNullOrEmpty(slot.item.itemID) && slot.item.itemID.Equals(itemID, StringComparison.OrdinalIgnoreCase))
+                      || (!string.IsNullOrEmpty(slot.item.itemName) && slot.item.itemName.Equals(itemID, StringComparison.OrdinalIgnoreCase));
+
+            if (match)
+            {
+                slot.amount -= amount;
+                slot.textItemAmount.text = slot.amount.ToString();
+
+                if (slot.amount <= 0)
+                {
+                    slot.isEmpty = true;
+                    slot.item = null;
+                    slot.iconGO.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+                    slot.iconGO.GetComponent<Image>().sprite = null;
+                    slot.textItemAmount.text = " ";
+                }
+
+                Debug.Log($"Удалён предмет: {itemID}");
+                return true;
+            }
+        }
+
+        Debug.LogWarning($"RemoveItemByID: предмет '{itemID}' не найден в инвентаре.");
+        return false;
+    }
     private void InventoryNavigation() // ��������� �� ���������
     {
         // �������
@@ -541,7 +549,6 @@ public class InventoryManager : MonoBehaviour
             }
             if (slots[curCol, curRow].amount == 0)
             {
-                Debug.Log("������ ������ ��������");
                 slots[curCol, curRow].isEmpty = true;
                 slots[curCol, curRow].item = null;
                 slots[curCol, curRow].iconGO.GetComponent<Image>().color = new Color(0, 0, 0, 0); // ����� ���� ���������� ����� �� �� ����������� ���������
